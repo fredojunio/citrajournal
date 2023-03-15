@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('invoice');
             $table->string('status');
             $table->double('total');
-            $table->integer('remaining_bill');
+            $table->double('remaining_bill');
             $table->date('date');
             $table->date('due_date');
             $table->unsignedBigInteger('kas_id')->index();
