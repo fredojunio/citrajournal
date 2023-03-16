@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Purchase;
 use Illuminate\Http\Request;
 
-class PurchasetController extends Controller
+class PurchaseController extends Controller
 {
     /**
      * Display a listing of the resource.
