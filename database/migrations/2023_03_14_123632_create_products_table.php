@@ -20,6 +20,8 @@ return new class extends Migration
             $table->integer('pajak_beli')->nullable();
             $table->integer('harga_jual')->nullable();
             $table->integer('pajak_jual')->nullable();
+            $table->unsignedBigInteger('umkm_id')->index();
+            $table->foreign('umkm_id')->references('id')->on('umkms');
             $table->timestamps();
         });
     }
