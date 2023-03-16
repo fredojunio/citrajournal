@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="boxicons.min.css">
 </head>
 
-<body class="font-sans text-gray-900 antialiased">
+<body class="font-sans antialiased">
     <div class="min-h-screen px-28 sm:pt-0 bg-gradient-to-b from-citragreen-400 to-citragreen-600">
         {{ $slot }}
     </div>

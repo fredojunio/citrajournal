@@ -16,6 +16,7 @@ module.exports = {
             colors: {
                 // contoh kalo mau nambah warna
                 // "example-blue": "#2484C6",
+                citrablack: "#1B1212",
 
                 citragreen: {
                     50: "#E3FBE0",
