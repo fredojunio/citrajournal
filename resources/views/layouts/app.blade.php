@@ -12,15 +12,17 @@
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
+    {{-- Boxicons --}}
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-    <link rel="stylesheet" href="boxicons.min.css">
 </head>
 
 <body class="font-sans antialiased">
     <div class="min-h-screen bg-gray-100">
-        @include('layouts.navigation')
+        @include('layouts.citra-navigation')
 
         <!-- Page Heading -->
         @if (isset($header))

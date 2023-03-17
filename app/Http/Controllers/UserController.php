@@ -2,19 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Umkm;
+use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class UmkmController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $umkm = Umkm::where('user_id', Auth::user()->id);
-        return view('user.umkm.umkm');
+        //
     }
 
     /**
@@ -22,7 +20,7 @@ class UmkmController extends Controller
      */
     public function create()
     {
-        return view('user.umkm.create_umkm');
+        //
     }
 
     /**
@@ -36,7 +34,7 @@ class UmkmController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Umkm $umkm)
+    public function show(User $user)
     {
         //
     }
@@ -44,7 +42,7 @@ class UmkmController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Umkm $umkm)
+    public function edit(User $user)
     {
         //
     }
@@ -52,7 +50,7 @@ class UmkmController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Umkm $umkm)
+    public function update(Request $request, User $user)
     {
         //
     }
@@ -60,7 +58,7 @@ class UmkmController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Umkm $umkm)
+    public function destroy(User $user)
     {
         //
     }

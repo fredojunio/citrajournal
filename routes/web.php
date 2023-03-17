@@ -5,6 +5,7 @@ use App\Http\Controllers\CoaController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\CostController;
 use App\Http\Controllers\KasController;
+use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PurchaseController;
@@ -13,6 +14,7 @@ use App\Http\Controllers\SaleController;
 use App\Http\Controllers\SaleDetailController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\UmkmController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,11 +28,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [AuthenticatedSessionController::class, 'create']);
+Route::get('/', [PageController::class, 'index']);
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -46,6 +48,8 @@ Route::group([
     'prefix' => 'umkm',
     'as' => 'umkm.'
 ], function () {
+    Route::get('/dashboard', [PageController::class, 'dashboard'])->name('dashboard');
+
     Route::resource('coa', CoaController::class);
     Route::resource('contact', ContactController::class);
     Route::resource('cost', CostController::class);
