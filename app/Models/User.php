@@ -43,4 +43,10 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function umkm()
+    {
+        $manage_umkm = $this->hasMany(User_Umkm::class, 'user_id', 'id')->first();
+        return $manage_umkm->umkm();
+    }
 }

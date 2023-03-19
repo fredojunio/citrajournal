@@ -22,21 +22,30 @@
 
 <body class="font-sans antialiased">
     <div class="min-h-screen bg-gray-100">
-        @include('layouts.citra-navigation')
 
-        <!-- Page Heading -->
-        @if (isset($header))
-            <header class="bg-white shadow">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    {{ $header }}
-                </div>
-            </header>
-        @endif
+        <div class="flex gap-0">
+            <div class="bg-white shadow-md w-16 min-h-screen z-10">
 
-        <!-- Page Content -->
-        <main>
-            {{ $slot }}
-        </main>
+            </div>
+            <div class="w-full">
+                <!-- Page Heading -->
+                @if (isset($header))
+                    <header class="bg-white shadow-md">
+                        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                            <div class="flex items-center gap-1">
+                                <i class="bx bx-menu text-2xl"></i>
+                                {{ $header }}
+                            </div>
+                        </div>
+                    </header>
+                @endif
+
+                <!-- Page Content -->
+                <main>
+                    {{ $slot }}
+                </main>
+            </div>
+        </div>
     </div>
 </body>
 

@@ -41,6 +41,7 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('user', UserController::class);
     Route::resource('umkm', UmkmController::class);
+    Route::post('/umkm/save_umkm', [UmkmController::class, 'save_umkm'])->name('umkm.save_umkm');
 });
 
 Route::group([
@@ -48,7 +49,7 @@ Route::group([
     'prefix' => 'umkm',
     'as' => 'umkm.'
 ], function () {
-    Route::get('/dashboard', [PageController::class, 'dashboard'])->name('dashboard');
+    Route::get('/umkm/dashboard', [PageController::class, 'dashboard'])->name('dashboard');
 
     Route::resource('coa', CoaController::class);
     Route::resource('contact', ContactController::class);

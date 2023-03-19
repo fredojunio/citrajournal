@@ -7,15 +7,21 @@
         <div class="mt-20">
             <h3 class="text-white text-xl">Pilih UMKM atau perusahaan yang kamu miliki.</h3>
             <div class="mt-4 flex flex-wrap gap-5">
-                <a href="{{ route('umkm.dashboard') }}"
-                    class="w-44 h-44 flex justify-center items-center shadow-md rounded-lg bg-white p-5">
-                    <div>
-                        <img src="{{ asset('images/assets/shop.svg') }}" class="w-28" alt="">
-                        <h2 class="text-lg font-bold text-center mt-2">
-                            UMKM X
-                        </h2>
-                    </div>
-                </a>
+                @foreach ($umkms as $umkm)
+                    <form method="POST" action="{{ route('umkm.save_umkm') }}">
+                        @csrf
+                        <input type="hidden" value="{{ $umkm->id }}" name="umkm_id" id="">
+                        <button type="submit"
+                            class="w-44 h-44 flex justify-center items-center shadow-md rounded-lg bg-white p-5">
+                            <div>
+                                <img src="{{ asset('images/assets/shop.svg') }}" class="w-28" alt="">
+                                <h2 class="text-lg font-bold text-center mt-2">
+                                    {{ $umkm->name }}
+                                </h2>
+                            </div>
+                        </button>
+                    </form>
+                @endforeach
                 <a href="{{ route('umkm.create') }}"
                     class="w-44 h-44 flex justify-center items-center shadow-md rounded-lg bg-white p-5">
                     <div class="flex flex-col items-center">

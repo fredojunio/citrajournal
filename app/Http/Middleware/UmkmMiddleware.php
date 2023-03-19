@@ -18,7 +18,7 @@ class UmkmMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         if (Auth::check()) {
-            $umkms = Umkm::where('user_id', Auth::user()->id);
+            $umkms = Umkm::where('user_id', Auth::user()->id)->get();
             if (!empty($umkms[0])) {
                 return $next($request);
             }

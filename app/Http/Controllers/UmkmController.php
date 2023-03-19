@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Umkm;
+use App\Models\User_Umkm;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -13,8 +14,12 @@ class UmkmController extends Controller
      */
     public function index()
     {
-        $umkm = Umkm::where('user_id', Auth::user()->id);
-        return view('user.umkm.umkm');
+        $umkms = Umkm::where('user_id', Auth::user()->id)->get();
+        if (!empty($umkms[0])) {
+            return view('user.umkm.umkm', compact('umkms'));
+        }
+
+        return view('user.umkm.create_umkm');
     }
 
     /**
@@ -30,7 +35,14 @@ class UmkmController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:' . Umkm::class],
+        ]);
+
+        Umkm::create($request->all());
+
+        return redirect()->route('umkm.index');
     }
 
     /**
@@ -63,5 +75,22 @@ class UmkmController extends Controller
     public function destroy(Umkm $umkm)
     {
         //
+    }
+
+    public function save_umkm(Request $request)
+    {
+        $manage_umkm = User_Umkm::where('user_id', Auth::user()->id)->get();
+        if (!empty($manage_umkm[0])) {
+            $manage_umkm[0]->update([
+                'umkm_id' => $request->umkm_id
+            ]);
+        } else {
+            User_Umkm::create([
+                'user_id' => Auth::user()->id,
+                'umkm_id' => $request->umkm_id
+            ]);
+        }
+
+        return redirect()->route('umkm.dashboard');
     }
 }
