@@ -6,5 +6,6 @@
     html {
         font-family: Roboto, system-ui, sans-serif;
         @apply text-citrablack;
+        @apply text-sm;
     }
 }
