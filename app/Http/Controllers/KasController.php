@@ -12,7 +12,7 @@ class KasController extends Controller
      */
     public function index()
     {
-        //
+        return view('user.kas.kas');
     }
 
     /**
@@ -20,7 +20,7 @@ class KasController extends Controller
      */
     public function create()
     {
-        //
+        return view('user.kas.create_kas');
     }
 
     /**

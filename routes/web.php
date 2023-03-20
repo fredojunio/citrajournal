@@ -51,16 +51,16 @@ Route::group([
 ], function () {
     Route::get('/umkm/dashboard', [PageController::class, 'dashboard'])->name('dashboard');
 
-    Route::resource('coa', CoaController::class);
-    Route::resource('contact', ContactController::class);
-    Route::resource('cost', CostController::class);
-    Route::resource('kas', KasController::class);
-    Route::resource('product', ProductController::class);
-    Route::resource('purchase', PurchaseController::class);
-    Route::resource('purchasedetail', PurchaseDetailController::class);
-    Route::resource('sale', SaleController::class);
-    Route::resource('saledetail', SaleDetailController::class);
-    Route::resource('stock', StockController::class);
+    Route::resource('umkm/coa', CoaController::class);
+    Route::resource('umkm/contact', ContactController::class);
+    Route::resource('umkm/cost', CostController::class);
+    Route::resource('umkm/kas', KasController::class);
+    Route::resource('umkm/product', ProductController::class);
+    Route::resource('umkm/purchase', PurchaseController::class);
+    Route::resource('umkm/purchasedetail', PurchaseDetailController::class);
+    Route::resource('umkm/sale', SaleController::class);
+    Route::resource('umkm/saledetail', SaleDetailController::class);
+    Route::resource('umkm/stock', StockController::class);
 });
 
 require __DIR__ . '/auth.php';
