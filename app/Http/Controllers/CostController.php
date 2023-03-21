@@ -12,7 +12,7 @@ class CostController extends Controller
      */
     public function index()
     {
-        //
+        return view('user.cost.cost');
     }
 
     /**
@@ -20,7 +20,7 @@ class CostController extends Controller
      */
     public function create()
     {
-        //
+        return view('user.cost.create_cost');
     }
 
     /**

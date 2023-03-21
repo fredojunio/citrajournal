@@ -94,7 +94,7 @@
                     <div
                         class="{{ request()->routeIs('umkm.sale.index') || request()->routeIs('umkm.sale.create') || request()->routeIs('umkm.sale.edit') ? 'w-full -left-3 top-0 h-full bg-citragreen-500 absolute rounded-r-full' : '' }}">
                     </div>
-                    <a href="" class="w-full flex justify-between items-center z-10">
+                    <a href="{{ route('umkm.sale.index') }}" class="w-full flex justify-between items-center z-10">
                         <div class="flex gap-2 items-center">
                             <i
                                 class="bx bxs-purchase-tag {{ request()->routeIs('umkm.sale.index') || request()->routeIs('umkm.sale.create') || request()->routeIs('umkm.sale.edit') ? 'text-white' : 'text-citradark-500' }} text-3xl"></i>
@@ -112,7 +112,7 @@
                     <div
                         class="{{ request()->routeIs('umkm.purchase.index') || request()->routeIs('umkm.purchase.create') || request()->routeIs('umkm.purchase.edit') ? 'w-full -left-3 top-0 h-full bg-citragreen-500 absolute rounded-r-full' : '' }}">
                     </div>
-                    <a href="" class="w-full flex justify-between items-center z-10">
+                    <a href="{{ route('umkm.purchase.index') }}" class="w-full flex justify-between items-center z-10">
                         <div class="flex gap-2 items-center">
                             <i
                                 class="bx bxs-cart {{ request()->routeIs('umkm.purchase.index') || request()->routeIs('umkm.purchase.create') || request()->routeIs('umkm.purchase.edit') ? 'text-white' : 'text-citradark-500' }} text-3xl"></i>
@@ -130,7 +130,7 @@
                     <div
                         class="{{ request()->routeIs('umkm.cost.index') || request()->routeIs('umkm.cost.create') || request()->routeIs('umkm.cost.edit') ? 'w-full -left-3 top-0 h-full bg-citragreen-500 absolute rounded-r-full' : '' }}">
                     </div>
-                    <a href="" class="w-full flex justify-between items-center z-10">
+                    <a href="{{ route('umkm.cost.index') }}" class="w-full flex justify-between items-center z-10">
                         <div class="flex gap-2 items-center">
                             <i
                                 class="bx bxs-credit-card-front {{ request()->routeIs('umkm.cost.index') || request()->routeIs('umkm.cost.create') || request()->routeIs('umkm.cost.edit') ? 'text-white' : 'text-citradark-500' }} text-3xl"></i>

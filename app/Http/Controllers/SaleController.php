@@ -12,7 +12,7 @@ class SaleController extends Controller
      */
     public function index()
     {
-        //
+        return view('user.sale.sale');
     }
 
     /**
@@ -20,7 +20,7 @@ class SaleController extends Controller
      */
     public function create()
     {
-        //
+        return view('user.sale.create_sale');
     }
 
     /**
