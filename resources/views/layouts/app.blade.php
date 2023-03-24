@@ -148,7 +148,7 @@
                     <div
                         class="{{ request()->routeIs('umkm.contact.index') || request()->routeIs('umkm.contact.create') || request()->routeIs('umkm.contact.edit') ? 'w-full -left-3 top-0 h-full bg-citragreen-500 absolute rounded-r-full' : '' }}">
                     </div>
-                    <a href="" class="w-full flex justify-between items-center z-10">
+                    <a href="{{ route('umkm.contact.index') }}" class="w-full flex justify-between items-center z-10">
                         <div class="flex gap-2 items-center">
                             <i
                                 class="bx bxs-contact {{ request()->routeIs('umkm.contact.index') || request()->routeIs('umkm.contact.create') || request()->routeIs('umkm.contact.edit') ? 'text-white' : 'text-citradark-500' }} text-3xl"></i>
@@ -166,7 +166,7 @@
                     <div
                         class="{{ request()->routeIs('umkm.product.index') || request()->routeIs('umkm.product.create') || request()->routeIs('umkm.product.edit') ? 'w-full -left-3 top-0 h-full bg-citragreen-500 absolute rounded-r-full' : '' }}">
                     </div>
-                    <a href="" class="w-full flex justify-between items-center z-10">
+                    <a href="{{ route('umkm.product.index') }}" class="w-full flex justify-between items-center z-10">
                         <div class="flex gap-2 items-center">
                             <i
                                 class="bx bxs-package {{ request()->routeIs('umkm.product.index') || request()->routeIs('umkm.product.create') || request()->routeIs('umkm.product.edit') ? 'text-white' : 'text-citradark-500' }} text-3xl"></i>
@@ -184,7 +184,7 @@
                     <div
                         class="{{ request()->routeIs('umkm.asset.index') || request()->routeIs('umkm.asset.create') || request()->routeIs('umkm.asset.edit') ? 'w-full -left-3 top-0 h-full bg-citragreen-500 absolute rounded-r-full' : '' }}">
                     </div>
-                    <a href="" class="w-full flex justify-between items-center z-10">
+                    <a href="{{ route('umkm.asset.index') }}" class="w-full flex justify-between items-center z-10">
                         <div class="flex gap-2 items-center">
                             <i
                                 class="bx bxs-building-house {{ request()->routeIs('umkm.asset.index') || request()->routeIs('umkm.asset.create') || request()->routeIs('umkm.asset.edit') ? 'text-white' : 'text-citradark-500' }} text-3xl"></i>
@@ -202,7 +202,7 @@
                     <div
                         class="{{ request()->routeIs('umkm.coa.index') || request()->routeIs('umkm.coa.create') || request()->routeIs('umkm.coa.edit') ? 'w-full -left-3 top-0 h-full bg-citragreen-500 absolute rounded-r-full' : '' }}">
                     </div>
-                    <a href="" class="w-full flex justify-between items-center z-10">
+                    <a href="{{ route('umkm.coa.index') }}" class="w-full flex justify-between items-center z-10">
                         <div class="flex gap-2 items-center">
                             <i
                                 class="bx bxs-food-menu {{ request()->routeIs('umkm.coa.index') || request()->routeIs('umkm.coa.create') || request()->routeIs('umkm.coa.edit') ? 'text-white' : 'text-citradark-500' }} text-3xl"></i>

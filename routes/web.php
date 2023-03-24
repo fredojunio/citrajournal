@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AssetController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\CoaController;
 use App\Http\Controllers\ContactController;
@@ -51,6 +52,7 @@ Route::group([
 ], function () {
     Route::get('/umkm/dashboard', [PageController::class, 'dashboard'])->name('dashboard');
 
+    Route::resource('umkm/asset', AssetController::class);
     Route::resource('umkm/coa', CoaController::class);
     Route::resource('umkm/contact', ContactController::class);
     Route::resource('umkm/cost', CostController::class);
