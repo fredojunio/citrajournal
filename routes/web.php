@@ -11,6 +11,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\PurchaseDetailController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\SaleDetailController;
 use App\Http\Controllers\StockController;
@@ -51,6 +52,11 @@ Route::group([
     'as' => 'umkm.'
 ], function () {
     Route::get('/umkm/dashboard', [PageController::class, 'dashboard'])->name('dashboard');
+
+    Route::get('umkm/report/index', [ReportController::class, 'index'])->name('report.index');
+    Route::get('umkm/report/labarugi', [ReportController::class, 'labarugi'])->name('report.labarugi');
+    Route::get('umkm/report/neraca', [ReportController::class, 'neraca'])->name('report.neraca');
+    Route::get('umkm/report/healthanalysis', [ReportController::class, 'healthanalysis'])->name('report.healthanalysis');
 
     Route::resource('umkm/asset', AssetController::class);
     Route::resource('umkm/coa', CoaController::class);
