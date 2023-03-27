@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Contact;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ContactController extends Controller
 {
@@ -12,7 +13,8 @@ class ContactController extends Controller
      */
     public function index()
     {
-        return view('user.contact.contact');
+        $contacts = Contact::where('umkm_id', Auth::user()->umkm->id)->get();
+        return view('user.contact.contact', compact('contacts'));
     }
 
     /**
@@ -28,7 +30,20 @@ class ContactController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            Contact::create([
+                'name' => $request->name,
+                'type' => $request->type,
+                'email' => $request->email,
+                'address' => $request->address,
+                'phone' => $request->phone,
+                'umkm_id' => Auth::user()->umkm->id,
+            ]);
+
+            return redirect()->route('umkm.contact.index');
+        } catch (Exception $e) {
+            return redirect()->route('umkm.contact.index');
+        }
     }
 
     /**
@@ -52,7 +67,19 @@ class ContactController extends Controller
      */
     public function update(Request $request, Contact $contact)
     {
-        //
+        try {
+            $contact->update([
+                'name' => $request->name,
+                'type' => $request->type,
+                'email' => $request->email,
+                'address' => $request->address,
+                'phone' => $request->phone,
+            ]);
+
+            return redirect()->route('umkm.contact.index');
+        } catch (Exception $e) {
+            return redirect()->route('umkm.contact.index');
+        }
     }
 
     /**
@@ -60,6 +87,7 @@ class ContactController extends Controller
      */
     public function destroy(Contact $contact)
     {
-        //
+        $contact->delete();
+        return redirect()->route('umkm.contact.index');
     }
 }

@@ -47,36 +47,159 @@
                     <table class="mt-6 w-full border-collapse">
                         <tr
                             class="text-zinc-400 font-bold border border-b-1 border-r-0 border-t-0 border-l-0 border-zinc-400">
+                            <td class="p-3">Tipe</td>
                             <td class="p-3">Nama</td>
                             <td class="p-3">Email</td>
                             <td class="p-3">Alamat</td>
                             <td class="p-3">Nomor Telepon</td>
                             <td class="p-3 text-center">Tindakan</td>
                         </tr>
-                        <tr class="border border-b-1 border-r-0 border-t-0 border-l-0 border-zinc-400">
-                            <td class="p-3">Nama</td>
-                            <td class="p-3">Email</td>
-                            <td class="p-3">Alamat</td>
-                            <td class="p-3">Nomor Telepon</td>
-                            <td class="p-3 text-center">
-                                <x-dropdown align="left" width="48">
-                                    <x-slot name="trigger">
-                                        <button>
-                                            <i class="bx bx-dots-horizontal-rounded text-xl"></i>
-                                        </button>
-                                    </x-slot>
+                        @foreach ($contacts as $contact)
+                            <tr class="border border-b-1 border-r-0 border-t-0 border-l-0 border-zinc-400">
+                                <td class="p-3">{{ $contact->type }}</td>
+                                <td class="p-3">{{ $contact->name }}</td>
+                                <td class="p-3">{{ $contact->email }}</td>
+                                <td class="p-3">{{ $contact->address }}</td>
+                                <td class="p-3">{{ $contact->phone }}</td>
+                                <td class="p-3 text-center">
+                                    <x-dropdown align="left" width="48">
+                                        <x-slot name="trigger">
+                                            <button>
+                                                <i class="bx bx-dots-horizontal-rounded text-xl"></i>
+                                            </button>
+                                        </x-slot>
 
-                                    <x-slot name="content">
-                                        <x-dropdown-link :href="route('umkm.kas.edit', 0)">
-                                            {{ __('Edit') }}
-                                        </x-dropdown-link>
-                                        <x-dropdown-link class="text-red-500">
-                                            {{ __('Delete') }}
-                                        </x-dropdown-link>
-                                    </x-slot>
-                                </x-dropdown>
-                            </td>
-                        </tr>
+                                        <x-slot name="content">
+                                            <x-dropdown-link data-modal="editContactModal-{{ $loop->iteration }}"
+                                                data-modal-toggle="editContactModal-{{ $loop->iteration }}">
+                                                {{ __('Edit') }}
+                                            </x-dropdown-link>
+                                            <x-dropdown-link class="text-red-500">
+                                                {{ __('Delete') }}
+                                            </x-dropdown-link>
+                                        </x-slot>
+                                    </x-dropdown>
+                                </td>
+
+                                <!-- Edit modal -->
+                                <div id="editContactModal-{{ $loop->iteration }}" tabindex="-1" aria-hidden="true"
+                                    class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] md:h-full">
+                                    <div class="relative w-full h-full max-w-2xl md:h-auto">
+                                        <!-- Modal content -->
+                                        <div class="relative bg-white rounded-lg shadow">
+                                            <!-- Modal header -->
+                                            <div
+                                                class="flex items-start justify-between p-4 border-b rounded-t border-zinc-200">
+                                                <h3 class="text-xl font-bold">
+                                                    Edit Kontak
+                                                </h3>
+                                                <button type="button"
+                                                    class="text-gray-400 bg-transparent hover:bg-zinc-200 hover:text-citrablack rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
+                                                    data-modal-hide="editContactModal-{{ $loop->iteration }}">
+                                                    <svg aria-hidden="true" class="w-5 h-5" fill="currentColor"
+                                                        viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                        <path fill-rule="evenodd"
+                                                            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                                            clip-rule="evenodd"></path>
+                                                    </svg>
+                                                    <span class="sr-only">Close modal</span>
+                                                </button>
+                                            </div>
+                                            <form action="{{ route('umkm.contact.update', $contact) }}"
+                                                id="editcontact-{{ $loop->iteration }}" method="post">@csrf
+                                                @method('PATCH')</form>
+                                            <!-- Modal body -->
+                                            <div class="p-6 space-y-6">
+                                                <div class="flex space-x-16 items-center">
+                                                    <label for="name" class="w-32">Nama</label>
+                                                    <x-text-input form="editcontact-{{ $loop->iteration }}"
+                                                        id="name" class="block w-full" type="text"
+                                                        name="name" :value="$contact->name" required autofocus
+                                                        autocomplete="name" />
+                                                </div>
+
+                                                <div class="flex space-x-16 items-center">
+                                                    <label for="type" class="w-32">Tipe Kontak</label>
+                                                    <div class="flex justify-between w-full">
+                                                        <div class="inline-block">
+                                                            <input form="editcontact-{{ $loop->iteration }}"
+                                                                type="radio" name="type"
+                                                                class="accent-citragreen-500" value="Pelanggan"
+                                                                id="type1"
+                                                                {{ $contact->type == 'Pelanggan' ? 'checked' : '' }}>
+                                                            <label for="type1">Pelanggan</label>
+                                                        </div>
+                                                        <div class="inline-block">
+                                                            <input form="editcontact-{{ $loop->iteration }}"
+                                                                type="radio" name="type"
+                                                                class="accent-citragreen-500" value="Supplier"
+                                                                id="type2"
+                                                                {{ $contact->type == 'Supplier' ? 'checked' : '' }}>
+                                                            <label for="type2">Supplier</label>
+                                                        </div>
+                                                        <div class="inline-block">
+                                                            <input form="editcontact-{{ $loop->iteration }}"
+                                                                type="radio" name="type"
+                                                                class="accent-citragreen-500" value="Karyawan"
+                                                                id="type3"
+                                                                {{ $contact->type == 'Karyawan' ? 'checked' : '' }}>
+                                                            <label for="type3">Karyawan</label>
+                                                        </div>
+                                                        <div class="inline-block">
+                                                            <input form="editcontact-{{ $loop->iteration }}"
+                                                                type="radio" name="type"
+                                                                class="accent-citragreen-500" value="Lainnya"
+                                                                id="type4"
+                                                                {{ $contact->type == 'Lainnya' ? 'checked' : '' }}>
+                                                            <label for="type4">Lainnya</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="flex space-x-16 items-center">
+                                                    <label for="phone" class="w-32">Handphone</label>
+                                                    <x-text-input form="editcontact-{{ $loop->iteration }}"
+                                                        id="phone" class="block w-full" type="text"
+                                                        name="phone" :value="$contact->phone" autofocus
+                                                        autocomplete="phone" />
+                                                </div>
+
+                                                <div class="flex space-x-16 items-center">
+                                                    <label for="email" class="w-32">Email</label>
+                                                    <x-text-input form="editcontact-{{ $loop->iteration }}"
+                                                        id="email" class="block w-full" type="text"
+                                                        name="email" :value="$contact->email" autofocus
+                                                        autocomplete="email" />
+                                                </div>
+
+                                                <div class="flex space-x-16 items-center">
+                                                    <label for="address" class="w-32">Alamat</label>
+                                                    <x-text-input form="editcontact-{{ $loop->iteration }}"
+                                                        id="address" class="block w-full" type="text"
+                                                        name="address" :value="$contact->address" autofocus
+                                                        autocomplete="address" />
+                                                </div>
+
+                                            </div>
+                                            <!-- Modal footer -->
+                                            <div
+                                                class="flex justify-end items-center p-6 space-x-2 border-t border-zinc-200 rounded-b">
+
+                                                <button data-modal-hide="editContactModal-{{ $loop->iteration }}"
+                                                    type="button"
+                                                    class="inline-flex items-center px-4 py-2 bg-zinc-200 border border-transparent rounded-md font-bold text-xs text-zinc-500 hover:bg-zinc-300 focus:bg-zinc-400 active:bg-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                                                    Batal
+                                                </button>
+                                                <x-primary-button form="editcontact-{{ $loop->iteration }}"
+                                                    class="ml-2">
+                                                    Simpan
+                                                </x-primary-button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </tr>
+                        @endforeach
                     </table>
                 </div>
             </div>
@@ -106,35 +229,36 @@
                         <span class="sr-only">Close modal</span>
                     </button>
                 </div>
+                <form action="{{ route('umkm.contact.store') }}" id="addcontact" method="post">@csrf</form>
                 <!-- Modal body -->
                 <div class="p-6 space-y-6">
                     <div class="flex space-x-16 items-center">
                         <label for="name" class="w-32">Nama</label>
-                        <x-text-input id="name" class="block w-full" type="text" name="name"
-                            :value="old('name')" required autofocus autocomplete="name" />
+                        <x-text-input form="addcontact" id="name" class="block w-full" type="text"
+                            name="name" :value="old('name')" required autofocus autocomplete="name" />
                     </div>
 
                     <div class="flex space-x-16 items-center">
                         <label for="type" class="w-32">Tipe Kontak</label>
                         <div class="flex justify-between w-full">
                             <div class="inline-block">
-                                <input type="radio" name="type" class="accent-citragreen-500" value="Pelanggan"
-                                    id="type1">
+                                <input form="addcontact" type="radio" name="type" class="accent-citragreen-500"
+                                    value="Pelanggan" id="type1">
                                 <label for="type1">Pelanggan</label>
                             </div>
                             <div class="inline-block">
-                                <input type="radio" name="type" class="accent-citragreen-500" value="Supplier"
-                                    id="type2">
+                                <input form="addcontact" type="radio" name="type" class="accent-citragreen-500"
+                                    value="Supplier" id="type2">
                                 <label for="type2">Supplier</label>
                             </div>
                             <div class="inline-block">
-                                <input type="radio" name="type" class="accent-citragreen-500" value="Karyawan"
-                                    id="type3">
+                                <input form="addcontact" type="radio" name="type" class="accent-citragreen-500"
+                                    value="Karyawan" id="type3">
                                 <label for="type3">Karyawan</label>
                             </div>
                             <div class="inline-block">
-                                <input type="radio" name="type" class="accent-citragreen-500" value="Lainnya"
-                                    id="type4">
+                                <input form="addcontact" type="radio" name="type" class="accent-citragreen-500"
+                                    value="Lainnya" id="type4">
                                 <label for="type4">Lainnya</label>
                             </div>
                         </div>
@@ -142,20 +266,20 @@
 
                     <div class="flex space-x-16 items-center">
                         <label for="phone" class="w-32">Handphone</label>
-                        <x-text-input id="phone" class="block w-full" type="text" name="phone"
-                            :value="old('phone')" required autofocus autocomplete="phone" />
+                        <x-text-input form="addcontact" id="phone" class="block w-full" type="text"
+                            name="phone" :value="old('phone')" autofocus autocomplete="phone" />
                     </div>
 
                     <div class="flex space-x-16 items-center">
                         <label for="email" class="w-32">Email</label>
-                        <x-text-input id="email" class="block w-full" type="text" name="email"
-                            :value="old('email')" required autofocus autocomplete="email" />
+                        <x-text-input form="addcontact" id="email" class="block w-full" type="text"
+                            name="email" :value="old('email')" autofocus autocomplete="email" />
                     </div>
 
                     <div class="flex space-x-16 items-center">
-                        <label for="phone" class="w-32">Alamat</label>
-                        <x-text-input id="Address" class="block w-full" type="text" name="Address"
-                            :value="old('Address')" required autofocus autocomplete="Address" />
+                        <label for="address" class="w-32">Alamat</label>
+                        <x-text-input form="addcontact" id="address" class="block w-full" type="text"
+                            name="address" :value="old('address')" autofocus autocomplete="address" />
                     </div>
 
                 </div>
@@ -166,7 +290,7 @@
                         class="inline-flex items-center px-4 py-2 bg-zinc-200 border border-transparent rounded-md font-bold text-xs text-zinc-500 hover:bg-zinc-300 focus:bg-zinc-400 active:bg-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-500 focus:ring-offset-2 transition ease-in-out duration-150">
                         Batal
                     </button>
-                    <x-primary-button class="ml-2">
+                    <x-primary-button form="addcontact" class="ml-2">
                         Simpan
                     </x-primary-button>
                 </div>
