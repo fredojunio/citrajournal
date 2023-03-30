@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Coa;
+use App\Models\CoaCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CoaController extends Controller
 {
@@ -12,7 +14,9 @@ class CoaController extends Controller
      */
     public function index()
     {
-        return view('user.coa.coa');
+        $coas = Coa::where('umkm_id', Auth::user()->umkm->id)->paginate(15);
+        $coaCategories = CoaCategory::all();
+        return view('user.coa.coa', compact('coas', 'coaCategories'));
     }
 
     /**
@@ -28,7 +32,18 @@ class CoaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            Coa::create([
+                'code' => $request->code,
+                'name' => $request->name,
+                'category_id' => $request->category_id,
+                'umkm_id' => Auth::user()->umkm->id
+            ]);
+
+            return redirect()->route('umkm.coa.index');
+        } catch (Exception $e) {
+            return redirect()->route('umkm.coa.index');
+        }
     }
 
     /**
@@ -52,7 +67,17 @@ class CoaController extends Controller
      */
     public function update(Request $request, Coa $coa)
     {
-        //
+        try {
+            $coa->update([
+                'code' => $request->code,
+                'name' => $request->name,
+                'category_id' => $request->category_id,
+            ]);
+
+            return redirect()->route('umkm.coa.index');
+        } catch (Exception $e) {
+            return redirect()->route('umkm.coa.index');
+        }
     }
 
     /**
@@ -60,6 +85,7 @@ class CoaController extends Controller
      */
     public function destroy(Coa $coa)
     {
-        //
+        $coa->delete();
+        return redirect()->route('umkm.coa.index');
     }
 }

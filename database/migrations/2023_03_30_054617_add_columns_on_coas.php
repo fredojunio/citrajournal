@@ -11,13 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('coas', function (Blueprint $table) {
-            $table->id();
-            $table->string('code');
-            $table->string('name');
-            $table->unsignedBigInteger('umkm_id')->index();
-            $table->foreign('umkm_id')->references('id')->on('umkms');
-            $table->timestamps();
+        Schema::table('coas', function (Blueprint $table) {
+            $table->unsignedBigInteger('category_id')->index();
+            $table->foreign('category_id')->references('id')->on('coa_categories');
         });
     }
 
@@ -26,6 +22,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('coas');
+        Schema::table('coas', function (Blueprint $table) {
+            //
+        });
     }
 };

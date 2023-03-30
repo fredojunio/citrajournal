@@ -22,6 +22,11 @@ class Product extends Model
         'umkm_id',
     ];
 
+    public function coa()
+    {
+        return $this->belongsTo(Coa::class, 'coa-id', 'id');
+    }
+
     public function umkm()
     {
         return $this->belongsTo(Umkm::class, 'umkm_id', 'id');

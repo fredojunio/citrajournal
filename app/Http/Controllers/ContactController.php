@@ -11,10 +11,18 @@ class ContactController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $contacts = Contact::where('umkm_id', Auth::user()->umkm->id)->get();
-        return view('user.contact.contact', compact('contacts'));
+        $filter = $request->filter;
+        if (!empty($filter)) {
+            $contacts = Contact::where('umkm_id', Auth::user()->umkm->id)
+                ->where('type', $filter)
+                ->get();
+        } else {
+            $contacts = Contact::where('umkm_id', Auth::user()->umkm->id)->get();
+        }
+
+        return view('user.contact.contact', compact('contacts', 'filter'));
     }
 
     /**

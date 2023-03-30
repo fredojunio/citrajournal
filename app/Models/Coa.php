@@ -15,12 +15,17 @@ class Coa extends Model
         'id',
         'code',
         'name',
-        'category',
+        'category_id',
         'umkm_id',
     ];
 
     public function umkm()
     {
         return $this->belongsTo(Umkm::class, 'umkm_id', 'id');
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(CoaCategory::class, 'category_id', 'id');
     }
 }

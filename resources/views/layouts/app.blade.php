@@ -7,6 +7,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name') }}</title>
+    <link rel="icon" href="{{ asset('images/icon.png') }}" type="image/x-icon">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -232,7 +233,7 @@
             </div>
             <div class="w-1/4"></div>
             <div class="w-full">
-                <div class="pl-72 fixed right-0 w-full flex justify-between bg-white shadow-md">
+                <div class="z-50 pl-72 fixed right-0 w-full flex justify-between bg-white shadow-md">
                     <!-- Page Heading -->
                     @if (isset($header))
                         <header class="">
@@ -292,6 +293,7 @@
             </div>
         </div>
     </div>
+
 
 </body>
 

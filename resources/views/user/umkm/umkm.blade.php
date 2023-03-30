@@ -3,8 +3,11 @@
     <div class="pt-32">
         <h1 class="font-bold text-white text-4xl">Hai {{ Auth::user()->name }}</h1>
         <h3 class="mt-2 text-white text-xl">Selamat datang kembali</h3>
+        <form method="POST" action="{{ route('logout') }}">
+            <a href="" class="underline text-citragreen-100 text-lg">log out</a>
+        </form>
 
-        <div class="mt-20">
+        <div class="mt-16">
             <h3 class="text-white text-xl">Pilih UMKM atau perusahaan yang kamu miliki.</h3>
             <div class="mt-4 flex flex-wrap gap-5">
                 @foreach ($umkms as $umkm)
