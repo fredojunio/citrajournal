@@ -269,6 +269,9 @@
                             </div>
                         @endforeach
                     </table>
+                    <div class="mt-4">
+                        {{ $contacts->links('vendor.pagination.default') }}
+                    </div>
                 </div>
             </div>
         </div>

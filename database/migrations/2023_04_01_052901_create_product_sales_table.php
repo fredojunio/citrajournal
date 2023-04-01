@@ -11,17 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('kass', function (Blueprint $table) {
+        Schema::create('product_sales', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('product_id')->index();
+            $table->foreign('product_id')->references('id')->on('products')->onUpdate('cascade')->onDelete('cascade');
             $table->unsignedBigInteger('coa_id')->index();
             $table->foreign('coa_id')->references('id')->on('coas');
-            $table->date('date');
+            $table->integer('price');
             $table->integer('tax');
-            $table->double('balance');
-            $table->unsignedBigInteger('umkm_id')->index();
-            $table->foreign('umkm_id')->references('id')->on('umkms')->onUpdate('cascade')->onDelete('cascade');
-            $table->unsignedBigInteger('contact_id')->index()->nullable();
-            $table->foreign('contact_id')->references('id')->on('contacts');
             $table->timestamps();
         });
     }
@@ -31,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('kass');
+        Schema::dropIfExists('product_sales');
     }
 };

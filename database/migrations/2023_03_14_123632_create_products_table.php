@@ -14,14 +14,9 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->unsignedBigInteger('coa_id')->index();
-            $table->foreign('coa_id')->references('id')->on('coas');
-            $table->integer('harga_beli')->nullable();
-            $table->integer('pajak_beli')->nullable();
-            $table->integer('harga_jual')->nullable();
-            $table->integer('pajak_jual')->nullable();
+            $table->string('description')->nullable();
             $table->unsignedBigInteger('umkm_id')->index();
-            $table->foreign('umkm_id')->references('id')->on('umkms');
+            $table->foreign('umkm_id')->references('id')->on('umkms')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }

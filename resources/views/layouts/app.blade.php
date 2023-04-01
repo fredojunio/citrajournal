@@ -233,7 +233,7 @@
             </div>
             <div class="w-1/4"></div>
             <div class="w-full">
-                <div class="z-50 pl-72 fixed right-0 w-full flex justify-between bg-white shadow-md">
+                <div class="w-4/5 z-10 fixed right-0 flex justify-between bg-white shadow-md">
                     <!-- Page Heading -->
                     @if (isset($header))
                         <header class="">

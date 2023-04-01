@@ -17,9 +17,9 @@ class ContactController extends Controller
         if (!empty($filter)) {
             $contacts = Contact::where('umkm_id', Auth::user()->umkm->id)
                 ->where('type', $filter)
-                ->get();
+                ->paginate(15);
         } else {
-            $contacts = Contact::where('umkm_id', Auth::user()->umkm->id)->get();
+            $contacts = Contact::where('umkm_id', Auth::user()->umkm->id)->paginate(15);
         }
 
         return view('user.contact.contact', compact('contacts', 'filter'));

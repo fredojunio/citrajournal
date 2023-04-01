@@ -14,21 +14,27 @@ class Product extends Model
     protected $fillable = [
         'id',
         'name',
-        'coa_id',
-        'harga_beli',
-        'pajak_beli',
-        'harga_jual',
-        'pajak_jual',
+        'description',
         'umkm_id',
     ];
-
-    public function coa()
-    {
-        return $this->belongsTo(Coa::class, 'coa-id', 'id');
-    }
 
     public function umkm()
     {
         return $this->belongsTo(Umkm::class, 'umkm_id', 'id');
+    }
+
+    public function sale()
+    {
+        return $this->hasOne(ProductSale::class, 'product_id', 'id');
+    }
+
+    public function purchase()
+    {
+        return $this->hasOne(ProductPurchase::class, 'product_id', 'id');
+    }
+
+    public function stock()
+    {
+        return $this->hasOne(ProductStock::class, 'product_id', 'id');
     }
 }
