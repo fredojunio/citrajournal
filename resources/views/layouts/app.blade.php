@@ -35,8 +35,8 @@
                 <!-- User -->
                 <div class="px-6 mt-6 flex justify-content-start w-full">
                     <a href="" class="w-full flex gap-2 items-center">
-                        <i class="bx bxs-user-circle text-citradark-500 text-4xl"></i>
-                        <p class="font-bold">{{ Auth::user()->name }}</p>
+                        <i class="bx bxs-home-smile text-citradark-500 text-4xl"></i>
+                        <p class="font-bold">{{ Auth::user()->umkm->name }}</p>
                     </a>
                 </div>
 
@@ -252,8 +252,8 @@
                             <x-slot name="trigger">
                                 <button
                                     class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-bold rounded-md text-citrablack focus:outline-none transition ease-in-out duration-150">
-                                    <i class="bx bxs-home-smile text-2xl text-citragreen-500 mr-1"></i>
-                                    <div>{{ Auth::user()->umkm->name }}</div>
+                                    <i class="bx bxs-user-circle text-2xl text-citragreen-500 mr-1"></i>
+                                    <div class="text-base">{{ Auth::user()->name }}</div>
 
                                     <div class="ml-1">
                                         <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
