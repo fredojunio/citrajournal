@@ -88,8 +88,8 @@
                                             </x-dropdown-link>
                                             <x-dropdown-link data-modal="deleteContactModal-{{ $loop->iteration }}"
                                                 data-modal-toggle="deleteContactModal-{{ $loop->iteration }}"
-                                                class="text-red-500">
-                                                {{ __('Delete') }}
+                                                class="text-citrared-500">
+                                                {{ __('Hapus') }}
                                             </x-dropdown-link>
                                         </x-slot>
                                     </x-dropdown>

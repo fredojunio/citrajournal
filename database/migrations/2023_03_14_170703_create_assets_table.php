@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('assets', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('purchase_id')->index();
-            $table->foreign('purchase_id')->references('id')->on('purchases');
+            $table->unsignedBigInteger('transaction_id')->index();
+            $table->foreign('transaction_id')->references('id')->on('transactions');
             $table->unsignedBigInteger('product_id')->index();
             $table->foreign('product_id')->references('id')->on('products');
             $table->date('date');

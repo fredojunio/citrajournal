@@ -15,13 +15,9 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('coa_id')->index();
             $table->foreign('coa_id')->references('id')->on('coas');
-            $table->date('date');
-            $table->integer('tax');
             $table->double('balance');
             $table->unsignedBigInteger('umkm_id')->index();
             $table->foreign('umkm_id')->references('id')->on('umkms')->onUpdate('cascade')->onDelete('cascade');
-            $table->unsignedBigInteger('contact_id')->index()->nullable();
-            $table->foreign('contact_id')->references('id')->on('contacts');
             $table->timestamps();
         });
     }

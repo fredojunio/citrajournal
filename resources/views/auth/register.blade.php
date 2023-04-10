@@ -18,7 +18,7 @@
                 <div class="mt-4">
                     <x-input-label for="phone" :value="__('Nomor Telepon')" />
                     <x-text-input id="phone" class="block mt-1 w-full" type="tel" name="phone"
-                        :value="old('phone')" required autofocus autocomplete="phone" />
+                        :value="old('phone')" autofocus autocomplete="phone" />
                     <x-input-error :messages="$errors->get('phone')" class="mt-2" />
                 </div>
 
@@ -26,7 +26,7 @@
                 <div class="mt-4">
                     <x-input-label for="address" :value="__('Alamat')" />
                     <x-text-input id="address" class="block mt-1 w-full" type="text" name="address"
-                        :value="old('address')" required autofocus autocomplete="address" />
+                        :value="old('address')" autofocus autocomplete="address" />
                     <x-input-error :messages="$errors->get('address')" class="mt-2" />
                 </div>
 

@@ -15,7 +15,10 @@
         "vite": "^4.0.0"
     },
     "dependencies": {
+        "autonumeric": "^4.8.1",
         "boxicons": "^2.1.4",
-        "flowbite": "^1.6.4"
+        "flowbite": "^1.6.4",
+        "jquery": "^3.6.4",
+        "select2": "^4.1.0-rc.0"
     }
 }

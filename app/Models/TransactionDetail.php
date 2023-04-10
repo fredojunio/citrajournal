@@ -5,15 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class SaleDetail extends Model
+class TransactionDetail extends Model
 {
     use HasFactory;
     protected $primaryKey = 'id';
-    protected $table = 'sale_details';
+    protected $table = 'transaction_details';
 
     protected $fillable = [
         'id',
-        'sale_id',
+        'transaction_id',
         'product_id',
         'description',
         'price',
@@ -21,9 +21,9 @@ class SaleDetail extends Model
         'tax'
     ];
 
-    public function sale()
+    public function transaction()
     {
-        return $this->belongsTo(Sale::class, 'sale_id', 'id');
+        return $this->belongsTo(Transaction::class, 'transaction_id', 'id');
     }
 
     public function product()

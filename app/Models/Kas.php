@@ -14,11 +14,8 @@ class Kas extends Model
     protected $fillable = [
         'id',
         'coa_id',
-        'date',
-        'tax',
         'balance',
         'umkm_id',
-        'contact_id',
     ];
 
     public function coa()

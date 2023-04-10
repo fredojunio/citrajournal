@@ -26,16 +26,25 @@
                             <td class="p-3">Harga Beli</td>
                             <td class="p-3">Harga Jual</td>
                             <td class="p-3">Stok</td>
+                            <td class="p-3">Pajak Beli</td>
+                            <td class="p-3">Pajak Jual</td>
                             <td class="p-3 text-center">Tindakan</td>
                         </tr>
                         @foreach ($products as $product)
                             <tr class="border border-b-1 border-r-0 border-t-0 border-l-0 border-zinc-400">
                                 <td class="p-3">{{ $product->name }}</td>
-                                <td class="p-3">{{ $product->description }}</td>
-                                <td class="p-3">{{ $product->purchase->price ?? 0 }}</td>
-                                <td class="p-3">{{ $product->sale->price ?? 0 }}</td>
+                                <td class="p-3">{{ $product->description ?? '-' }}</td>
                                 <td class="p-3">
-                                    {{ $product->stock->stock ?? 'tidak dimonitor' }}</td>
+                                    {{ !empty($product->purchase->price) ? AppHelper::rp($product->purchase->price) : '-' }}
+                                </td>
+                                <td class="p-3">
+                                    {{ !empty($product->sale->price) ? AppHelper::rp($product->sale->price) : '-' }}
+                                </td>
+                                <td class="p-3">
+                                    {{ $product->stock->stock ?? '-' }}</td>
+                                <td class="p-3">{{ !empty($product->purchase->tax) ? $product->purchase->tax : '-' }}
+                                </td>
+                                <td class="p-3">{{ !empty($product->sale->tax) ? $product->sale->tax : '-' }}</td>
                                 <td class="p-3 text-center">
                                     <x-dropdown align="left" width="48">
                                         <x-slot name="trigger">
@@ -52,7 +61,7 @@
                                             <x-dropdown-link data-modal="deleteProductModal-{{ $loop->iteration }}"
                                                 data-modal-toggle="deleteProductModal-{{ $loop->iteration }}"
                                                 class="text-red-500">
-                                                {{ __('Delete') }}
+                                                {{ __('Hapus') }}
                                             </x-dropdown-link>
                                         </x-slot>
                                     </x-dropdown>
@@ -69,7 +78,7 @@
                                         <div
                                             class="flex items-start justify-between p-4 border-b rounded-t border-zinc-200">
                                             <h3 class="text-xl font-bold">
-                                                Edit Kontak
+                                                Edit Produk
                                             </h3>
                                             <button type="button"
                                                 class="text-gray-400 bg-transparent hover:bg-zinc-200 hover:text-citrablack rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
@@ -144,7 +153,7 @@
                                                             class="pl-3">Harga Beli</label>
                                                         <x-text-input form="editproduct-{{ $loop->iteration }}"
                                                             id="harga_beli-{{ $loop->iteration }}" class="block"
-                                                            type="text" name="harga_beli" :value="$product->purchase ?? ''"
+                                                            type="text" name="harga_beli" :value="$product->purchase->price ?? ''"
                                                             autofocus autocomplete="harga_beli" />
                                                         <label for="pajak_beli" class="">Pajak Beli</label>
                                                         <x-text-input form="editproduct-{{ $loop->iteration }}"
@@ -243,14 +252,6 @@
                                                             @endforeach
                                                         </select>
                                                     </div>
-                                                    <div class="flex space-x-16 items-center">
-                                                        <label for="stock-{{ $loop->iteration }}"
-                                                            class="pl-3 w-32">Stok saat ini</label>
-                                                        <x-text-input form="editproduct-{{ $loop->iteration }}"
-                                                            id="stock-{{ $loop->iteration }}" class="block w-full"
-                                                            type="text" name="stock" :value="$product->stock->stock ?? ''" autofocus
-                                                            autocomplete="stock" />
-                                                    </div>
                                                 </div>
                                             </div>
 
@@ -297,8 +298,7 @@
                                                 </svg>
                                                 <span class="sr-only">Close modal</span>
                                             </button>
-                                        </div>teration }}" method="post">@csrf
-                                        @method('PATCH')</form>
+                                        </div>
                                         <!-- Modal body -->
                                         <div class="p-6 space-y-6 flex flex-col items-center">
                                             <img src="{{ asset('images/assets/delete.svg') }}" class="w-36"
@@ -456,11 +456,6 @@
                                             {{ $coa->name }}</option>
                                     @endforeach
                                 </select>
-                            </div>
-                            <div class="flex space-x-16 items-center">
-                                <label for="stock" class="pl-3 w-32">Stok saat ini</label>
-                                <x-text-input form="addproduct" id="stock" class="block w-full" type="text"
-                                    name="stock" :value="old('stock')" autofocus autocomplete="stock" />
                             </div>
                         </div>
                     </div>

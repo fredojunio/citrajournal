@@ -9,6 +9,8 @@
     <title>{{ config('app.name') }}</title>
     <link rel="icon" href="{{ asset('images/icon.png') }}" type="image/x-icon">
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
@@ -16,8 +18,9 @@
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 </head>
 
 <body class="font-sans antialiased">
@@ -80,19 +83,19 @@
                 <!-- Kas -->
                 <div class="relative px-6 mt-6 py-1 flex justify-content-start w-full">
                     <div
-                        class="{{ request()->routeIs('umkm.kas.index') || request()->routeIs('umkm.kas.create') || request()->routeIs('umkm.kas.edit') ? 'w-full -left-3 top-0 h-full bg-citragreen-500 absolute rounded-r-full' : '' }}">
+                        class="{{ request()->routeIs('umkm.kas.send_money') || request()->routeIs('umkm.kas.transfer_fund') || request()->routeIs('umkm.kas.receive_money') || request()->routeIs('umkm.kas.index') || request()->routeIs('umkm.kas.create') || request()->routeIs('umkm.kas.edit') ? 'w-full -left-3 top-0 h-full bg-citragreen-500 absolute rounded-r-full' : '' }}">
                     </div>
                     <a href="{{ route('umkm.kas.index') }}"
                         class="w-full flex justify-between items-center z-10 group">
                         <div class="flex gap-2 items-center">
                             <i
-                                class="bx bxs-bank {{ request()->routeIs('umkm.kas.index') || request()->routeIs('umkm.kas.create') || request()->routeIs('umkm.kas.edit') ? 'text-white' : 'text-citradark-500 group-hover:text-citragreen-500' }} text-3xl"></i>
+                                class="bx bxs-bank {{ request()->routeIs('umkm.kas.send_money') || request()->routeIs('umkm.kas.transfer_fund') || request()->routeIs('umkm.kas.receive_money') || request()->routeIs('umkm.kas.index') || request()->routeIs('umkm.kas.create') || request()->routeIs('umkm.kas.edit') ? 'text-white' : 'text-citradark-500 group-hover:text-citragreen-500' }} text-3xl"></i>
                             <p
-                                class="{{ request()->routeIs('umkm.kas.index') || request()->routeIs('umkm.kas.create') || request()->routeIs('umkm.kas.edit') ? 'text-white' : 'group-hover:text-citragreen-500' }}">
+                                class="{{ request()->routeIs('umkm.kas.send_money') || request()->routeIs('umkm.kas.transfer_fund') || request()->routeIs('umkm.kas.receive_money') || request()->routeIs('umkm.kas.index') || request()->routeIs('umkm.kas.create') || request()->routeIs('umkm.kas.edit') ? 'text-white' : 'group-hover:text-citragreen-500' }}">
                                 Kas</p>
                         </div>
                         <i
-                            class="bx bx-chevron-right text-2xl {{ request()->routeIs('umkm.kas.index') || request()->routeIs('umkm.kas.create') || request()->routeIs('umkm.kas.edit') ? 'text-white' : 'group-hover:text-citragreen-500' }}"></i>
+                            class="bx bx-chevron-right text-2xl {{ request()->routeIs('umkm.kas.send_money') || request()->routeIs('umkm.kas.transfer_fund') || request()->routeIs('umkm.kas.receive_money') || request()->routeIs('umkm.kas.index') || request()->routeIs('umkm.kas.create') || request()->routeIs('umkm.kas.edit') ? 'text-white' : 'group-hover:text-citragreen-500' }}"></i>
                     </a>
                 </div>
 

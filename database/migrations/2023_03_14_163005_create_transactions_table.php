@@ -11,18 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('purchases', function (Blueprint $table) {
+        Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('contact_id')->index()->nullable();
-            $table->foreign('contact_id')->references('id')->on('contacts');
-            $table->string('invoice');
-            $table->string('status');
-            $table->double('total');
-            $table->double('remaining_bill');
-            $table->date('date');
-            $table->date('due_date');
             $table->unsignedBigInteger('kas_id')->index();
             $table->foreign('kas_id')->references('id')->on('kass');
+            $table->unsignedBigInteger('contact_id')->index()->nullable();
+            $table->foreign('contact_id')->references('id')->on('contacts');
+            $table->unsignedBigInteger('category_id')->index();
+            $table->foreign('category_id')->references('id')->on('transaction_categories');
+            $table->double('total');
+            $table->double('remaining_bill')->nullable();
+            $table->string('status');
+            $table->string('invoice');
+            $table->date('date');
+            $table->date('due_date')->nullable();
             $table->timestamps();
         });
     }
@@ -32,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('purchases');
+        Schema::dropIfExists('transactions');
     }
 };

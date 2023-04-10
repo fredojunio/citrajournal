@@ -5,20 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Stock extends Model
+class TransactionCategory extends Model
 {
     use HasFactory;
     protected $primaryKey = 'id';
-    protected $table = 'stocks';
+    protected $table = 'transaction_categories';
 
     protected $fillable = [
         'id',
-        'product_id',
-        'stocks',
+        'name'
     ];
-
-    public function product()
-    {
-        return $this->belongsTo(Product::class, 'product_id', 'id');
-    }
 }

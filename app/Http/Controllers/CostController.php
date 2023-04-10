@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Cost;
 use Illuminate\Http\Request;
 
 class CostController extends Controller
@@ -34,7 +33,7 @@ class CostController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Cost $cost)
+    public function show(string $id)
     {
         //
     }
@@ -42,7 +41,7 @@ class CostController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Cost $cost)
+    public function edit(string $id)
     {
         //
     }
@@ -50,7 +49,7 @@ class CostController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Cost $cost)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -58,7 +57,7 @@ class CostController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Cost $cost)
+    public function destroy(string $id)
     {
         //
     }

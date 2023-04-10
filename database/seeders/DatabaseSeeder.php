@@ -20,5 +20,6 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         $this->call(CoaCategoriesSeeder::class);
+        $this->call(TransactionCategoriesSeeder::class);
     }
 }

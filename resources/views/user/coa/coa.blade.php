@@ -47,7 +47,7 @@
                                             <x-dropdown-link data-modal="deleteCoaModal-{{ $loop->iteration }}"
                                                 data-modal-toggle="deleteCoaModal-{{ $loop->iteration }}"
                                                 class="text-red-500">
-                                                {{ __('Delete') }}
+                                                {{ __('Hapus') }}
                                             </x-dropdown-link>
                                         </x-slot>
                                     </x-dropdown>

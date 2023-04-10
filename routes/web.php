@@ -10,10 +10,8 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PurchaseController;
-use App\Http\Controllers\PurchaseDetailController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SaleController;
-use App\Http\Controllers\SaleDetailController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\UmkmController;
 use App\Http\Controllers\UserController;
@@ -54,21 +52,25 @@ Route::group([
     Route::get('/umkm/dashboard', [PageController::class, 'dashboard'])->name('dashboard');
 
     Route::get('umkm/report/index', [ReportController::class, 'index'])->name('report.index');
-    Route::get('umkm/report/labarugi', [ReportController::class, 'labarugi'])->name('report.labarugi');
-    Route::get('umkm/report/neraca', [ReportController::class, 'neraca'])->name('report.neraca');
-    Route::get('umkm/report/healthanalysis', [ReportController::class, 'healthanalysis'])->name('report.healthanalysis');
+    Route::get('report/labarugi', [ReportController::class, 'labarugi'])->name('report.labarugi');
+    Route::get('report/neraca', [ReportController::class, 'neraca'])->name('report.neraca');
+    Route::get('report/healthanalysis', [ReportController::class, 'healthanalysis'])->name('report.healthanalysis');
+
+
+    Route::resource('umkm/kas', KasController::class);
+    Route::get('kas/receive_money', [KasController::class, 'receive_money'])->name('kas.receive_money');
+    Route::post('kas/receive_money', [KasController::class, 'store_receive_money'])->name('receive_money.store');
+    Route::get('kas/transfer_fund', [KasController::class, 'transfer_fund'])->name('kas.transfer_fund');
+    Route::get('kas/send_money', [KasController::class, 'send_money'])->name('kas.send_money');
+
+    Route::resource('umkm/cost', CostController::class);
+    Route::resource('umkm/purchase', PurchaseController::class);
+    Route::resource('umkm/sale', SaleController::class);
 
     Route::resource('umkm/asset', AssetController::class);
     Route::resource('umkm/coa', CoaController::class);
     Route::resource('umkm/contact', ContactController::class);
-    Route::resource('umkm/cost', CostController::class);
-    Route::resource('umkm/kas', KasController::class);
     Route::resource('umkm/product', ProductController::class);
-    Route::resource('umkm/purchase', PurchaseController::class);
-    Route::resource('umkm/purchasedetail', PurchaseDetailController::class);
-    Route::resource('umkm/sale', SaleController::class);
-    Route::resource('umkm/saledetail', SaleDetailController::class);
-    Route::resource('umkm/stock', StockController::class);
 });
 
 require __DIR__ . '/auth.php';

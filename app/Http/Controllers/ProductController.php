@@ -69,7 +69,7 @@ class ProductController extends Controller
                 ProductStock::create([
                     'product_id' => $product->id,
                     'coa_id' => $request->coa_id_stock,
-                    'stock' => $request->stock,
+                    'stock' => 0,
                 ]);
             }
 
@@ -144,17 +144,17 @@ class ProductController extends Controller
             }
 
             // Stock
-            if (!empty($request->monitor) && !empty($request->stock)) {
+            if (!empty($request->monitor)) {
                 if (!empty($product->stock)) {
                     $product->stock->update([
                         'coa_id' => $request->coa_id_stock,
-                        'stock' => $request->stock,
+                        'stock' => 0,
                     ]);
                 } else {
                     ProductStock::create([
                         'product_id' => $product->id,
                         'coa_id' => $request->coa_id_stock,
-                        'stock' => $request->stock,
+                        'stock' => 0,
                     ]);
                 }
             }
