@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Coa;
 use App\Models\CoaCategory;
-use App\Models\Kas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -38,16 +37,9 @@ class CoaController extends Controller
                 'code' => $request->code,
                 'name' => $request->name,
                 'category_id' => $request->category_id,
-                'umkm_id' => Auth::user()->umkm->id
+                'umkm_id' => Auth::user()->umkm->id,
+                'balance' => 0
             ]);
-
-            if ($request->category_id == 1) {
-                Kas::create([
-                    'coa_id' => $coa->id,
-                    'umkm_id' => Auth::user()->umkm->id,
-                    'balance' => 0,
-                ]);
-            }
 
             return redirect()->route('umkm.coa.index');
         } catch (Exception $e) {

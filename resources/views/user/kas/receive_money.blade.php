@@ -15,7 +15,7 @@
                         class="js-example-basic-single border-b-1 border-r-0 border-t-0 border-l-0 border-gray-300 focus:border-citragreen-500 focus:ring-citragreen-500 block mt-1 w-1/4"
                         type="text" name="kas_id" required>
                         @foreach ($kass as $kas)
-                            <option value="{{ $kas->id }}">{{ $kas->coa->code }} - {{ $kas->coa->name }}</option>
+                            <option value="{{ $kas->id }}">{{ $kas->code }} - {{ $kas->name }}</option>
                         @endforeach
                     </select>
                     <x-input-error :messages="$errors->get('type')" class="mt-2" />

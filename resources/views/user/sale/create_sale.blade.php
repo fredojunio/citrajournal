@@ -6,6 +6,13 @@
     </x-slot>
     <div class="py-6">
         <div class="max-w-7xl mx-auto px-4">
+            @if (session('alert'))
+                <div class="mb-6 bg-white overflow-hidden shadow-md sm:rounded-lg p-4">
+                    <p class="text-citrared-500 text-center">
+                        {{ session('alert') }}
+                    </p>
+                </div>
+            @endif
             <div class="bg-white overflow-hidden shadow-md sm:rounded-lg p-4">
                 <form id="receive" action="{{ route('umkm.sale.store') }}" method="post">@csrf
 
@@ -18,7 +25,8 @@
                                 type="text" name="contact_id">
                                 <option hidden value="">Pilih Kontak</option>
                                 @foreach ($contacts as $contact)
-                                    <option value="{{ $contact->id }}">{{ $contact->name }}</option>
+                                    <option value="{{ $contact->id }}">{{ $contact->name }} ({{ $contact->type }})
+                                    </option>
                                 @endforeach
                             </select>
                             <x-input-error :messages="$errors->get('contact')" class="mt-2" />

@@ -11,15 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('assets', function (Blueprint $table) {
+        Schema::create('coa_transaction', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('transaction_id')->index();
             $table->foreign('transaction_id')->references('id')->on('transactions');
-            $table->unsignedBigInteger('product_id')->index();
-            $table->foreign('product_id')->references('id')->on('products');
-            $table->date('date');
             $table->unsignedBigInteger('coa_id')->index();
             $table->foreign('coa_id')->references('id')->on('coas');
+            $table->double('debit')->default(0);
+            $table->double('credit')->default(0);
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('assets');
+        Schema::dropIfExists('coa_transaction');
     }
 };

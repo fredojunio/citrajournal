@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Asset;
+use App\Models\TransactionDetail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AssetController extends Controller
 {
@@ -12,7 +13,24 @@ class AssetController extends Controller
      */
     public function index()
     {
-        return view('user.asset.asset');
+
+        $assets = TransactionDetail::whereHas('transaction', function ($q) {
+            $q->where('category_id', 2)
+                ->where('umkm_id', Auth::user()->umkm->id);
+        })
+            // ->whereHas('coa', function ($q) {
+            //     $q->where('category_id', 5);
+            // })
+            ->whereHas('product', function ($q) {
+                $q->whereHas('purchase', function ($query) {
+                    $query->whereHas('coa', function ($querycoa) {
+                        $querycoa->where('category_id', 5);
+                    });
+                });
+            })
+            ->paginate(15);
+
+        return view('user.asset.asset', compact('assets'));
     }
 
     /**
@@ -34,7 +52,7 @@ class AssetController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Asset $asset)
+    public function show(string $id)
     {
         //
     }
@@ -42,7 +60,7 @@ class AssetController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Asset $asset)
+    public function edit(string $id)
     {
         //
     }
@@ -50,7 +68,7 @@ class AssetController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Asset $asset)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -58,7 +76,7 @@ class AssetController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Asset $asset)
+    public function destroy(string $id)
     {
         //
     }

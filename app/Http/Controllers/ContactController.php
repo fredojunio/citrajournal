@@ -41,7 +41,7 @@ class ContactController extends Controller
         try {
             Contact::create([
                 'name' => $request->name,
-                'type' => $request->type,
+                'type' => $request->type ?? 'Lainnya',
                 'email' => $request->email,
                 'address' => $request->address,
                 'phone' => $request->phone,

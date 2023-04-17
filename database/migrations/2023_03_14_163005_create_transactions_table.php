@@ -13,13 +13,17 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('kas_id')->index();
-            $table->foreign('kas_id')->references('id')->on('kass');
+            $table->unsignedBigInteger('umkm_id')->index();
+            $table->foreign('umkm_id')->references('id')->on('umkms');
             $table->unsignedBigInteger('contact_id')->index()->nullable();
             $table->foreign('contact_id')->references('id')->on('contacts');
             $table->unsignedBigInteger('category_id')->index();
             $table->foreign('category_id')->references('id')->on('transaction_categories');
+            $table->double('taxtotal');
+            $table->double('subtotal');
+            $table->double('cuttotal');
             $table->double('total');
+            $table->integer('cut');
             $table->double('remaining_bill')->nullable();
             $table->string('status');
             $table->string('invoice');

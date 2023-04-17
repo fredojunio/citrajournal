@@ -9,7 +9,7 @@
         <div class="max-w-7xl mx-auto px-4">
             <div class="flex gap-4">
                 <!-- Pemasukan -->
-                <div class="bg-white shadow-sm sm:rounded-md p-4">
+                {{-- <div class="bg-white shadow-sm sm:rounded-md p-4">
                     <div class="flex items-center gap-2">
                         <div class="bg-citragreen-100 rounded-full w-14 h-14 flex justify-items-center items-center">
                             <i class="text-citragreen-500 bx bxs-bar-chart-alt-2 text-3xl m-auto"></i>
@@ -21,7 +21,7 @@
                             </h2>
                         </div>
                     </div>
-                </div>
+                </div> --}}
 
                 <!-- Saldo -->
                 <div class="bg-white shadow-sm sm:rounded-md p-4">
@@ -78,8 +78,8 @@
                         </tr>
                         @foreach ($kass as $kas)
                             <tr class="border border-b-1 border-r-0 border-t-0 border-l-0 border-zinc-400">
-                                <td class="p-3">{{ $kas->coa->code }}</td>
-                                <td class="p-3">{{ $kas->coa->name }}</td>
+                                <td class="p-3">{{ $kas->code }}</td>
+                                <td class="p-3">{{ $kas->name }}</td>
                                 <td class="p-3">{{ AppHelper::rp($kas->balance ?? 0) }}</td>
                                 <td class="p-3 text-center">
                                     <x-dropdown align="left" width="48">

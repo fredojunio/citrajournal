@@ -24,6 +24,7 @@
                             <td class="p-3">Kode Akun</td>
                             <td class="p-3">Nama</td>
                             <td class="p-3">Kategori</td>
+                            <td class="p-3">Saldo</td>
                             <td class="p-3 text-center">Tindakan</td>
                         </thead>
                         @foreach ($coas as $coa)
@@ -31,6 +32,7 @@
                                 <td class="p-3">{{ $coa->code }}</td>
                                 <td class="p-3">{{ $coa->name }}</td>
                                 <td class="p-3">{{ $coa->category->name }}</td>
+                                <td class="p-3">{{ $coa->balance }}</td>
                                 <td class="p-3 text-center">
                                     <x-dropdown align="left" width="48">
                                         <x-slot name="trigger">

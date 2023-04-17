@@ -9,7 +9,7 @@
         <div class="max-w-7xl mx-auto px-4">
             <div class="flex gap-4">
                 <!-- Pemasukan -->
-                <div class="bg-white shadow-sm sm:rounded-md p-4">
+                {{-- <div class="bg-white shadow-sm sm:rounded-md p-4">
                     <div class="flex items-center gap-2">
                         <div class="bg-citradark-100 rounded-full w-14 h-14 flex justify-items-center items-center">
                             <i class="text-citradark-500 bx bxs-cart text-3xl m-auto"></i>
@@ -21,10 +21,10 @@
                             </h2>
                         </div>
                     </div>
-                </div>
+                </div> --}}
 
-                <!-- Saldo -->
-                <div class="bg-white shadow-sm sm:rounded-md p-4">
+                <!-- Penjualan belum bayar -->
+                {{-- <div class="bg-white shadow-sm sm:rounded-md p-4">
                     <div class="flex items-center gap-2">
                         <div class="bg-citrared-100 rounded-full w-14 h-14 flex justify-items-center items-center">
                             <i class="text-citrared-500 bx bxs-credit-card text-3xl m-auto"></i>
@@ -36,7 +36,7 @@
                             </h2>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
             <div class="mt-4 bg-white overflow-hidden shadow-md sm:rounded-lg">
                 <div class="px-4 pt-4 pb-24">
@@ -72,7 +72,8 @@
                             <tr class="border border-b-1 border-r-0 border-t-0 border-l-0 border-zinc-400">
                                 <td class="p-3">{{ AppHelper::date($purchase->date) }}</td>
                                 <td class="p-3">{{ $purchase->invoice }}</td>
-                                <td class="p-3">{{ $purchase->status }}</td>
+                                <td class="p-3">{{ $purchase->status == 'paid' ? 'Sudah Bayar' : 'Belum Bayar' }}
+                                </td>
                                 <td class="p-3">{{ $purchase->contact->name ?? '' }}</td>
                                 <td class="p-3">{{ AppHelper::date($purchase->due_date) }}</td>
                                 <td class="p-3">{{ AppHelper::rp($purchase->remaining_bill ?? 0) }}</td>
@@ -157,6 +158,9 @@
                             </div>
                         @endforeach
                     </table>
+                    <div class="mt-4">
+                        {{ $purchases->links('vendor.pagination.default') }}
+                    </div>
                 </div>
             </div>
         </div>

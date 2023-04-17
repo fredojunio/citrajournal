@@ -18,24 +18,28 @@ class Transaction extends Model
         'status',
         'total',
         'remaining_bill',
+        'cut',
+        'taxtotal',
+        'subtotal',
+        'cuttotal',
         'date',
         'due_date',
         'category_id',
-        'kas_id',
+        'umkm_id',
     ];
+
+    public function umkm()
+    {
+        return $this->belongsTo(Umkm::class, 'umkm_id', 'id');
+    }
 
     public function contact()
     {
         return $this->belongsTo(Contact::class, 'contact_id', 'id');
     }
 
-    public function kas()
-    {
-        return $this->belongsTo(Kas::class, 'kas_id', 'id');
-    }
-
     public function details()
     {
-        return $this->hasMany(TransactionDetail::class, 'id', 'transaction_id');
+        return $this->hasMany(TransactionDetail::class, 'transaction_id', 'id');
     }
 }

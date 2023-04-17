@@ -44,7 +44,6 @@ class UmkmController extends Controller
 
         $umkm = Umkm::create($request->all());
         $this->generateCoa($umkm->id);
-        $this->generateKas($umkm->id);
 
         return redirect()->route('umkm.index');
     }
@@ -96,17 +95,6 @@ class UmkmController extends Controller
         }
 
         return redirect()->route('umkm.dashboard');
-    }
-
-    public function generateKas($umkm_id): void
-    {
-        for ($x = 1; $x <= 2; $x++) {
-            Kas::create([
-                'coa_id' => $x,
-                'umkm_id' => $umkm_id,
-                'balance' => 0
-            ]);
-        }
     }
 
     public function generateCoa($umkm_id): void
@@ -427,7 +415,7 @@ class UmkmController extends Controller
         ]);
 
         Coa::create([
-            'code' => '2-20503',
+            'code' => '2-20504',
             'name' => 'Hutang Pajak - PPh 29',
             'category_id' => 9,
             'umkm_id' => $umkm_id

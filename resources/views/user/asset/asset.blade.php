@@ -17,33 +17,36 @@
                             <td class="p-3">Tanggal diperoleh</td>
                             <td class="p-3">Barang</td>
                             <td class="p-3">Faktur</td>
-                            <td class="p-3">Total</td>
+                            <td class="p-3">Total Biaya</td>
                             <td class="p-3 text-center">Tindakan</td>
                         </tr>
-                        <tr class="border border-b-1 border-r-0 border-t-0 border-l-0 border-zinc-400">
-                            <td class="p-3">dd/mm/yyyy</td>
-                            <td class="p-3">Barang</td>
-                            <td class="p-3">Faktur Pembelian #10001</td>
-                            <td class="p-3">Total</td>
-                            <td class="p-3 text-center">
-                                <x-dropdown align="left" width="48">
-                                    <x-slot name="trigger">
-                                        <button>
-                                            <i class="bx bx-dots-horizontal-rounded text-xl"></i>
-                                        </button>
-                                    </x-slot>
+                        @foreach ($assets as $asset)
+                            <tr class="border border-b-1 border-r-0 border-t-0 border-l-0 border-zinc-400">
+                                <td class="p-3">{{ AppHelper::date($asset->transaction->date) }}</td>
+                                <td class="p-3">{{ $asset->product->name }}</td>
+                                <td class="p-3">{{ $asset->transaction->invoice }}</td>
+                                <td class="p-3">{{ AppHelper::rp($asset->price ?? 0) }}</td>
+                                <td class="p-3 text-center">
+                                    <x-dropdown align="left" width="48">
+                                        <x-slot name="trigger">
+                                            <button>
+                                                <i class="bx bx-dots-horizontal-rounded text-xl"></i>
+                                            </button>
+                                        </x-slot>
 
-                                    <x-slot name="content">
-                                        <x-dropdown-link data-modal="editAssetModal" data-modal-toggle="editAssetModal">
-                                            {{ __('Edit') }}
-                                        </x-dropdown-link>
-                                        <x-dropdown-link class="text-red-500">
-                                            {{ __('Delete') }}
-                                        </x-dropdown-link>
-                                    </x-slot>
-                                </x-dropdown>
-                            </td>
-                        </tr>
+                                        <x-slot name="content">
+                                            <x-dropdown-link data-modal="editAssetModal"
+                                                data-modal-toggle="editAssetModal">
+                                                {{ __('Edit') }}
+                                            </x-dropdown-link>
+                                            <x-dropdown-link class="text-red-500">
+                                                {{ __('Delete') }}
+                                            </x-dropdown-link>
+                                        </x-slot>
+                                    </x-dropdown>
+                                </td>
+                            </tr>
+                        @endforeach
                     </table>
                 </div>
             </div>

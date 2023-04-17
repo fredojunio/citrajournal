@@ -15,13 +15,13 @@ class Asset extends Model
 
     protected $fillable = [
         'id',
-        'purchase_id',
+        'transaction_id',
         'product_id',
         'date',
         'coa_id'
     ];
 
-    public function purchase()
+    public function transaction()
     {
         return $this->belongsTo(Purchase::class, 'purchase_id', 'id');
     }

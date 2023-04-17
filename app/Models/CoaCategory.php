@@ -15,4 +15,9 @@ class CoaCategory extends Model
         'id',
         'name'
     ];
+
+    public function coas()
+    {
+        return $this->hasMany(Coa::class, 'coa_id', 'id');
+    }
 }

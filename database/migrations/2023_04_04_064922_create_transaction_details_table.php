@@ -15,8 +15,13 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('transaction_id')->index();
             $table->foreign('transaction_id')->references('id')->on('transactions');
+            $table->unsignedBigInteger('coa_id')->index()->nullable();
+            $table->foreign('coa_id')->references('id')->on('coas');
             $table->unsignedBigInteger('product_id')->index()->nullable();
             $table->foreign('product_id')->references('id')->on('products');
+            $table->unsignedBigInteger('paid_id')->index()->nullable();
+            $table->foreign('paid_id')->references('id')->on('transactions');
+
             $table->string('description')->nullable();
             $table->double('price');
             $table->integer('quantity')->nullable();

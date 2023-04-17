@@ -4,7 +4,8 @@
         <h1 class="font-bold text-white text-4xl">Hai {{ Auth::user()->name }}</h1>
         <h3 class="mt-2 text-white text-xl">Selamat datang kembali</h3>
         <form method="POST" action="{{ route('logout') }}">
-            <a href="" class="underline text-citragreen-100 text-lg">log out</a>
+            @csrf
+            <button type="submit" class="underline text-citragreen-100 text-lg">log out</button>
         </form>
 
         <div class="mt-16">

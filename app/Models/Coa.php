@@ -15,6 +15,7 @@ class Coa extends Model
         'id',
         'code',
         'name',
+        'balance',
         'category_id',
         'umkm_id',
     ];

@@ -42,9 +42,11 @@
                                 </td>
                                 <td class="p-3">
                                     {{ $product->stock->stock ?? '-' }}</td>
-                                <td class="p-3">{{ !empty($product->purchase->tax) ? $product->purchase->tax : '-' }}
+                                <td class="p-3">
+                                    {{ !empty($product->purchase->tax) ? $product->purchase->tax . '%' : '-' }}
                                 </td>
-                                <td class="p-3">{{ !empty($product->sale->tax) ? $product->sale->tax : '-' }}</td>
+                                <td class="p-3">{{ !empty($product->sale->tax) ? $product->sale->tax . '%' : '-' }}
+                                </td>
                                 <td class="p-3 text-center">
                                     <x-dropdown align="left" width="48">
                                         <x-slot name="trigger">
@@ -158,9 +160,8 @@
                                                         <label for="pajak_beli" class="">Pajak Beli</label>
                                                         <x-text-input form="editproduct-{{ $loop->iteration }}"
                                                             id="pajak_beli-{{ $loop->iteration }}"
-                                                            class="w-1/6 block" type="text"
-                                                            name="pajak_beli-{{ $loop->iteration }}" :value="$product->purchase->tax ?? ''"
-                                                            autofocus autocomplete="pajak_beli" />
+                                                            class="w-1/6 block" type="text" name="pajak_beli"
+                                                            :value="$product->purchase->tax ?? ''" autofocus autocomplete="pajak_beli" />
                                                         %
                                                     </div>
                                                 </div>
@@ -386,7 +387,7 @@
                             <div class="flex space-x-16 items-center">
                                 <label for="coa_id_beli" class="pl-3 w-32">Kode Akun</label>
                                 <select form="addproduct" id="coa_id_beli"
-                                    class="border-b-1 w-full border-r-0 border-t-0 border-l-0 border-gray-300 focus:border-citragreen-500 focus:ring-citragreen-500 block mt-1"
+                                    class="js-example-basic-single border-b-1 w-full border-r-0 border-t-0 border-l-0 border-gray-300 focus:border-citragreen-500 focus:ring-citragreen-500 block mt-1"
                                     type="text" name="coa_id_beli" required>
                                     <option hidden value="{{ $coas->where('code', '5-50000')->first()->id }}">
                                         {{ $coas->where('code', '5-50000')->first()->code }}
@@ -416,7 +417,7 @@
                             <div class="flex space-x-16 items-center">
                                 <label for="coa_id_jual" class="pl-3 w-32">Kode Akun</label>
                                 <select form="addproduct" id="coa_id_jual"
-                                    class="border-b-1 w-full border-r-0 border-t-0 border-l-0 border-gray-300 focus:border-citragreen-500 focus:ring-citragreen-500 block mt-1"
+                                    class="js-example-basic-single border-b-1 w-full border-r-0 border-t-0 border-l-0 border-gray-300 focus:border-citragreen-500 focus:ring-citragreen-500 block mt-1"
                                     type="text" name="coa_id_jual" required>
                                     <option hidden value="{{ $coas->where('code', '4-40000')->first()->id }}">
                                         {{ $coas->where('code', '4-40000')->first()->code }}
@@ -446,7 +447,7 @@
                             <div class="flex space-x-16 items-center">
                                 <label for="coa_id_stock" class="pl-3 w-32">Kode Akun</label>
                                 <select form="addproduct" id="coa_id_stock"
-                                    class="border-b-1 w-full border-r-0 border-t-0 border-l-0 border-gray-300 focus:border-citragreen-500 focus:ring-citragreen-500 block mt-1"
+                                    class="js-example-basic-single border-b-1 w-full border-r-0 border-t-0 border-l-0 border-gray-300 focus:border-citragreen-500 focus:ring-citragreen-500 block mt-1"
                                     type="text" name="coa_id_stock" required>
                                     <option hidden value="{{ $coas->where('code', '1-10200')->first()->id }}">
                                         {{ $coas->where('code', '1-10200')->first()->code }}

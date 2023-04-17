@@ -65,7 +65,7 @@ class ProductController extends Controller
             }
 
             // Stock
-            if (!empty($request->monitor) && !empty($request->stock)) {
+            if (!empty($request->monitor)) {
                 ProductStock::create([
                     'product_id' => $product->id,
                     'coa_id' => $request->coa_id_stock,

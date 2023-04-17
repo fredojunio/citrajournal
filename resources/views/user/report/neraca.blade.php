@@ -9,35 +9,37 @@
             <div class="bg-white overflow-hidden shadow-md sm:rounded-lg p-4">
                 <h3 class="font-bold text-lg">Tentukan Periode Laporan</h3>
                 <div class="mt-4 flex justify-between items-center">
-                    <div class="flex gap-5 items-center">
-                        <div>
-                            <x-input-label for="date" :value="__('Tanggal')" />
-                            <div class="flex items-center gap-1">
-                                <x-text-input datepicker datepicker-autohide id="date" class="block mt-1"
-                                    type="text" name="date" :value="old('date')" required autofocus
-                                    autocomplete="date" />
-                                <label for="date" class="cursor-pointer">
-                                    <i class=" bx bxs-calendar text-citradark-500 text-xl"></i>
-                                </label>
+                    <form action="{{ route('umkm.report.neraca') }}" method="get">
+                        <div class="flex gap-5 items-center">
+                            <div>
+                                <x-input-label for="date" :value="__('Tanggal')" />
+                                <div class="flex items-center gap-1">
+                                    <x-text-input datepicker datepicker-autohide id="date" class="block mt-1"
+                                        type="text" name="date" datepicker-format="dd/mm/yyyy" :value="\Carbon\Carbon::now()->format('d-m-Y')"
+                                        required autofocus autocomplete="date" />
+                                    <label for="date" class="cursor-pointer">
+                                        <i class=" bx bxs-calendar text-citradark-500 text-xl"></i>
+                                    </label>
+                                </div>
+                                <x-input-error :messages="$errors->get('address')" class="mt-2" />
                             </div>
-                            <x-input-error :messages="$errors->get('address')" class="mt-2" />
-                        </div>
-                        <div>
-                            <x-input-label for="due_date" :value="__('Tanggal Jatuh Tempo')" />
-                            <div class="flex items-center gap-1">
-                                <x-text-input datepicker datepicker-autohide id="due_date" class="block mt-1"
-                                    type="text" name="due_date" :value="old('due_date')" required autofocus
-                                    autocomplete="due_date" />
-                                <label for="due_date" class="cursor-pointer">
-                                    <i class=" bx bxs-calendar text-citradark-500 text-xl"></i>
-                                </label>
+                            <div>
+                                <x-input-label for="due_date" :value="__('Tanggal Jatuh Tempo')" />
+                                <div class="flex items-center gap-1">
+                                    <x-text-input datepicker datepicker-autohide id="due_date" class="block mt-1"
+                                        type="text" name="due_date" datepicker-format="dd/mm/yyyy" :value="\Carbon\Carbon::now()->format('d-m-Y')"
+                                        required autofocus autocomplete="due_date" />
+                                    <label for="due_date" class="cursor-pointer">
+                                        <i class=" bx bxs-calendar text-citradark-500 text-xl"></i>
+                                    </label>
+                                </div>
+                                <x-input-error :messages="$errors->get('address')" class="mt-2" />
                             </div>
-                            <x-input-error :messages="$errors->get('address')" class="mt-2" />
+                            <x-primary-button class="ml-2">
+                                Filter
+                            </x-primary-button>
                         </div>
-                        <x-primary-button class="ml-2">
-                            Filter
-                        </x-primary-button>
-                    </div>
+                    </form>
                     <x-primary-button class="ml-2">
                         <span class="mr-2">
                             <i class="bx bx-printer text-xl text-white"></i>
@@ -59,71 +61,21 @@
                         <h4 class="font-bold">
                             Aset Lancar
                         </h4>
-                        <div class="mt-2 flex justify-between">
-                            <div class="ml-4 flex gap-3">
+                        @foreach ($aset_lancar as $al)
+                            <div class="mt-2 flex justify-between">
+                                <div class="ml-4 flex gap-3">
+                                    <p>
+                                        {{ $al['code'] }}
+                                    </p>
+                                    <p>
+                                        {{ $al['title'] }}
+                                    </p>
+                                </div>
                                 <p>
-                                    1-10001
-                                </p>
-                                <p>
-                                    Kas
-                                </p>
-                            </div>
-                            <p>
-                                Rp. xxx.xxx.xxx,-
-                            </p>
-                        </div>
-                        <div class="mt-2 flex justify-between">
-                            <div class="ml-4 flex gap-3">
-                                <p>
-                                    1-10100
-                                </p>
-                                <p>
-                                    Piutang Usaha
+                                    {{ AppHelper::rp($al['value'] ?? 0) }}
                                 </p>
                             </div>
-                            <p>
-                                Rp. xxx.xxx.xxx,-
-                            </p>
-                        </div>
-                        <div class="mt-2 flex justify-between">
-                            <div class="ml-4 flex gap-3">
-                                <p>
-                                    1-10200
-                                </p>
-                                <p>
-                                    Persediaan Barang
-                                </p>
-                            </div>
-                            <p>
-                                Rp. xxx.xxx.xxx,-
-                            </p>
-                        </div>
-                        <div class="mt-2 flex justify-between">
-                            <div class="ml-4 flex gap-3">
-                                <p>
-                                    1-10402
-                                </p>
-                                <p>
-                                    Biaya Dibayar Di Muka
-                                </p>
-                            </div>
-                            <p>
-                                Rp. xxx.xxx.xxx,-
-                            </p>
-                        </div>
-                        <div class="mt-2 flex justify-between">
-                            <div class="ml-4 flex gap-3">
-                                <p>
-                                    1-10500
-                                </p>
-                                <p>
-                                    PPN Masukan
-                                </p>
-                            </div>
-                            <p>
-                                Rp. xxx.xxx.xxx,-
-                            </p>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
 
