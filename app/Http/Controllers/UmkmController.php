@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Coa;
-use App\Models\Kas;
 use App\Models\Umkm;
 use App\Models\User_Umkm;
 use Illuminate\Http\Request;

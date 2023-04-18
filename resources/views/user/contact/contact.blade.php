@@ -70,9 +70,9 @@
                             <tr class="border border-b-1 border-r-0 border-t-0 border-l-0 border-zinc-400">
                                 <td class="p-3">{{ $contact->type }}</td>
                                 <td class="p-3">{{ $contact->name }}</td>
-                                <td class="p-3">{{ $contact->email }}</td>
-                                <td class="p-3">{{ $contact->address }}</td>
-                                <td class="p-3">{{ $contact->phone }}</td>
+                                <td class="p-3">{{ $contact->email ?? '-' }}</td>
+                                <td class="p-3">{{ $contact->address ?? '-' }}</td>
+                                <td class="p-3">{{ $contact->phone ?? '-' }}</td>
                                 <td class="p-3 text-center">
                                     <x-dropdown align="left" width="48">
                                         <x-slot name="trigger">

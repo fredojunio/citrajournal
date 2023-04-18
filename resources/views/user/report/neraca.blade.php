@@ -23,7 +23,7 @@
                                 </div>
                                 <x-input-error :messages="$errors->get('address')" class="mt-2" />
                             </div>
-                            <div>
+                            {{-- <div>
                                 <x-input-label for="due_date" :value="__('Tanggal Jatuh Tempo')" />
                                 <div class="flex items-center gap-1">
                                     <x-text-input datepicker datepicker-autohide id="due_date" class="block mt-1"
@@ -34,7 +34,7 @@
                                     </label>
                                 </div>
                                 <x-input-error :messages="$errors->get('address')" class="mt-2" />
-                            </div>
+                            </div> --}}
                             <x-primary-button class="ml-2">
                                 Filter
                             </x-primary-button>
@@ -48,215 +48,218 @@
                     </x-primary-button>
                 </div>
             </div>
-            <div class="mt-5 bg-white overflow-hidden shadow-md sm:rounded-lg p-4">
-                <div class="flex justify-between">
-                    <h4 class="font-bold">Tanggal</h4>
-                    <h4 class="font-bold">01/01/2023-31/01/2023</h4>
-                </div>
-                <div class="mt-4">
-                    <h4 class="font-bold">
-                        Aset
-                    </h4>
-                    <div class="mt-2 ml-4">
+
+            @isset($aset_lancar)
+
+                <div class="mt-5 bg-white overflow-hidden shadow-md sm:rounded-lg p-4">
+                    <div class="flex justify-between">
+                        <h4 class="font-bold">Tanggal</h4>
+                        <h4 class="font-bold">{{ $date }}</h4>
+                    </div>
+                    <div class="mt-4">
                         <h4 class="font-bold">
-                            Aset Lancar
+                            Aset
                         </h4>
-                        @foreach ($aset_lancar as $al)
+                        <div class="mt-2 ml-4">
+                            <h4 class="font-bold">
+                                Aset Lancar
+                            </h4>
+                            @foreach ($aset_lancar as $al)
+                                <div class="mt-2 flex justify-between">
+                                    <div class="ml-4 flex gap-3">
+                                        <p>
+                                            {{ $al->code }}
+                                        </p>
+                                        <p>
+                                            {{ $al->name }}
+                                        </p>
+                                    </div>
+                                    <p>
+                                        {{ AppHelper::rp($al->balance ?? 0) }}
+                                    </p>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+
+                    <hr class="my-3">
+
+                    <div class="ml-4 flex justify-between">
+                        <p class="font-bold">
+                            Total Aset Lancar
+                        </p>
+                        <p class="font-bold">
+                            {{ AppHelper::rp($aset_lancar->sum('balance') ?? 0) }}
+                        </p>
+                    </div>
+                    <div class="mt-4 ml-4">
+                        <h4 class="font-bold">
+                            Aset Tetap
+                        </h4>
+                        @foreach ($aset_tetap as $at)
                             <div class="mt-2 flex justify-between">
                                 <div class="ml-4 flex gap-3">
                                     <p>
-                                        {{ $al['code'] }}
+                                        {{ $at->code }}
                                     </p>
                                     <p>
-                                        {{ $al['title'] }}
+                                        {{ $at->name }}
                                     </p>
                                 </div>
                                 <p>
-                                    {{ AppHelper::rp($al['value'] ?? 0) }}
+                                    {{ AppHelper::rp($at->balance ?? 0) }}
                                 </p>
                             </div>
                         @endforeach
                     </div>
-                </div>
 
-                <hr class="my-3">
+                    <hr class="my-3">
 
-                <div class="ml-4 flex justify-between">
-                    <p class="font-bold">
-                        Total Aset Lancar
-                    </p>
-                    <p class="font-bold">
-                        Rp. xxx.xxx.xxx,-
-                    </p>
-                </div>
-                <div class="mt-4 ml-4">
-                    <h4 class="font-bold">
-                        Aset Tetap
-                    </h4>
-                    <div class="mt-2 flex justify-between">
-                        <div class="ml-4 flex gap-3">
-                            <p>
-                                1-10705
-                            </p>
-                            <p>
-                                Aset Tetap - Perlengkapan Kantor
-                            </p>
+                    <div class="ml-4 flex justify-between">
+                        <p class="font-bold">
+                            Total Aset Tetap
+                        </p>
+                        <p class="font-bold">
+                            {{ AppHelper::rp($aset_tetap->sum('balance') ?? 0) }}
+                        </p>
+                    </div>
+
+                    <hr class="my-3">
+
+                    <div class="flex justify-between">
+                        <p class="font-bold">
+                            Total Aset
+                        </p>
+                        <p class="font-bold">
+                            {{ AppHelper::rp($aset_lancar->sum('balance') + $aset_tetap->sum('balance') ?? 0) }}
+                        </p>
+                    </div>
+
+                    <div class="mt-4">
+                        <h4 class="font-bold">
+                            Liabilitas dan Modal
+                        </h4>
+                        <div class="mt-2 ml-4">
+                            <h4 class="font-bold">
+                                Liabilitas Jangka Pendek
+                            </h4>
+                            @foreach ($liabilitas_pendek as $lp)
+                                <div class="mt-2 flex justify-between">
+                                    <div class="ml-4 flex gap-3">
+                                        <p>
+                                            {{ $lp->code }}
+                                        </p>
+                                        <p>
+                                            {{ $lp->name }}
+                                        </p>
+                                    </div>
+                                    <p>
+                                        {{ AppHelper::rp($lp->balance ?? 0) }}
+                                    </p>
+                                </div>
+                            @endforeach
+
                         </div>
-                        <p>
-                            Rp. xxx.xxx.xxx,-
+                    </div>
+
+                    <hr class="my-3">
+
+                    <div class="ml-4 flex justify-between">
+                        <p class="font-bold">
+                            Liabilitas Jangka Pendek
+                        </p>
+                        <p class="font-bold">
+                            {{ AppHelper::rp($liabilitas_pendek->sum('balance') ?? 0) }}
+                        </p>
+                    </div>
+
+                    <hr class="my-3">
+
+                    <div class="ml-4 flex justify-between">
+                        <p class="font-bold">
+                            Total Liabilitas
+                        </p>
+                        <p class="font-bold">
+                            {{ AppHelper::rp($liabilitas_pendek->sum('balance') ?? 0) }}
+                        </p>
+                    </div>
+
+                    <div class="mt-10">
+                        <div class="mt-2 ml-4">
+                            <h4 class="font-bold">
+                                Modal Pemilik
+                            </h4>
+                            @foreach ($modal_saham as $ms)
+                                <div class="mt-2 flex justify-between">
+                                    <div class="ml-4 flex gap-3">
+                                        <p>
+                                            {{ $ms->code }}
+                                        </p>
+                                        <p>
+                                            {{ $ms->name }}
+                                        </p>
+                                    </div>
+                                    <p>
+                                        {{ AppHelper::rp($ms->balance ?? 0) }}
+                                    </p>
+                                </div>
+                            @endforeach
+                            <div class="mt-2 flex justify-between">
+                                <div class="ml-4 flex gap-3">
+                                    <p class="text-white select-none">
+                                        3-30000
+                                    </p>
+                                    <div class="flex flex-col gap-2">
+                                        <p>
+                                            Pendapatan lain
+                                        </p>
+                                        <p>
+                                            Pendapatan tahun lalu
+                                        </p>
+                                        <p>
+                                            Pendapatan periode ini
+                                        </p>
+                                    </div>
+
+                                </div>
+                                <div class="flex flex-col gap-2 text-right">
+                                    <p>
+                                        Rp. 0,-
+                                    </p>
+                                    <p>
+                                        Rp. 0,-
+                                    </p>
+                                    <p>
+                                        {{ AppHelper::rp($labarugi ?? 0) }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr class="my-3">
+
+                    <div class="ml-4 flex justify-between">
+                        <p class="font-bold">
+                            Total Modal Pemilik
+                        </p>
+                        <p class="font-bold">
+                            {{ AppHelper::rp($modal_saham->sum('balance') + $labarugi ?? 0) }}
+                        </p>
+                    </div>
+
+                    <hr class="my-3">
+
+                    <div class="flex justify-between">
+                        <p class="font-bold">
+                            Total Liabilitas dan Modal
+                        </p>
+                        <p class="font-bold">
+                            {{ AppHelper::rp($liabilitas_pendek->sum('balance') + $modal_saham->sum('balance') + $labarugi ?? 0) }}
                         </p>
                     </div>
                 </div>
-
-                <hr class="my-3">
-
-                <div class="ml-4 flex justify-between">
-                    <p class="font-bold">
-                        Total Aset Tetap
-                    </p>
-                    <p class="font-bold">
-                        Rp. xxx.xxx.xxx,-
-                    </p>
-                </div>
-
-                <hr class="my-3">
-
-                <div class="flex justify-between">
-                    <p class="font-bold">
-                        Total Aset
-                    </p>
-                    <p class="font-bold">
-                        Rp. xxx.xxx.xxx,-
-                    </p>
-                </div>
-
-                <div class="mt-4">
-                    <h4 class="font-bold">
-                        Liabilitas dan Modal
-                    </h4>
-                    <div class="mt-2 ml-4">
-                        <h4 class="font-bold">
-                            Liabilitas Jangka Pendek
-                        </h4>
-                        <div class="mt-2 flex justify-between">
-                            <div class="ml-4 flex gap-3">
-                                <p>
-                                    2-20100
-                                </p>
-                                <p>
-                                    Hutang Usaha
-                                </p>
-                            </div>
-                            <p>
-                                Rp. xxx.xxx.xxx,-
-                            </p>
-                        </div>
-                        <div class="mt-2 flex justify-between">
-                            <div class="ml-4 flex gap-3">
-                                <p>
-                                    2-20500
-                                </p>
-                                <p>
-                                    PPN Keluaran
-                                </p>
-                            </div>
-                            <p>
-                                Rp. xxx.xxx.xxx,-
-                            </p>
-                        </div>
-                        <div class="mt-2 flex justify-between">
-                            <div class="ml-4 flex gap-3">
-                                <p>
-                                    2-20505
-                                </p>
-                                <p>
-                                    Hutang Pajak
-                                </p>
-                            </div>
-                            <p>
-                                Rp. xxx.xxx.xxx,-
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <hr class="my-3">
-
-                <div class="ml-4 flex justify-between">
-                    <p class="font-bold">
-                        Liabilitas Jangka Pendek
-                    </p>
-                    <p class="font-bold">
-                        Rp. xxx.xxx.xxx,-
-                    </p>
-                </div>
-
-                <div class="mt-10">
-                    <div class="mt-2 ml-4">
-                        <h4 class="font-bold">
-                            Modal Pemilik
-                        </h4>
-                        <div class="mt-2 flex justify-between">
-                            <div class="ml-4 flex gap-3">
-                                <p>
-                                    3-30000
-                                </p>
-                                <div class="flex flex-col gap-2">
-                                    <p>
-                                        Modal Saham
-                                    </p>
-                                    <p>
-                                        Pendapatan lain
-                                    </p>
-                                    <p>
-                                        Pendapatan tahun lalu
-                                    </p>
-                                    <p>
-                                        Pendapatan periode ini
-                                    </p>
-                                </div>
-
-                            </div>
-                            <div class="flex flex-col gap-2">
-                                <p>
-                                    Rp. xxx.xxx.xxx,-
-                                </p>
-                                <p>
-                                    Rp. xxx.xxx.xxx,-
-                                </p>
-                                <p>
-                                    Rp. xxx.xxx.xxx,-
-                                </p>
-                                <p>
-                                    Rp. xxx.xxx.xxx,-
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <hr class="my-3">
-
-                <div class="ml-4 flex justify-between">
-                    <p class="font-bold">
-                        Total Modal Pemilik
-                    </p>
-                    <p class="font-bold">
-                        Rp. xxx.xxx.xxx,-
-                    </p>
-                </div>
-
-                <hr class="my-3">
-
-                <div class="flex justify-between">
-                    <p class="font-bold">
-                        Total Liabilitas dan Modal
-                    </p>
-                    <p class="font-bold">
-                        Rp. xxx.xxx.xxx,-
-                    </p>
-                </div>
-            </div>
+            @endisset
         </div>
     </div>
 

@@ -72,7 +72,9 @@
                             <tr class="border border-b-1 border-r-0 border-t-0 border-l-0 border-zinc-400">
                                 <td class="p-3">{{ AppHelper::date($sale->date) }}</td>
                                 <td class="p-3">{{ $sale->invoice }}</td>
-                                <td class="p-3">{{ $sale->status == 'paid' ? 'Sudah Bayar' : 'Belum Bayar' }}</td>
+                                <td
+                                    class="p-3 {{ $sale->status == 'paid' ? 'text-citragreen-500' : 'text-citrayellow-500' }}">
+                                    {{ $sale->status == 'paid' ? 'Sudah Bayar' : 'Belum Bayar' }}</td>
                                 <td class="p-3">{{ $sale->contact->name ?? '' }}</td>
                                 <td class="p-3">{{ AppHelper::date($sale->due_date) }}</td>
                                 <td class="p-3">{{ AppHelper::rp($sale->remaining_bill ?? 0) }}</td>

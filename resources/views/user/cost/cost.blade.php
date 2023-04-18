@@ -60,9 +60,9 @@
                         </tr>
                         @foreach ($costs as $cost)
                             <tr class="border border-b-1 border-r-0 border-t-0 border-l-0 border-zinc-400">
-                                <td class="p-3">{{ $cost->coa->code ?? '' }}</td>
-                                <td class="p-3">{{ $cost->contact->name ?? '' }}</td>
-                                <td class="p-3">{{ $cost->description ?? '' }}</td>
+                                <td class="p-3">{{ $cost->coa->code ?? '-' }}</td>
+                                <td class="p-3">{{ $cost->contact->name ?? '-' }}</td>
+                                <td class="p-3">{{ $cost->description ?? '-' }}</td>
                                 <td class="p-3">{{ AppHelper::rp($cost->price ?? 0) }}</td>
                                 <td class="p-3 text-center">
                                     <x-dropdown align="left" width="48">
