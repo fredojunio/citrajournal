@@ -26,15 +26,17 @@
                         </button>
                     </form>
                 @endforeach
-                <a href="{{ route('umkm.create') }}"
-                    class="w-44 h-44 flex justify-center items-center shadow-md rounded-lg bg-white p-5">
-                    <div class="flex flex-col items-center">
-                        <i class="bx bx-plus text-8xl"></i>
-                        <h2 class="text-lg font-bold text-center">
-                            Tambah UMKM
-                        </h2>
-                    </div>
-                </a>
+                @if ($umkms->count() < 1)
+                    <a href="{{ route('umkm.create') }}"
+                        class="w-44 h-44 flex justify-center items-center shadow-md rounded-lg bg-white p-5">
+                        <div class="flex flex-col items-center">
+                            <i class="bx bx-plus text-8xl"></i>
+                            <h2 class="text-lg font-bold text-center">
+                                Tambah UMKM
+                            </h2>
+                        </div>
+                    </a>
+                @endif
             </div>
         </div>
     </div>

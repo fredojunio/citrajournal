@@ -18,7 +18,7 @@
                             <td class="p-3">Barang</td>
                             <td class="p-3">Faktur</td>
                             <td class="p-3">Total Biaya</td>
-                            <td class="p-3 text-center">Tindakan</td>
+                            {{-- <td class="p-3 text-center">Tindakan</td> --}}
                         </tr>
                         @foreach ($assets as $asset)
                             <tr class="border border-b-1 border-r-0 border-t-0 border-l-0 border-zinc-400">
@@ -26,7 +26,7 @@
                                 <td class="p-3">{{ $asset->product->name }}</td>
                                 <td class="p-3">{{ $asset->transaction->invoice }}</td>
                                 <td class="p-3">{{ AppHelper::rp($asset->price ?? 0) }}</td>
-                                <td class="p-3 text-center">
+                                {{-- <td class="p-3 text-center">
                                     <x-dropdown align="left" width="48">
                                         <x-slot name="trigger">
                                             <button>
@@ -44,7 +44,7 @@
                                             </x-dropdown-link>
                                         </x-slot>
                                     </x-dropdown>
-                                </td>
+                                </td> --}}
                             </tr>
                         @endforeach
                     </table>

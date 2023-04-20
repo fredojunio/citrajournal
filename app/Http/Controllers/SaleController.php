@@ -41,7 +41,17 @@ class SaleController extends Controller
                 $q->whereNotNull('id');
             })->get();
 
-        return view('user.sale.create_sale', compact('contacts', 'products'));
+        $products_json = Product::where('umkm_id', Auth::user()->umkm->id)
+            ->whereHas('sale', function ($q) {
+                $q->whereNotNull('id');
+            })->with('sale')
+            ->get()->toJson();
+
+        return view('user.sale.create_sale', compact(
+            'contacts',
+            'products',
+            'products_json'
+        ));
     }
 
     /**

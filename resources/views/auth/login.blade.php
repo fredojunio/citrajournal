@@ -51,7 +51,9 @@
                     </x-long-primary-button>
 
                     <div class="flex justify-center">
-                        <a href="{{ route('register') }}" class="mt-3 text-xs">Belum memiliki akun? buat disini</a>
+                        <a href="{{ route('register') }}"
+                            class="mt-3 underline text-xs text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Belum
+                            memiliki akun? buat disini</a>
                     </div>
                     {{-- @if (Route::has('password.request'))
                 <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"

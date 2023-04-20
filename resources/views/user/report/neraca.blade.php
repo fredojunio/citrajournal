@@ -15,7 +15,7 @@
                                 <x-input-label for="date" :value="__('Tanggal')" />
                                 <div class="flex items-center gap-1">
                                     <x-text-input datepicker datepicker-autohide id="date" class="block mt-1"
-                                        type="text" name="date" datepicker-format="dd/mm/yyyy" :value="\Carbon\Carbon::now()->format('d-m-Y')"
+                                        type="text" name="date" datepicker-format="dd/mm/yyyy" :value="empty($date) ? \Carbon\Carbon::now()->format('d-m-Y') : $date"
                                         required autofocus autocomplete="date" />
                                     <label for="date" class="cursor-pointer">
                                         <i class=" bx bxs-calendar text-citradark-500 text-xl"></i>

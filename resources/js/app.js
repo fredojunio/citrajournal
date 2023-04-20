@@ -24,6 +24,7 @@ const autoNumericOptionsRupiah = {
     currencySymbolPlacement: AutoNumeric.options.currencySymbolPlacement.prefix,
     roundingMethod: AutoNumeric.options.roundingMethod.halfUpSymmetric,
     unformatOnSubmit: true,
+    emptyInputBehavior: "press",
 };
 
 // Initialization Autonumeric
@@ -50,18 +51,20 @@ $(".appendbtn").click(function () {
 
 var tbody = document.querySelector(".append tbody");
 
-tbody.addEventListener("click", function (event) {
-    if (event.target.classList.contains("removebtn")) {
-        var tr = event.target.closest("tr");
-        tr.parentNode.removeChild(tr);
+if (tbody != null) {
+    tbody.addEventListener("click", function (event) {
+        if (event.target.classList.contains("removebtn")) {
+            var tr = event.target.closest("tr");
+            tr.parentNode.removeChild(tr);
 
-        an.forEach(function (a) {
-            a.remove();
-        });
-        an = new AutoNumeric.multiple(
-            ".rupiahInput",
-            null,
-            autoNumericOptionsRupiah
-        );
-    }
-});
+            an.forEach(function (a) {
+                a.remove();
+            });
+            an = new AutoNumeric.multiple(
+                ".rupiahInput",
+                null,
+                autoNumericOptionsRupiah
+            );
+        }
+    });
+}

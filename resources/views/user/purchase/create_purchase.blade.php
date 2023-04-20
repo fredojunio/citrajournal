@@ -4,6 +4,9 @@
             {{ __('Tambah Pembelian') }}
         </h2>
     </x-slot>
+
+    <div id="product-data" data-product-data="{{ $products_json }}"></div>
+
     <div class="py-6">
         <div class="max-w-7xl mx-auto px-4">
             @if (session('alert'))
@@ -53,8 +56,9 @@
                                     <div class="flex items-center gap-1">
                                         <x-text-input datepicker datepicker-autohide id="date" class="block mt-1"
                                             type="text" name="date" datepicker-format="dd/mm/yyyy"
-                                            :value="\Carbon\Carbon::now()->format('d-m-Y')" required autofocus autocomplete="date"
-                                            placeholder="Tanggal" /> <label for="date" class="cursor-pointer">
+                                            :value="\Carbon\Carbon::now()->format('d-m-Y')" onchange="setDueDate()" required autofocus
+                                            autocomplete="date" placeholder="Tanggal" /> <label for="date"
+                                            class="cursor-pointer">
                                             <i class=" bx bxs-calendar text-citradark-500 text-xl"></i>
                                         </label>
                                     </div>
@@ -94,8 +98,8 @@
                         <tbody>
                             <tr>
                                 <td class="p-2">
-                                    <select id="product-1"
-                                        class="border-b-1 border-r-0 border-t-0 border-l-0 border-gray-300 focus:border-citragreen-500 focus:ring-citragreen-500 block"
+                                    <select id="product-1" onchange="setTaxPrice(event, this.value), calculateTotal()"
+                                        class="selecttotal border-b-1 border-r-0 border-t-0 border-l-0 border-gray-300 focus:border-citragreen-500 focus:ring-citragreen-500 block"
                                         type="text" name="product_id[]" required>
                                         <option hidden value="">Pilih Produk</option>
                                         @foreach ($products as $product)
@@ -140,7 +144,8 @@
                                 <tr>
                                     <td class="p-2">
                                         <select id="product-1"
-                                            class="border-b-1 border-r-0 border-t-0 border-l-0 border-gray-300 focus:border-citragreen-500 focus:ring-citragreen-500 block"
+                                            onchange="setTaxPrice(event, this.value), calculateTotal()"
+                                            class="selecttotal border-b-1 border-r-0 border-t-0 border-l-0 border-gray-300 focus:border-citragreen-500 focus:ring-citragreen-500 block"
                                             type="text" name="product_id[]" required>
                                             <option hidden value="">Pilih Produk</option>
                                             @foreach ($products as $product)
@@ -237,6 +242,8 @@
     </div>
 
     <script>
+        var productData = JSON.parse(document.getElementById('product-data').getAttribute('data-product-data'));
+
         // get total of input
         function calculateTotal() {
             var inputs = document.getElementsByClassName("sumtotal");
@@ -293,7 +300,8 @@
         // subtotal on each row
         tbody.addEventListener("change", function(event) {
             if (event.target.classList.contains("sumtotal") || event.target.classList.contains("taxtotal") || event
-                .target.classList.contains("quantitytotal")) {
+                .target.classList.contains("quantitytotal") || event
+                .target.classList.contains("selecttotal")) {
                 var tr = event.target.closest("tr");
                 var subtotal = tr.querySelector('.subtotal');
 
@@ -306,6 +314,41 @@
                 subtotal.value = "Rp. " + subvalue.toLocaleString("id-ID") + ",-";
             }
         });
+
+        function setDueDate() {
+            // Mendapatkan nilai input tanggal pertama
+            var date1 = document.getElementById("date").value;
+            var [day1, month1, year1] = date1.split("/");
+
+            // Membuat objek Date baru dengan nilai-nilai tanggal, bulan, dan tahun dari input pertama
+            var dateObj1 = new Date(year1, month1 - 1, day1);
+
+            // Mengatur nilai input tanggal kedua dengan nilai satu bulan setelah tanggal pertama
+            var dateObj2 = new Date(dateObj1.getFullYear(), dateObj1.getMonth() + 1, dateObj1.getDate());
+            var day2 = dateObj2.getDate();
+            var month2 = dateObj2.getMonth() + 1;
+            var year2 = dateObj2.getFullYear();
+
+            // Mengubah format tampilan tanggal kedua menjadi dd/mm/yyyy
+            var formattedDate2 = `${day2 < 10 ? '0'+day2 : day2}/${month2 < 10 ? '0'+month2 : month2}/${year2}`;
+            document.getElementById("due_date").value = formattedDate2;
+        }
+
+        function setTaxPrice(event, idProduct) {
+            var tr = event.target.closest("tr");
+
+            var filteredProduct = productData.filter(function(obj) {
+                return obj.id == idProduct;
+            })[0];
+
+
+            console.log(filteredProduct);
+
+            var harga = tr.querySelector(".sumtotal");
+            harga.value = "Rp. " + filteredProduct.purchase.price.toLocaleString("id-ID");
+            var pajak = tr.querySelector(".taxtotal");
+            pajak.value = filteredProduct.purchase.tax;
+        }
     </script>
 
 </x-app-layout>

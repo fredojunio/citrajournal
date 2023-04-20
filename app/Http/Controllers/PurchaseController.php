@@ -41,7 +41,17 @@ class PurchaseController extends Controller
                 $q->whereNotNull('id');
             })->get();
 
-        return view('user.purchase.create_purchase', compact('contacts', 'products'));
+        $products_json = Product::where('umkm_id', Auth::user()->umkm->id)
+            ->whereHas('purchase', function ($q) {
+                $q->whereNotNull('id');
+            })->with('purchase')
+            ->get()->toJson();
+
+        return view('user.purchase.create_purchase', compact(
+            'contacts',
+            'products',
+            'products_json'
+        ));
     }
 
     /**
