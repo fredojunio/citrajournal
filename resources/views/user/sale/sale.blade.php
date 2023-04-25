@@ -88,7 +88,7 @@
                                         </x-slot>
 
                                         <x-slot name="content">
-                                            <x-dropdown-link :href="route('umkm.kas.edit', 0)">
+                                            <x-dropdown-link :href="route('umkm.sale.edit', $sale->id)">
                                                 {{ __('Edit') }}
                                             </x-dropdown-link>
                                             <x-dropdown-link data-modal="deleteSaleModal-{{ $loop->iteration }}"

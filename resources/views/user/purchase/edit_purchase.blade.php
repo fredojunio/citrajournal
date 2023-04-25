@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Tambah Penjualan') }}
+            {{ __('Edit Pembelian - ' . $transaction->invoice) }}
         </h2>
     </x-slot>
 
@@ -17,16 +17,20 @@
                 </div>
             @endif
             <div class="bg-white overflow-hidden shadow-md sm:rounded-lg p-4">
-                <form action="{{ route('umkm.sale.store') }}" method="post">@csrf
+                <form action="{{ route('umkm.purchase.update', $transaction->id) }}" method="post">
+                    @csrf
+                    @method('patch')
 
                     <div class="w-3/4">
                         <!-- Contact -->
                         <div class="w-1/2">
-                            <x-input-label for="contact" :value="__('Pelanggan')" />
+                            <x-input-label for="contact" :value="__('Supplier')" />
                             <select id="contact"
                                 class="w-full border-b-1 border-r-0 border-t-0 border-l-0 border-gray-300 focus:border-citragreen-500 focus:ring-citragreen-500 block mt-1"
                                 type="text" name="contact_id">
-                                <option hidden value="">Pilih Kontak</option>
+                                <option hidden value="{{ $transaction->contact->id ?? '' }}">
+                                    {{ !empty($transaction->contact) ? $transaction->contact->name . ' ' . '(' . $transaction->contact->type . ')' : 'Pilih Kontak' }}
+                                </option>
                                 @foreach ($contacts as $contact)
                                     <option value="{{ $contact->id }}">{{ $contact->name }} ({{ $contact->type }})
                                     </option>
@@ -49,6 +53,9 @@
                                 <select id="Status"
                                     class="border-b-1 border-r-0 border-t-0 border-l-0 border-gray-300 focus:border-citragreen-500 focus:ring-citragreen-500 block mt-1 w-full"
                                     type="text" name="status" required>
+                                    <option hidden value="{{ $transaction->status }}">
+                                        {{ $transaction->status == 'paid' ? 'Sudah dibayar' : 'Belum dibayar' }}
+                                    </option>
                                     <option value="paid">Sudah dibayar</option>
                                     <option value="open">Belum dibayar</option>
                                 </select>
@@ -60,27 +67,25 @@
                                     <x-input-label for="date" :value="__('Tanggal')" />
                                     <div class="flex items-center gap-1">
                                         <x-text-input datepicker datepicker-autohide id="date" class="block mt-1"
-                                            onchange="setDueDate()" type="text" name="date"
-                                            datepicker-format="dd/mm/yyyy" :value="\Carbon\Carbon::now()->format('d-m-Y')" required autofocus
+                                            type="text" name="date" datepicker-format="dd/mm/yyyy"
+                                            :value="AppHelper::date($transaction->date)" onchange="setDueDate()" required autofocus
                                             autocomplete="date" placeholder="Tanggal" /> <label for="date"
                                             class="cursor-pointer">
                                             <i class=" bx bxs-calendar text-citradark-500 text-xl"></i>
                                         </label>
                                     </div>
-                                    <x-input-error :messages="$errors->get('address')" class="mt-2" />
                                 </div>
                                 <div>
                                     <x-input-label for="due_date" :value="__('Tanggal Jatuh Tempo')" />
                                     <div class="flex items-center gap-1">
                                         <x-text-input datepicker datepicker-autohide id="due_date" class="block mt-1"
                                             type="text" name="due_date" datepicker-format="dd/mm/yyyy"
-                                            :value="\Carbon\Carbon::now()->format('d-m-Y')" required autofocus autocomplete="due_date"
+                                            :value="AppHelper::date($transaction->due_date)" required autofocus autocomplete="due_date"
                                             placeholder="Tanggal" />
                                         <label for="due_date" class="cursor-pointer">
                                             <i class=" bx bxs-calendar text-citradark-500 text-xl"></i>
                                         </label>
                                     </div>
-                                    <x-input-error :messages="$errors->get('address')" class="mt-2" />
                                 </div>
                             </div>
                         </div>
@@ -101,53 +106,61 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td class="p-2">
-                                    <select id="product" onchange="setTaxPrice(event, this.value), calculateTotal()"
-                                        class="selecttotal border-b-1 border-r-0 border-t-0 border-l-0 border-gray-300 focus:border-citragreen-500 focus:ring-citragreen-500 block"
-                                        type="text" name="product_id[]" required>
-                                        <option hidden value="">Pilih Produk</option>
-                                        @foreach ($products as $product)
-                                            <option value="{{ $product->id }}">{{ $product->name }}</option>
-                                        @endforeach
-                                        <option data-modal-target="addProductModal" value="addproduct"
-                                            class="text-citragreen-500">
-                                            Tambah Produk
-                                        </option>
-                                    </select>
-                                </td>
-                                <td class="p-2">
-                                    <x-text-input id="description-1" class="block mt-1 w-full" type="text"
-                                        name="description[]" :value="old('description')" autofocus autocomplete="description"
-                                        placeholder="Deskripsi" />
-                                </td>
-                                <td class="p-2">
-                                    <x-text-input id="quantity-1" class="quantitytotal block mt-1 w-full" type="number"
-                                        onchange="calculateTotal()" name="quantity[]" :value="1" required
-                                        autofocus autocomplete="quantity" placeholder="" />
-                                </td>
-                                <td class="flex gap-1 items-center p-2">
-                                    <x-text-input id="tax-1" class="taxtotal block mt-1 w-full" type="number"
-                                        onchange="calculateTotal()" name="tax[]" :value="old('tax')" autofocus
-                                        autocomplete="tax" placeholder="" />
-                                    %
-                                </td>
-                                <td class="p-2">
-                                    <x-text-input id="price-1" class="sumtotal rupiahInput block mt-1 w-full"
-                                        type="text" onchange="calculateTotal()" name="price[]" :value="old('price')"
-                                        required autofocus autocomplete="price" placeholder="Harga" />
-                                </td>
-                                <td class="p-2">
-                                    <x-text-input id="subtotal-1" class="subtotal block mt-1 w-full" type="text"
-                                        name="subtotal[]" :value="old('subtotal')" required autofocus
-                                        autocomplete="subtotal" disabled />
-                                </td>
-                                {{-- <td class="p-2">
+                            @foreach ($transaction->details as $td)
+                                <tr>
+                                    <td class="p-2">
+                                        <select id="product"
+                                            onchange="setTaxPrice(event, this.value), calculateTotal()"
+                                            class="selecttotal border-b-1 border-r-0 border-t-0 border-l-0 border-gray-300 focus:border-citragreen-500 focus:ring-citragreen-500 block"
+                                            type="text" name="product_id[]" required>
+                                            <option hidden value="{{ $td->product_id }}">{{ $td->product->name }}
+                                            </option>
+                                            @foreach ($products as $product)
+                                                <option value="{{ $product->id }}">{{ $product->name }}</option>
+                                            @endforeach
+                                            <option data-modal-target="addProductModal" value="addproduct"
+                                                class="text-citragreen-500">
+                                                Tambah Produk
+                                            </option>
+                                        </select>
+                                    </td>
+                                    <td class="p-2">
+                                        <x-text-input id="description-1" class="block mt-1 w-full" type="text"
+                                            name="description[]" :value="$td->description" autofocus autocomplete="description"
+                                            placeholder="Deskripsi" />
+                                    </td>
+                                    <td class="p-2">
+                                        <x-text-input id="quantity-1" class="quantitytotal block mt-1 w-full"
+                                            type="number" onchange="calculateTotal()" name="quantity[]"
+                                            :value="$td->quantity" required autofocus autocomplete="quantity"
+                                            placeholder="" />
+                                    </td>
+                                    <td class="flex gap-1 items-center p-2">
+                                        <x-text-input id="tax-1" class="taxtotal block mt-1 w-full" type="number"
+                                            onchange="calculateTotal()" name="tax[]" :value="$td->tax" autofocus
+                                            autocomplete="tax" placeholder="" />
+                                        %
+                                    </td>
+                                    <td class="p-2">
+                                        <x-text-input id="price-1" class="sumtotal rupiahInput block mt-1 w-full"
+                                            type="text" onchange="calculateTotal()" name="price[]"
+                                            :value="$td->price" required autofocus autocomplete="price"
+                                            placeholder="Harga" />
+                                    </td>
+                                    <td class="p-2">
+                                        <x-text-input id="subtotal-1" class="subtotal block mt-1 w-full"
+                                            type="text" name="subtotal[]" :value="AppHelper::rp(
+                                                ($td->price + ($td->price * $td->tax) / 100) * $td->quantity,
+                                            )" required autofocus
+                                            autocomplete="subtotal" disabled />
+                                    </td>
+                                    {{-- <td class="p-2">
                                 <button>
                                     <i class="removebtn bx bx-minus text-lg"></i>
                                 </button>
                             </td> --}}
-                            </tr>
+                                </tr>
+                            @endforeach
 
                             <template id="appendRow">
                                 <tr>
@@ -211,32 +224,33 @@
                     <div class="mt-10 float-right w-1/2">
                         <div class="flex justify-between items-center">
                             <p class="text-left">Subtotal</p>
-                            <p class="text-right" id="subtotal">Rp. 0,-</p>
+                            <p class="text-right" id="subtotal">{{ AppHelper::rp($transaction->subtotal ?? 0) }}</p>
                         </div>
                         <div id="taxes" class="hidden mt-4 justify-between items-center">
                             <p class="text-left">Pajak</p>
-                            <p class="text-right" id="taxtotal">Rp. 0,-</p>
+                            <p class="text-right" id="taxtotal">{{ AppHelper::rp($transaction->taxtotal ?? 0) }}</p>
                         </div>
 
                         <div class="mt-4 flex justify-between items-center">
                             <div class="flex gap-1 items-center">
                                 <p class="text-left">Potongan</p>
                                 <x-text-input id="cut" class="block mt-1 w-12" type="text"
-                                    onchange="calculateTotal()" name="cut" :value="old('cut')" autofocus
+                                    onchange="calculateTotal()" name="cut" :value="$transaction->cut" autofocus
                                     autocomplete="tax" placeholder="" />
                                 %
                             </div>
-                            <p class="text-right" id="cuttotal">Rp. 0,-</p>
+                            <p class="text-right" id="cuttotal">{{ AppHelper::rp($transaction->cuttotal ?? 0) }}</p>
                         </div>
 
                         <div class="mt-6 flex justify-between items-center">
                             <h3 class="text-left text-md font-bold">Total</h3>
-                            <h3 class="text-right text-2xl font-bold" id="total">Rp. 0,-</h3>
+                            <h3 class="text-right text-2xl font-bold" id="total">
+                                {{ AppHelper::rp($transaction->total) }}</h3>
                         </div>
 
 
                         <div class="mt-6 float-right">
-                            <a href="{{ route('umkm.sale.index') }}"
+                            <a href="{{ route('umkm.purchase.index') }}"
                                 class="inline-flex items-center px-4 py-2 bg-zinc-200 border border-transparent rounded-md font-bold text-xs text-zinc-500 hover:bg-zinc-300 focus:bg-zinc-400 active:bg-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-500 focus:ring-offset-2 transition ease-in-out duration-150">
                                 Batal
                             </a>
@@ -286,13 +300,13 @@
                         <label for="type" class="w-32">Tipe Kontak</label>
                         <div class="flex justify-between w-full">
                             <div class="inline-block">
-                                <input form="addcontact" checked type="radio" name="type"
-                                    class="accent-citragreen-500" value="Pelanggan" id="type1">
+                                <input form="addcontact" type="radio" name="type" class="accent-citragreen-500"
+                                    value="Pelanggan" id="type1">
                                 <label for="type1">Pelanggan</label>
                             </div>
                             <div class="inline-block">
-                                <input form="addcontact" type="radio" name="type" class="accent-citragreen-500"
-                                    value="Supplier" id="type2">
+                                <input form="addcontact" checked type="radio" name="type"
+                                    class="accent-citragreen-500" value="Supplier" id="type2">
                                 <label for="type2">Supplier</label>
                             </div>
                             <div class="inline-block">
@@ -330,7 +344,7 @@
                 <!-- Modal footer -->
                 <div class="flex justify-end items-center p-6 space-x-2 border-t border-zinc-200 rounded-b">
 
-                    <button data-modal-hide="addContactModal" type="button"
+                    <button data-modal-hide="addContactModal" type="button" onclick="modalhide()"
                         class="inline-flex items-center px-4 py-2 bg-zinc-200 border border-transparent rounded-md font-bold text-xs text-zinc-500 hover:bg-zinc-300 focus:bg-zinc-400 active:bg-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-500 focus:ring-offset-2 transition ease-in-out duration-150">
                         Batal
                     </button>
@@ -465,7 +479,7 @@
                 <!-- Modal footer -->
                 <div class="flex justify-end items-center p-6 space-x-2 border-t border-zinc-200 rounded-b">
 
-                    <button data-modal-hide="addProductModal" type="button"
+                    <button data-modal-hide="addProductModal" type="button" onclick="modalhide()"
                         class="inline-flex items-center px-4 py-2 bg-zinc-200 border border-transparent rounded-md font-bold text-xs text-zinc-500 hover:bg-zinc-300 focus:bg-zinc-400 active:bg-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-500 focus:ring-offset-2 transition ease-in-out duration-150">
                         Batal
                     </button>
@@ -580,9 +594,9 @@
 
 
                 var harga = tr.querySelector(".sumtotal");
-                harga.value = "Rp. " + filteredProduct.sale.price.toLocaleString("id-ID");
+                harga.value = "Rp. " + filteredProduct.purchase.price.toLocaleString("id-ID");
                 var pajak = tr.querySelector(".taxtotal");
-                pajak.value = filteredProduct.sale.tax;
+                pajak.value = filteredProduct.purchase.tax;
             }
         }
 

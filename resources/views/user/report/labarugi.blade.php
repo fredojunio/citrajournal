@@ -69,7 +69,7 @@
                                     </p>
                                 </div>
                                 <p>
-                                    {{ AppHelper::rp($p->balance ?? 0) }}
+                                    {{ AppHelper::rp($p->balance() ?? 0) }}
                                 </p>
                             </div>
                         @endforeach
@@ -80,7 +80,7 @@
                             Total Pendapatan
                         </p>
                         <p class="font-bold">
-                            {{ AppHelper::rp($pendapatan->sum('balance') ?? 0) }}
+                            {{ AppHelper::rp($pendapatan->map->balance()->sum() ?? 0) }}
                         </p>
                     </div>
                     <div class="mt-4">
@@ -98,7 +98,7 @@
                                     </p>
                                 </div>
                                 <p>
-                                    {{ AppHelper::rp($bp->balance ?? 0) }}
+                                    {{ AppHelper::rp($bp->balance() ?? 0) }}
                                 </p>
                             </div>
                         @endforeach
@@ -109,7 +109,7 @@
                             Total Beban Pendapatan
                         </p>
                         <p class="font-bold">
-                            {{ AppHelper::rp($beban_pendapatan->sum('balance') ?? 0) }}
+                            {{ AppHelper::rp($beban_pendapatan->map->balance()->sum() ?? 0) }}
                         </p>
                     </div>
                     <hr class="my-3">
@@ -118,7 +118,7 @@
                             Laba Kotor
                         </p>
                         <p class="font-bold">
-                            {{ AppHelper::rp($pendapatan->sum('balance') - $beban_pendapatan->sum('balance') ?? 0) }}
+                            {{ AppHelper::rp($pendapatan->map->balance()->sum() - $beban_pendapatan->map->balance()->sum() ?? 0) }}
                         </p>
                     </div>
                     <div class="mt-4">
@@ -136,7 +136,7 @@
                                     </p>
                                 </div>
                                 <p>
-                                    {{ AppHelper::rp($bp->balance ?? 0) }}
+                                    {{ AppHelper::rp($bp->balance() ?? 0) }}
                                 </p>
                             </div>
                         @endforeach
@@ -147,7 +147,7 @@
                             Total Biaya Usaha
                         </p>
                         <p class="font-bold">
-                            {{ AppHelper::rp($beban_operasional->sum('balance') ?? 0) }}
+                            {{ AppHelper::rp($beban_operasional->map->balance()->sum() ?? 0) }}
                         </p>
                     </div>
                     <hr class="my-3">
@@ -156,7 +156,7 @@
                             Laba Operasional
                         </p>
                         <p class="font-bold">
-                            {{ AppHelper::rp($pendapatan->sum('balance') - $beban_pendapatan->sum('balance') - $beban_operasional->sum('balance') ?? 0) }}
+                            {{ AppHelper::rp($pendapatan->map->balance()->sum() - $beban_pendapatan->map->balance()->sum() - $beban_operasional->map->balance()->sum() ?? 0) }}
                         </p>
                     </div>
                     <div class="mt-4">
@@ -168,7 +168,7 @@
                                 Pendapatan Diluar Usaha
                             </p>
                             <p>
-                                {{ AppHelper::rp($pendapatan_lain->sum('balance') ?? 0) }}
+                                {{ AppHelper::rp($pendapatan_lain->map->balance()->sum() ?? 0) }}
                             </p>
                         </div>
                         <div class="mt-2 flex justify-between">
@@ -176,7 +176,7 @@
                                 Biaya Diluar Usaha
                             </p>
                             <p>
-                                {{ AppHelper::rp($beban_lain->sum('balance') ?? 0) }}
+                                {{ AppHelper::rp($beban_lain->map->balance()->sum() ?? 0) }}
                             </p>
                         </div>
                     </div>
@@ -186,7 +186,7 @@
                             Total Pendapatan (Biaya Diluar Usaha)
                         </p>
                         <p class="font-bold">
-                            {{ AppHelper::rp($pendapatan_lain->sum('balance') - $beban_lain->sum('balance') ?? 0) }}
+                            {{ AppHelper::rp($pendapatan_lain->map->balance()->sum() - $beban_lain->map->balance()->sum() ?? 0) }}
                         </p>
                     </div>
                     <hr class="my-3">
@@ -196,10 +196,10 @@
                         </p>
                         <p class="font-bold">
                             {{ AppHelper::rp(
-                                $pendapatan->sum('balance') -
-                                    $beban_pendapatan->sum('balance') -
-                                    $beban_operasional->sum('balance') +
-                                    ($pendapatan_lain->sum('balance') - $beban_lain->sum('balance')) ??
+                                $pendapatan->map->balance()->sum() -
+                                    $beban_pendapatan->map->balance()->sum() -
+                                    $beban_operasional->map->balance()->sum() +
+                                    ($pendapatan_lain->map->balance()->sum() - $beban_lain->map->balance()->sum()) ??
                                     0,
                             ) }}
                         </p>

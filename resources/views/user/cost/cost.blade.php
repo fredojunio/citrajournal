@@ -52,18 +52,19 @@
                     <table class="mt-4 w-full border-collapse">
                         <tr
                             class="text-zinc-400 font-bold border border-b-1 border-r-0 border-t-0 border-l-0 border-zinc-400">
-                            <td>Kode Akun</td>
-                            <td class="p-3">Kontak</td>
-                            <td class="p-3">Deskripsi</td>
+                            <td class="p-3">Tanggal</td>
+                            <td class="p-3">Penerima</td>
+                            <td class="p-3">Kategori</td>
                             <td class="p-3">Biaya</td>
                             <td class="p-3 text-center">Tindakan</td>
                         </tr>
                         @foreach ($costs as $cost)
                             <tr class="border border-b-1 border-r-0 border-t-0 border-l-0 border-zinc-400">
-                                <td class="p-3">{{ $cost->coa->code ?? '-' }}</td>
+                                <td class="p-3">{{ AppHelper::date($cost->date) ?? '-' }}</td>
                                 <td class="p-3">{{ $cost->contact->name ?? '-' }}</td>
-                                <td class="p-3">{{ $cost->description ?? '-' }}</td>
-                                <td class="p-3">{{ AppHelper::rp($cost->price ?? 0) }}</td>
+                                <td class="p-3">
+                                    {{ $cost->details->count() > 1 ? 'terbagi' : $cost->details[0]->coa->name }}</td>
+                                <td class="p-3">{{ AppHelper::rp($cost->total ?? 0) }}</td>
                                 <td class="p-3 text-center">
                                     <x-dropdown align="left" width="48">
                                         <x-slot name="trigger">
@@ -73,7 +74,7 @@
                                         </x-slot>
 
                                         <x-slot name="content">
-                                            <x-dropdown-link :href="route('umkm.kas.edit', 0)">
+                                            <x-dropdown-link :href="route('umkm.cost.edit', $cost->id)">
                                                 {{ __('Edit') }}
                                             </x-dropdown-link>
                                             <x-dropdown-link data-modal="deleteCostModal-{{ $loop->iteration }}"

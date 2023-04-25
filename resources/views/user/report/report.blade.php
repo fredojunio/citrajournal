@@ -35,8 +35,9 @@
                 </div>
                 <div class="bg-white overflow-hidden shadow-md sm:rounded-md">
                     <div class="px-4 py-4">
-                        <h3 class="font-bold">Rekomendasi terkait Kesehatan UMKM</h3>
-                        <p class="mt-2">Dapatkan rekomendasi terkait kondisi kesehatan UMKM milikmu saat ini. Saran
+                        <h3 class="font-bold">Rekomendasi terkait Kesehatan UMKM (Altman Z-Score)</h3>
+                        <p class="mt-2">Dapatkan rekomendasi terkait kondisi kesehatan UMKM milikmu saat ini
+                            berdasarkan analisis kesehatan menggunakan Altman Z-Score. Saran
                             ini dapat kamu terapkan untuk memperbaiki kinerja UMKM.</p>
                         <form action="{{ route('umkm.report.healthanalysis') }}" method="get">
                             <x-primary-button class="mt-4">

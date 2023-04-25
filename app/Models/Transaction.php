@@ -26,6 +26,7 @@ class Transaction extends Model
         'due_date',
         'category_id',
         'umkm_id',
+        'paid_id'
     ];
 
     public function umkm()
@@ -41,5 +42,18 @@ class Transaction extends Model
     public function details()
     {
         return $this->hasMany(TransactionDetail::class, 'transaction_id', 'id');
+    }
+
+    public function coa()
+    {
+        $coa_transaction = $this->hasMany(Coa_Transaction::class, 'transaction_id', 'id')
+            ->orderByDesc('id')
+            ->first();
+        return $coa_transaction->coa();
+    }
+
+    public function paid()
+    {
+        return $this->belongsTo(Transaction::class, 'paid_id', 'id');
     }
 }

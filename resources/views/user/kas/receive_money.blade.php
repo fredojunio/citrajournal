@@ -12,7 +12,7 @@
                 <div class="">
                     <x-input-label for="type" :value="__('Akun Penerima')" />
                     <select form="receive" id="type"
-                        class="js-example-basic-single border-b-1 border-r-0 border-t-0 border-l-0 border-gray-300 focus:border-citragreen-500 focus:ring-citragreen-500 block mt-1 w-1/4"
+                        class="border-b-1 border-r-0 border-t-0 border-l-0 border-gray-300 focus:border-citragreen-500 focus:ring-citragreen-500 block mt-1 w-1/4"
                         type="text" name="kas_id" required>
                         @foreach ($kass as $kas)
                             <option value="{{ $kas->id }}">{{ $kas->code }} - {{ $kas->name }}</option>
@@ -27,13 +27,17 @@
                         <div class="w-1/2">
                             <x-input-label for="contact" :value="__('Pengirim')" />
                             <select form="receive" id="contact"
-                                class="js-example-basic-single border-b-1 border-r-0 border-t-0 border-l-0 border-gray-300 focus:border-citragreen-500 focus:ring-citragreen-500 block mt-1 w-full"
+                                class="border-b-1 border-r-0 border-t-0 border-l-0 border-gray-300 focus:border-citragreen-500 focus:ring-citragreen-500 block mt-1 w-full"
                                 type="text" name="contact_id">
                                 <option hidden value="">Pilih Pengirim</option>
                                 @foreach ($contacts as $contact)
                                     <option value="{{ $contact->id }}">{{ $contact->name }} ({{ $contact->type }})
                                     </option>
                                 @endforeach
+                                <option data-modal-target="addContactModal" value="addcontact"
+                                    class="text-citragreen-500">
+                                    Tambah Kontak
+                                </option>
                             </select>
                             <x-input-error :messages="$errors->get('address')" class="mt-2" />
                         </div>
@@ -192,6 +196,98 @@
         </div>
     </div>
 
+    <!-- Add modal -->
+    <div id="addContactModal" tabindex="-1" aria-hidden="true"
+        class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] md:h-full">
+        <div class="relative w-full h-full max-w-2xl md:h-auto">
+            <!-- Modal content -->
+            <div class="relative bg-white rounded-lg shadow">
+                <!-- Modal header -->
+                <div class="flex items-start justify-between p-4 border-b rounded-t border-zinc-200">
+                    <h3 class="text-xl font-bold">
+                        Tambah Kontak
+                    </h3>
+                    <button type="button"
+                        class="text-gray-400 bg-transparent hover:bg-zinc-200 hover:text-citrablack rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
+                        onclick="modalhide()" data-modal-hide="addContactModal">
+                        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                        <span class="sr-only">Close modal</span>
+                    </button>
+                </div>
+                <form action="{{ route('umkm.contact.store') }}" id="addcontact" method="post">@csrf</form>
+                <!-- Modal body -->
+                <div class="p-6 space-y-6">
+                    <div class="flex space-x-16 items-center">
+                        <label for="name" class="w-32">Nama</label>
+                        <x-text-input form="addcontact" id="name" class="block w-full" type="text"
+                            name="name" :value="old('name')" required autofocus autocomplete="name" />
+                    </div>
+
+                    <div class="flex space-x-16 items-center">
+                        <label for="type" class="w-32">Tipe Kontak</label>
+                        <div class="flex justify-between w-full">
+                            <div class="inline-block">
+                                <input form="addcontact" type="radio" name="type" class="accent-citragreen-500"
+                                    value="Pelanggan" id="type1">
+                                <label for="type1">Pelanggan</label>
+                            </div>
+                            <div class="inline-block">
+                                <input form="addcontact" type="radio" name="type" class="accent-citragreen-500"
+                                    value="Supplier" id="type2">
+                                <label for="type2">Supplier</label>
+                            </div>
+                            <div class="inline-block">
+                                <input form="addcontact" type="radio" name="type" class="accent-citragreen-500"
+                                    value="Karyawan" id="type3">
+                                <label for="type3">Karyawan</label>
+                            </div>
+                            <div class="inline-block">
+                                <input form="addcontact" type="radio" name="type" class="accent-citragreen-500"
+                                    value="Lainnya" id="type4">
+                                <label for="type4">Lainnya</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex space-x-16 items-center">
+                        <label for="phone" class="w-32">Handphone</label>
+                        <x-text-input form="addcontact" id="phone" class="block w-full" type="text"
+                            name="phone" :value="old('phone')" autofocus autocomplete="phone" />
+                    </div>
+
+                    <div class="flex space-x-16 items-center">
+                        <label for="email" class="w-32">Email</label>
+                        <x-text-input form="addcontact" id="email" class="block w-full" type="text"
+                            name="email" :value="old('email')" autofocus autocomplete="email" />
+                    </div>
+
+                    <div class="flex space-x-16 items-center">
+                        <label for="address" class="w-32">Alamat</label>
+                        <x-text-input form="addcontact" id="address" class="block w-full" type="text"
+                            name="address" :value="old('address')" autofocus autocomplete="address" />
+                    </div>
+
+                </div>
+                <!-- Modal footer -->
+                <div class="flex justify-end items-center p-6 space-x-2 border-t border-zinc-200 rounded-b">
+
+                    <button data-modal-hide="addContactModal" type="button" onclick="modalhide()"
+                        class="inline-flex items-center px-4 py-2 bg-zinc-200 border border-transparent rounded-md font-bold text-xs text-zinc-500 hover:bg-zinc-300 focus:bg-zinc-400 active:bg-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                        Batal
+                    </button>
+                    <x-primary-button form="addcontact" class="ml-2">
+                        Simpan
+                    </x-primary-button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         // get total of input
         function calculateTotal() {
@@ -232,6 +328,10 @@
                 taxes.classList.remove('flex');
                 taxes.classList.add("hidden");
             }
+        }
+
+        function modalhide() {
+            document.querySelector("[modal-backdrop]").remove();
         }
     </script>
 

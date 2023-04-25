@@ -20,7 +20,6 @@ class TransactionDetail extends Model
         'quantity',
         'tax',
         'coa_id',
-        'paid_id',
     ];
 
     public function transaction()

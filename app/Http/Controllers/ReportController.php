@@ -20,30 +20,40 @@ class ReportController extends Controller
         if (!empty($date)) {
             $pendapatan = Coa::where('category_id', 12)
                 ->where('umkm_id', Auth::user()->umkm->id)
-                ->where('balance', '!=', 0)
-                ->get();
+                ->get()
+                ->filter(function ($q) {
+                    return $q->balance() != 0;
+                });
 
             $beban_pendapatan = Coa::where('category_id', 13)
                 ->where('umkm_id', Auth::user()->umkm->id)
-                ->where('balance', '!=', 0)
-                ->get();
+                ->get()
+                ->filter(function ($q) {
+                    return $q->balance() != 0;
+                });
 
             $beban_operasional = Coa::where('umkm_id', Auth::user()->umkm->id)
-                ->where('balance', '!=', 0)
                 ->where(function ($q) {
                     $q->where('category_id', 14)
                         ->orWhere('category_id', 16);
                 })
-                ->get();
+                ->get()
+                ->filter(function ($q) {
+                    return $q->balance() != 0;
+                });
 
             $pendapatan_lain = Coa::where('umkm_id', Auth::user()->umkm->id)
-                ->where('balance', '!=', 0)
                 ->where('category_id', 15)
-                ->get();
+                ->get()
+                ->filter(function ($q) {
+                    return $q->balance() != 0;
+                });
             $beban_lain = Coa::where('umkm_id', Auth::user()->umkm->id)
-                ->where('balance', '!=', 0)
                 ->where('category_id', 16)
-                ->get();
+                ->get()
+                ->filter(function ($q) {
+                    return $q->balance() != 0;
+                });
 
             return view('user.report.labarugi', compact(
                 'pendapatan',
@@ -67,57 +77,75 @@ class ReportController extends Controller
         if (!empty($date)) {
             $aset_lancar = Coa::where('category_id', '<=', 4)
                 ->where('umkm_id', Auth::user()->umkm->id)
-                ->where('balance', '!=', 0)
-                ->get();
+                ->get()
+                ->filter(function ($q) {
+                    return $q->balance() != 0;
+                });
 
             $aset_tetap = Coa::where('category_id', 5)
                 ->where('umkm_id', Auth::user()->umkm->id)
-                ->where('balance', '!=', 0)
-                ->get();
+                ->get()
+                ->filter(function ($q) {
+                    return $q->balance() != 0;
+                });
 
             $liabilitas_pendek = Coa::where('category_id', '>=', 8)
                 ->where('category_id', '<=', 9)
                 ->where('umkm_id', Auth::user()->umkm->id)
-                ->where('balance', '!=', 0)
-                ->get();
+                ->get()
+                ->filter(function ($q) {
+                    return $q->balance() != 0;
+                });
 
             $modal_saham = Coa::where('category_id', 11)
                 ->where('umkm_id', Auth::user()->umkm->id)
-                ->where('balance', '!=', 0)
-                ->get();
+                ->get()
+                ->filter(function ($q) {
+                    return $q->balance() != 0;
+                });
 
 
             // hitung laba rugi
             $pendapatan = Coa::where('category_id', 12)
                 ->where('umkm_id', Auth::user()->umkm->id)
-                ->where('balance', '!=', 0)
-                ->get();
+                ->get()
+                ->filter(function ($q) {
+                    return $q->balance() != 0;
+                });
 
             $beban_pendapatan = Coa::where('category_id', 13)
                 ->where('umkm_id', Auth::user()->umkm->id)
-                ->where('balance', '!=', 0)
-                ->get();
+                ->get()
+                ->filter(function ($q) {
+                    return $q->balance() != 0;
+                });
 
             $beban_operasional = Coa::where('umkm_id', Auth::user()->umkm->id)
-                ->where('balance', '!=', 0)
                 ->where(function ($q) {
                     $q->where('category_id', 14)
                         ->orWhere('category_id', 16);
                 })
-                ->get();
+                ->get()
+                ->filter(function ($q) {
+                    return $q->balance() != 0;
+                });
 
             $pendapatan_lain = Coa::where('umkm_id', Auth::user()->umkm->id)
-                ->where('balance', '!=', 0)
                 ->where('category_id', 15)
-                ->get();
+                ->get()
+                ->filter(function ($q) {
+                    return $q->balance() != 0;
+                });
             $beban_lain = Coa::where('umkm_id', Auth::user()->umkm->id)
-                ->where('balance', '!=', 0)
                 ->where('category_id', 16)
-                ->get();
-            $labarugi = $pendapatan->sum('balance') -
-                $beban_pendapatan->sum('balance') -
-                $beban_operasional->sum('balance') +
-                ($pendapatan_lain->sum('balance') - $beban_lain->sum('balance'));
+                ->get()
+                ->filter(function ($q) {
+                    return $q->balance() != 0;
+                });
+            $labarugi = $pendapatan->map->balance()->sum() -
+                $beban_pendapatan->map->balance()->sum() -
+                $beban_operasional->map->balance()->sum() +
+                ($pendapatan_lain->map->balance()->sum() - $beban_lain->map->balance()->sum());
 
             return view('user.report.neraca', compact(
                 'aset_lancar',
@@ -141,67 +169,91 @@ class ReportController extends Controller
             // aset lancar
             $aset_lancar = Coa::where('category_id', '<=', 4)
                 ->where('umkm_id', Auth::user()->umkm->id)
-                ->where('balance', '!=', 0)
-                ->get()->sum('balance');
+                ->get()
+                ->filter(function ($q) {
+                    return $q->balance() != 0;
+                })->map->balance()->sum();
 
             $liabilitas_pendek = Coa::where('category_id', '>=', 8)
                 ->where('category_id', '<=', 9)
                 ->where('umkm_id', Auth::user()->umkm->id)
-                ->where('balance', '!=', 0)
-                ->get()->sum('balance');
+                ->get()
+                ->filter(function ($q) {
+                    return $q->balance() != 0;
+                })->map->balance()->sum();
 
             $total_aset = $aset_tetap = Coa::where('category_id', 5)
                 ->where('umkm_id', Auth::user()->umkm->id)
-                ->where('balance', '!=', 0)
-                ->get()->sum('balance') + $aset_lancar;
+                ->get()
+                ->filter(function ($q) {
+                    return $q->balance() != 0;
+                })->map->balance()->sum() + $aset_lancar;
 
             $laba_operasional = Coa::where('category_id', 12)
                 ->where('umkm_id', Auth::user()->umkm->id)
-                ->where('balance', '!=', 0)
-                ->get()->sum('balance') -
+                ->get()
+                ->filter(function ($q) {
+                    return $q->balance() != 0;
+                })->map->balance()->sum() -
                 Coa::where('category_id', 13)
                 ->where('umkm_id', Auth::user()->umkm->id)
-                ->where('balance', '!=', 0)
-                ->get()->sum('balance') -
+                ->get()
+                ->filter(function ($q) {
+                    return $q->balance() != 0;
+                })->map->balance()->sum() -
                 Coa::where('umkm_id', Auth::user()->umkm->id)
-                ->where('balance', '!=', 0)
                 ->where(function ($q) {
                     $q->where('category_id', 14)
                         ->orWhere('category_id', 16);
                 })
-                ->get()->sum('balance');
+                ->get()
+                ->filter(function ($q) {
+                    return $q->balance() != 0;
+                })->map->balance()->sum();
 
 
             $pendapatan_lain = Coa::where('umkm_id', Auth::user()->umkm->id)
-                ->where('balance', '!=', 0)
                 ->where('category_id', 15)
-                ->get();
+                ->get()
+                ->filter(function ($q) {
+                    return $q->balance() != 0;
+                });
             $beban_lain = Coa::where('umkm_id', Auth::user()->umkm->id)
-                ->where('balance', '!=', 0)
                 ->where('category_id', 16)
-                ->get();
-            $laba_bersih = $laba_operasional + $pendapatan_lain->sum('balance') - $beban_lain->sum('balance');
+                ->get()
+                ->filter(function ($q) {
+                    return $q->balance() != 0;
+                });
+            $laba_bersih = $laba_operasional + $pendapatan_lain->map->balance()->sum() - $beban_lain->map->balance()->sum();
             $laba_ditahan = $laba_bersih - $beban_lain = Coa::where('umkm_id', Auth::user()->umkm->id)
                 ->where('code', '3-30200')
-                ->get()->sum('balance');
+                ->get()->map->balance()->sum();
 
             $liabilitas = Coa::where('category_id', '>=', 8)
                 ->where('category_id', '<=', 9)
                 ->where('umkm_id', Auth::user()->umkm->id)
-                ->where('balance', '!=', 0)
-                ->get()->sum('balance') +
+                ->get()
+                ->filter(function ($q) {
+                    return $q->balance() != 0;
+                })->map->balance()->sum() +
                 Coa::where('category_id', 10)
                 ->where('umkm_id', Auth::user()->umkm->id)
-                ->where('balance', '!=', 0)
-                ->get()->sum('balance');
+                ->get()
+                ->filter(function ($q) {
+                    return $q->balance() != 0;
+                })->map->balance()->sum();
 
             $modal_disetor = Coa::where('category_id', 11)
                 ->where('code', '3-30000')
-                ->where('balance', '!=', 0)
-                ->get()->sum('balance') + Coa::where('category_id', 11)
+                ->get()
+                ->filter(function ($q) {
+                    return $q->balance() != 0;
+                })->map->balance()->sum() + Coa::where('category_id', 11)
                 ->where('code', '3-30001')
-                ->where('balance', '!=', 0)
-                ->get()->sum('balance');
+                ->get()
+                ->filter(function ($q) {
+                    return $q->balance() != 0;
+                })->map->balance()->sum();
 
 
             $x1 = (($aset_lancar - $liabilitas) / $total_aset) * 6.56;

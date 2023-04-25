@@ -48,9 +48,9 @@ class ContactController extends Controller
                 'umkm_id' => Auth::user()->umkm->id,
             ]);
 
-            return redirect()->route('umkm.contact.index');
+            return redirect()->back();
         } catch (Exception $e) {
-            return redirect()->route('umkm.contact.index');
+            return redirect()->back();
         }
     }
 

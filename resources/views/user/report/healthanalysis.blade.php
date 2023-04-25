@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Analisis Kesehatan UMKM') }}
+            {{ __('Analisis Kesehatan UMKM (Altman Z-Score)') }}
         </h2>
     </x-slot>
     <div class="py-6">
@@ -53,11 +53,8 @@
 
             @isset($aset_lancar)
                 <div class="mt-5 grid grid-cols-2 gap-4">
-                    {{-- <div class="bg-white shadow-md sm:rounded-lg p-4">
-
-                    </div> --}}
                     <div class="bg-white shadow-md sm:rounded-lg p-4">
-                        <p class="text-lg">
+                        <p class="text-lg font-bold">
                             Nilai Z-Score:
                             {{ AppHelper::decimal($zscore) }}
                         </p>
@@ -66,15 +63,15 @@
                                 kondisi kesehatan UMKM berdasarkan periode,
                             </p>
                             @if ($zscore > 2.6)
-                                <h1 class="text-2xl font-bold text-citragreen-500">
-                                    Stabil
+                                <h1 class="text-2xl font-semibold text-citragreen-500">
+                                    Sehat
                                 </h1>
                             @elseif ($zscore < 1.8)
-                                <h1 class="text-2xl font-bold text-citrared-500">
+                                <h1 class="text-2xl font-semibold text-citrared-500">
                                     Bangkrut
                                 </h1>
                             @else
-                                <h1 class="text-2xl font-bold text-citrayellow-500">
+                                <h1 class="text-2xl font-semibold text-citrayellow-500">
                                     Berpotensi Bangkrut
                                 </h1>
                             @endif
@@ -95,6 +92,48 @@
                             </div>
                         </div>
                     </div>
+                    <div class="bg-white shadow-md sm:rounded-lg p-4">
+                        <h1 class="text-lg font-bold">Penjelasan terkait Z-Score</h1>
+                        <p>
+                            Z-Score Altman merupakan metode yang dikembangkan oleh Edward I.Altman sebagai metode prediksi
+                            <span class="italic">financial distress</span> dengan menentukan rasio finansial
+                            menggunakan sebuah skor Z-Score untuk menentukan tingkat posibilitas dari suatu perusahaan
+                            mengalami kebangkrutan.
+                        </p>
+                        <p class="my-4 text-center text-lg border p-3 border-citrablack">
+                            Z = 6.56 X1 + 3.26X2 + 6.72 X3 + 1.05 X4
+                        </p>
+                        <p class="my-4">
+                            Metode Z-Score memiliki berbagai kategori diantaranya sebagai berikut.
+                        </p>
+                        <ul class="flex flex-col gap-3 list-disc ml-5">
+                            <li>
+                                <h2 class="font-bold text-citrared-500"> Bangkrut: Nilai Z-Score < 1.8 </h2>
+                                        <p>
+                                            Perusahaan yang diprediksi mengalami kesulitan keuangan dan akan mengalami
+                                            kebangkrutan.
+                                        </p>
+                            </li>
+                            <li>
+                                <h2 class="font-bold text-citrayellow-500">
+                                    Abu-abu: Nilai Z-Score 1.8 - 2.6
+                                </h2>
+                                <p>
+                                    Perusahaan yang diprediksi sedang berada dalam zona abu-abu dan berpotensi mengalami
+                                    kebangkrutan.
+                                </p>
+                            </li>
+                            <li>
+                                <h2 class="font-bold text-citragreen-500">
+                                    Sehat: Nilai Z-Score > 2.6
+                                </h2>
+                                <p>
+                                    Perusahaan dikategorikan sehat dan berisiko rendah untuk mengalami kesulitan keuangan
+                                    atau kebangkrutan.
+                                </p>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
 
                 <div class="mt-5 bg-white overflow-hidden shadow-md sm:rounded-lg p-4">
@@ -107,7 +146,7 @@
                     </div>
                     <div class="mt-4">
                         <h4 class="font-bold">
-                            X1
+                            6.56 X1
                         </h4>
                         <div class="mt-2 flex justify-between">
                             <p class="ml-4">
@@ -143,7 +182,7 @@
                         </div>
                         <div class="mt-2 flex justify-between">
                             <p class="ml-4">
-                                Modal Kerja/Total Aset
+                                X1 (Modal Kerja/Total Aset)
                             </p>
                             <p>
                                 {{ AppHelper::decimal(($aset_lancar - $liabilitas) / $total_aset) }}
@@ -155,7 +194,7 @@
 
                     <div class="ml-4 flex justify-between">
                         <p class="font-bold">
-                            X1 (6.56)
+                            6.56 X1
                         </p>
                         <p class="font-bold">
                             {{ AppHelper::decimal((($aset_lancar - $liabilitas) / $total_aset) * 6.56) }}
@@ -166,7 +205,7 @@
 
                     <div class="">
                         <h4 class="font-bold">
-                            X2
+                            3.26 X2
                         </h4>
                         <div class="mt-2 flex justify-between">
                             <p class="ml-4">
@@ -186,7 +225,7 @@
                         </div>
                         <div class="mt-2 flex justify-between">
                             <p class="ml-4">
-                                Laba Operasional/Total Aset
+                                X2 (Laba Operasional/Total Aset)
                             </p>
                             <p>
                                 {{ AppHelper::decimal($laba_ditahan / $total_aset ?? 0) }}
@@ -198,7 +237,7 @@
 
                     <div class="ml-4 flex justify-between">
                         <p class="font-bold">
-                            X2 (3.26)
+                            3.26 X2
                         </p>
                         <p class="font-bold">
                             {{ AppHelper::decimal(3.26 * ($laba_operasional / $total_aset) ?? 0) }}
@@ -209,7 +248,7 @@
 
                     <div class="">
                         <h4 class="font-bold">
-                            X3
+                            6.72 X3
                         </h4>
                         <div class="mt-2 flex justify-between">
                             <p class="ml-4">
@@ -229,7 +268,7 @@
                         </div>
                         <div class="mt-2 flex justify-between">
                             <p class="ml-4">
-                                Laba Operasional/Total Aset
+                                X3 (Laba Operasional/Total Aset)
                             </p>
                             <p>
                                 {{ AppHelper::decimal($laba_operasional / $total_aset ?? 0) }}
@@ -241,7 +280,7 @@
 
                     <div class="ml-4 flex justify-between">
                         <p class="font-bold">
-                            X3 (6.72)
+                            6.72 X3
                         </p>
                         <p class="font-bold">
                             {{ AppHelper::decimal(6.72 * ($laba_operasional / $total_aset) ?? 0) }}
@@ -252,7 +291,7 @@
 
                     <div class="">
                         <h4 class="font-bold">
-                            X4
+                            1.05 X4
                         </h4>
                         <div class="mt-2 flex justify-between">
                             <p class="ml-4">
@@ -272,7 +311,7 @@
                         </div>
                         <div class="mt-2 flex justify-between">
                             <p class="ml-4">
-                                Modal Disetor/Total Liabilitas
+                                X4 (Modal Disetor/Total Liabilitas)
                             </p>
                             <p>
                                 {{ AppHelper::decimal($modal_disetor / $liabilitas ?? 0) }}
@@ -284,7 +323,7 @@
 
                     <div class="ml-4 flex justify-between">
                         <p class="font-bold">
-                            X4 (1.05)
+                            1.05 X4
                         </p>
                         <p class="font-bold">
                             {{ AppHelper::decimal(1.05 * ($modal_disetor / $liabilitas) ?? 0) }}
@@ -299,7 +338,7 @@
                         </h4>
                         <div class="mt-2 flex justify-between">
                             <p class="ml-4 italic">
-                                X1
+                                6.56 X1
                             </p>
                             <p>
                                 {{ AppHelper::decimal($x1) }}
@@ -307,7 +346,7 @@
                         </div>
                         <div class="mt-2 flex justify-between">
                             <p class="ml-4 italic">
-                                X2
+                                3.26 X2
                             </p>
                             <p>
                                 {{ AppHelper::decimal($x2) }}
@@ -315,7 +354,7 @@
                         </div>
                         <div class="mt-2 flex justify-between">
                             <p class="ml-4 italic">
-                                X3
+                                6.72 X3
                             </p>
                             <p>
                                 {{ AppHelper::decimal($x3) }}
@@ -323,7 +362,7 @@
                         </div>
                         <div class="mt-2 flex justify-between">
                             <p class="ml-4 italic">
-                                X4
+                                1.05 X4
                             </p>
                             <p>
                                 {{ AppHelper::decimal($x4) }}

@@ -32,7 +32,7 @@
                         <div>
                             <p class="">Saldo kas</p>
                             <h2 class="text-2xl font-bold">
-                                {{ AppHelper::rp($kass->sum('balance') ?? 0) }}
+                                {{ AppHelper::rp($kass->map->balance()->sum()) }}
                             </h2>
                         </div>
                     </div>
@@ -68,37 +68,15 @@
                     <table class="mt-4 w-full border-collapse">
                         <tr
                             class="text-zinc-400 font-bold border border-b-1 border-r-0 border-t-0 border-l-0 border-zinc-400">
-                            <td class="p-3">Kode Akun
-                            </td>
-                            <td class="p-3">Nama Akun
-                            </td>
-                            <td class="p-3">Saldo
-                            </td>
-                            <td class="p-3 text-center">Tindakan</td>
+                            <td class="p-3">Kode Akun</td>
+                            <td class="p-3">Nama Akun</td>
+                            <td class="p-3">Saldo</td>
                         </tr>
                         @foreach ($kass as $kas)
                             <tr class="border border-b-1 border-r-0 border-t-0 border-l-0 border-zinc-400">
                                 <td class="p-3">{{ $kas->code }}</td>
                                 <td class="p-3">{{ $kas->name }}</td>
-                                <td class="p-3">{{ AppHelper::rp($kas->balance ?? 0) }}</td>
-                                <td class="p-3 text-center">
-                                    <x-dropdown align="left" width="48">
-                                        <x-slot name="trigger">
-                                            <button>
-                                                <i class="bx bx-dots-horizontal-rounded text-xl"></i>
-                                            </button>
-                                        </x-slot>
-
-                                        <x-slot name="content">
-                                            <x-dropdown-link :href="route('umkm.kas.edit', 0)">
-                                                {{ __('Edit') }}
-                                            </x-dropdown-link>
-                                            <x-dropdown-link class="text-red-500">
-                                                {{ __('Hapus') }}
-                                            </x-dropdown-link>
-                                        </x-slot>
-                                    </x-dropdown>
-                                </td>
+                                <td class="p-3">{{ AppHelper::rp($kas->balance() ?? 0) }}</td>
                             </tr>
                         @endforeach
                     </table>

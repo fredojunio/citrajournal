@@ -25,6 +25,7 @@ const autoNumericOptionsRupiah = {
     roundingMethod: AutoNumeric.options.roundingMethod.halfUpSymmetric,
     unformatOnSubmit: true,
     emptyInputBehavior: "press",
+    watchExternalChanges: true,
 };
 
 // Initialization Autonumeric
@@ -65,6 +66,30 @@ if (tbody != null) {
                 null,
                 autoNumericOptionsRupiah
             );
+        }
+    });
+}
+
+var selectContact = document.getElementById("contact");
+if (selectContact != null) {
+    selectContact.addEventListener("change", function () {
+        if (selectContact.value == "addcontact") {
+            var addContact = document.getElementById("addContactModal");
+            const modalAdd = new Modal(addContact);
+            modalAdd.show();
+            selectContact.value = selectContact.options[0].value;
+        }
+    });
+}
+
+var selectProduct = document.getElementById("product");
+if (selectProduct != null) {
+    selectProduct.addEventListener("change", function () {
+        if (selectProduct.value == "addproduct") {
+            var addProduct = document.getElementById("addProductModal");
+            const modalAdd = new Modal(addProduct);
+            modalAdd.show();
+            selectProduct.value = selectProduct.options[0].value;
         }
     });
 }

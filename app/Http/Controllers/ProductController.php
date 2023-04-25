@@ -73,9 +73,9 @@ class ProductController extends Controller
                 ]);
             }
 
-            return redirect()->route('umkm.product.index');
+            return redirect()->back();
         } catch (Exception $e) {
-            return redirect()->route('umkm.product.index');
+            return redirect()->back();
         }
     }
 

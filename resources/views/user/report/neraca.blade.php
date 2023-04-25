@@ -75,7 +75,7 @@
                                         </p>
                                     </div>
                                     <p>
-                                        {{ AppHelper::rp($al->balance ?? 0) }}
+                                        {{ AppHelper::rp($al->balance() ?? 0) }}
                                     </p>
                                 </div>
                             @endforeach
@@ -89,7 +89,7 @@
                             Total Aset Lancar
                         </p>
                         <p class="font-bold">
-                            {{ AppHelper::rp($aset_lancar->sum('balance') ?? 0) }}
+                            {{ AppHelper::rp($aset_lancar->map->balance()->sum() ?? 0) }}
                         </p>
                     </div>
                     <div class="mt-4 ml-4">
@@ -107,7 +107,7 @@
                                     </p>
                                 </div>
                                 <p>
-                                    {{ AppHelper::rp($at->balance ?? 0) }}
+                                    {{ AppHelper::rp($at->balance() ?? 0) }}
                                 </p>
                             </div>
                         @endforeach
@@ -120,7 +120,7 @@
                             Total Aset Tetap
                         </p>
                         <p class="font-bold">
-                            {{ AppHelper::rp($aset_tetap->sum('balance') ?? 0) }}
+                            {{ AppHelper::rp($aset_tetap->map->balance()->sum() ?? 0) }}
                         </p>
                     </div>
 
@@ -131,7 +131,7 @@
                             Total Aset
                         </p>
                         <p class="font-bold">
-                            {{ AppHelper::rp($aset_lancar->sum('balance') + $aset_tetap->sum('balance') ?? 0) }}
+                            {{ AppHelper::rp($aset_lancar->map->balance()->sum() + $aset_tetap->map->balance()->sum() ?? 0) }}
                         </p>
                     </div>
 
@@ -154,7 +154,7 @@
                                         </p>
                                     </div>
                                     <p>
-                                        {{ AppHelper::rp($lp->balance ?? 0) }}
+                                        {{ AppHelper::rp($lp->balance() ?? 0) }}
                                     </p>
                                 </div>
                             @endforeach
@@ -169,7 +169,7 @@
                             Liabilitas Jangka Pendek
                         </p>
                         <p class="font-bold">
-                            {{ AppHelper::rp($liabilitas_pendek->sum('balance') ?? 0) }}
+                            {{ AppHelper::rp($liabilitas_pendek->map->balance()->sum() ?? 0) }}
                         </p>
                     </div>
 
@@ -180,7 +180,7 @@
                             Total Liabilitas
                         </p>
                         <p class="font-bold">
-                            {{ AppHelper::rp($liabilitas_pendek->sum('balance') ?? 0) }}
+                            {{ AppHelper::rp($liabilitas_pendek->map->balance()->sum() ?? 0) }}
                         </p>
                     </div>
 
@@ -200,7 +200,7 @@
                                         </p>
                                     </div>
                                     <p>
-                                        {{ AppHelper::rp($ms->balance ?? 0) }}
+                                        {{ AppHelper::rp($ms->balance() ?? 0) }}
                                     </p>
                                 </div>
                             @endforeach
@@ -244,7 +244,7 @@
                             Total Modal Pemilik
                         </p>
                         <p class="font-bold">
-                            {{ AppHelper::rp($modal_saham->sum('balance') + $labarugi ?? 0) }}
+                            {{ AppHelper::rp($modal_saham->map->balance()->sum() + $labarugi ?? 0) }}
                         </p>
                     </div>
 
@@ -255,7 +255,7 @@
                             Total Liabilitas dan Modal
                         </p>
                         <p class="font-bold">
-                            {{ AppHelper::rp($liabilitas_pendek->sum('balance') + $modal_saham->sum('balance') + $labarugi ?? 0) }}
+                            {{ AppHelper::rp($liabilitas_pendek->map->balance()->sum() + $modal_saham->map->balance()->sum() + $labarugi ?? 0) }}
                         </p>
                     </div>
                 </div>

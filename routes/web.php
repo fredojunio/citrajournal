@@ -61,6 +61,7 @@ Route::group([
     Route::get('kas/receive_money', [KasController::class, 'receive_money'])->name('kas.receive_money');
     Route::post('kas/receive_money', [KasController::class, 'store_receive_money'])->name('receive_money.store');
     Route::get('kas/transfer_fund', [KasController::class, 'transfer_fund'])->name('kas.transfer_fund');
+    Route::post('kas/transfer_fund', [KasController::class, 'store_transfer_fund'])->name('transfer_fund.store');
     Route::get('kas/send_money', [KasController::class, 'send_money'])->name('kas.send_money');
     Route::post('kas/send_money', [KasController::class, 'store_send_money'])->name('send_money.store');
 

@@ -15,7 +15,6 @@ class Coa extends Model
         'id',
         'code',
         'name',
-        'balance',
         'category_id',
         'umkm_id',
     ];
@@ -28,5 +27,18 @@ class Coa extends Model
     public function category()
     {
         return $this->belongsTo(CoaCategory::class, 'category_id', 'id');
+    }
+
+    public function balance()
+    {
+        $coa_transactions = $this->hasMany(Coa_Transaction::class, 'coa_id', 'id');
+        $credit = $coa_transactions->sum('credit');
+        $debit = $coa_transactions->sum('debit');
+        $balance = $debit - $credit;
+        if ($balance < 0) {
+            $balance = - ($balance);
+        }
+
+        return $balance;
     }
 }

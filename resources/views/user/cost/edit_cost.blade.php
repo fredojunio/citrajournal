@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Tambah Biaya') }}
+            {{ __('Edit Biaya - ' . $transaction->invoice) }}
         </h2>
     </x-slot>
     <div class="py-6">
@@ -14,13 +14,16 @@
                 </div>
             @endif
             <div class="bg-white overflow-hidden shadow-md sm:rounded-lg p-4">
-                <form id="addcost" action="{{ route('umkm.cost.store') }}" method="post">@csrf</form>
+                <form id="editcost" action="{{ route('umkm.cost.update', $transaction->id) }}" method="post">@csrf
+                    @method('patch')</form>
                 <!-- Coa -->
                 <div class="">
                     <x-input-label for="type" :value="__('Bayar Dari')" />
-                    <select form="addcost" id="type"
+                    <select form="editcost" id="type"
                         class="js-example-basic-single border-b-1 border-r-0 border-t-0 border-l-0 border-gray-300 focus:border-citragreen-500 focus:ring-citragreen-500 block mt-1 w-1/4"
                         type="text" name="kas_id" required>
+                        <option hidden value="{{ $transaction->coa->id }}">{{ $transaction->coa->code }} -
+                            {{ $transaction->coa->name }}</option>
                         @foreach ($kass as $kas)
                             <option value="{{ $kas->id }}">{{ $kas->code }} - {{ $kas->name }}</option>
                         @endforeach
@@ -37,7 +40,9 @@
                             <select id="contact"
                                 class="w-full border-b-1 border-r-0 border-t-0 border-l-0 border-gray-300 focus:border-citragreen-500 focus:ring-citragreen-500 block mt-1"
                                 type="text" name="contact_id">
-                                <option hidden value="">Pilih Kontak</option>
+                                <option hidden value="{{ $transaction->contact->id ?? '' }}">
+                                    {{ !empty($transaction->contact) ? $transaction->contact->name . ' ' . '(' . $transaction->contact->type . ')' : 'Pilih Kontak' }}
+                                </option>
                                 @foreach ($contacts as $contact)
                                     <option value="{{ $contact->id }}">{{ $contact->name }} ({{ $contact->type }})
                                     </option>
@@ -54,11 +59,11 @@
                             <div>
                                 <x-input-label for="date" :value="__('Tanggal')" />
                                 <div class="flex items-center gap-1">
-                                    <x-text-input form="addcost" datepicker datepicker-autohide id="date"
+                                    <x-text-input form="editcost" datepicker datepicker-autohide id="date"
                                         class="block mt-1" type="text" name="date" datepicker-format="dd/mm/yyyy"
-                                        :value="\Carbon\Carbon::now()->format('d-m-Y')" required autofocus autocomplete="date"
+                                        :value="AppHelper::date($transaction->date)" required autofocus autocomplete="date"
                                         placeholder="Tanggal" /> <label for="date" class="cursor-pointer"
-                                        form="addcost">
+                                        form="editcost">
                                         <i class=" bx bxs-calendar text-citradark-500 text-xl"></i>
                                     </label>
                                 </div>
@@ -81,46 +86,51 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td class="p-2">
-                                <select form="addcost"
-                                    class="js-example-basic-single border-b-1 border-r-0 border-t-0 border-l-0 border-gray-300 focus:border-citragreen-500 focus:ring-citragreen-500 block"
-                                    type="text" name="coa_id[]" required>
-                                    <option hidden value="">Pilih Akun</option>
-                                    @foreach ($coas as $coa)
-                                        <option class="text-clip" value="{{ $coa->id }}">{{ $coa->code }} -
-                                            {{ $coa->name }}
+                        @foreach ($transaction->details as $td)
+                            <tr>
+                                <td class="p-2">
+                                    <select form="editcost"
+                                        class="js-example-basic-single border-b-1 border-r-0 border-t-0 border-l-0 border-gray-300 focus:border-citragreen-500 focus:ring-citragreen-500 block"
+                                        type="text" name="coa_id[]" required>
+                                        <option hidden value="{{ $td->coa->id ?? '' }}">
+                                            {{ !empty($td->coa) ? $td->coa->code . ' - ' . $td->coa->name : 'Pilih Akun' }}
                                         </option>
-                                    @endforeach
-                                </select>
-                            </td>
-                            <td class="p-2">
-                                <x-text-input form="addcost" class="block mt-1 w-full" type="text"
-                                    name="description[]" :value="old('description')" autofocus autocomplete="description"
-                                    placeholder="Deskripsi" />
-                            </td>
-                            <td class="flex gap-1 items-center p-2">
-                                <x-text-input form="addcost" class="taxtotal block mt-1 w-20" type="text"
-                                    onchange="calculateTotal()" name="tax[]" :value="old('tax')" autofocus
-                                    autocomplete="tax" placeholder="" />
-                                %
-                            </td>
-                            <td class="p-2">
-                                <x-text-input type="text" form="addcost"
-                                    class="sumtotal rupiahInput block mt-1 w-full" name="price[]"
-                                    onchange="calculateTotal()" :value="old('price')" required autofocus
-                                    autocomplete="price" placeholder="Harga" />
-                            </td>
-                            {{-- <td class="p-2">
+                                        @foreach ($coas as $coa)
+                                            <option class="text-clip" value="{{ $coa->id }}">{{ $coa->code }}
+                                                -
+                                                {{ $coa->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                                <td class="p-2">
+                                    <x-text-input form="editcost" class="block mt-1 w-full" type="text"
+                                        name="description[]" :value="$td->description" autofocus autocomplete="description"
+                                        placeholder="Deskripsi" />
+                                </td>
+                                <td class="flex gap-1 items-center p-2">
+                                    <x-text-input form="editcost" class="taxtotal block mt-1 w-20" type="text"
+                                        onchange="calculateTotal()" name="tax[]" :value="$td->tax" autofocus
+                                        autocomplete="tax" placeholder="" />
+                                    %
+                                </td>
+                                <td class="p-2">
+                                    <x-text-input type="text" form="editcost"
+                                        class="sumtotal rupiahInput block mt-1 w-full" name="price[]"
+                                        onchange="calculateTotal()" :value="$td->price" required autofocus
+                                        autocomplete="price" placeholder="Harga" />
+                                </td>
+                                {{-- <td class="p-2">
                                 <button class="">
                                     <i class="removebtn bx bx-minus text-lg"></i>
                                 </button>
                             </td> --}}
-                        </tr>
+                            </tr>
+                        @endforeach
                         <template id="appendRow">
                             <tr>
                                 <td class="p-2">
-                                    <select form="addcost"
+                                    <select form="editcost"
                                         class="js-example-basic-single border-b-1 border-r-0 border-t-0 border-l-0 border-gray-300 focus:border-citragreen-500 focus:ring-citragreen-500 block"
                                         type="text" name="coa_id[]" required>
                                         <option hidden value="">Pilih Akun</option>
@@ -133,18 +143,18 @@
                                     </select>
                                 </td>
                                 <td class="p-2">
-                                    <x-text-input form="addcost" class="block mt-1 w-full" type="text"
+                                    <x-text-input form="editcost" class="block mt-1 w-full" type="text"
                                         name="description[]" :value="old('description')" autofocus autocomplete="description"
                                         placeholder="Deskripsi" />
                                 </td>
                                 <td class="flex gap-1 items-center p-2">
-                                    <x-text-input form="addcost" class="taxtotal block mt-1 w-20" type="text"
+                                    <x-text-input form="editcost" class="taxtotal block mt-1 w-20" type="text"
                                         onchange="calculateTotal()" name="tax[]" :value="old('tax')" autofocus
                                         autocomplete="tax" placeholder="" />
                                     %
                                 </td>
                                 <td class="p-2">
-                                    <x-text-input type="text" form="addcost"
+                                    <x-text-input type="text" form="editcost"
                                         class="sumtotal rupiahInput block mt-1 w-full" onchange="calculateTotal()"
                                         name="price[]" :value="old('price')" required autofocus autocomplete="price"
                                         placeholder="Harga" />
@@ -170,11 +180,11 @@
                 <div class="mt-10 float-right w-1/2">
                     <div class="flex justify-between items-center">
                         <p class="text-left">Subtotal</p>
-                        <p class="text-right" id="subtotal">Rp. 0,-</p>
+                        <p class="text-right" id="subtotal">{{ AppHelper::rp($transaction->subtotal ?? 0) }}</p>
                     </div>
                     <div id="taxes" class="hidden mt-4 justify-between items-center">
                         <p class="text-left">Pajak</p>
-                        <p class="text-right" id="taxtotal">Rp. 0,-</p>
+                        <p class="text-right" id="taxtotal">{{ AppHelper::rp($transaction->taxtotal ?? 0) }}</p>
                     </div>
                     <div class="mt-4 flex justify-between items-center">
                         <div class="flex gap-1 items-center">
@@ -184,12 +194,13 @@
                                 autocomplete="tax" placeholder="" />
                             %
                         </div>
-                        <p class="text-right" id="cuttotal">Rp. 0,-</p>
+                        <p class="text-right" id="cuttotal">{{ AppHelper::rp($transaction->cuttotal ?? 0) }}</p>
                     </div>
 
                     <div class="mt-6 flex justify-between items-center">
                         <h3 class="text-left text-md font-bold">Total</h3>
-                        <h3 class="text-right text-2xl font-bold" id="total">Rp. 0,-</h3>
+                        <h3 class="text-right text-2xl font-bold" id="total">
+                            {{ AppHelper::rp($transaction->total ?? 0) }}</h3>
                     </div>
 
                     <div class="mt-6 float-right">
@@ -197,7 +208,7 @@
                             class="inline-flex items-center px-4 py-2 bg-zinc-200 border border-transparent rounded-md font-bold text-xs text-zinc-500 hover:bg-zinc-300 focus:bg-zinc-400 active:bg-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-500 focus:ring-offset-2 transition ease-in-out duration-150">
                             Batal
                         </a>
-                        <x-primary-button form="addcost" class="ml-2">
+                        <x-primary-button form="editcost" class="ml-2">
                             Simpan
                         </x-primary-button>
                     </div>

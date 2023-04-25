@@ -38,7 +38,6 @@ class CoaController extends Controller
                 'name' => $request->name,
                 'category_id' => $request->category_id,
                 'umkm_id' => Auth::user()->umkm->id,
-                'balance' => 0
             ]);
 
             return redirect()->route('umkm.coa.index');

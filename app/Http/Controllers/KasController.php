@@ -8,6 +8,7 @@ use App\Models\Contact;
 use App\Models\Transaction;
 use App\Models\TransactionDetail;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -33,7 +34,81 @@ class KasController extends Controller
 
     public function transfer_fund()
     {
-        return view('user.kas.transfer_fund');
+        $kass = Coa::where('umkm_id', Auth::user()->umkm->id)
+            ->where('category_id', 1)
+            ->get();
+        return view('user.kas.transfer_fund', compact('kass'));
+    }
+
+    public function store_transfer_fund(Request $request)
+    {
+        // try {
+        if ($request->kas_id == $request->to_kas_id) {
+            return redirect()->back()->with('alert', 'Tidak bisa melakukan pemindahan dana ke rekening yang sama.');
+        }
+
+        $total = (float) preg_replace('/[^\d]/', '', $request->total);
+
+        $sender = Coa::findOrFail($request->kas_id);
+        $receiver = Coa::findOrFail($request->to_kas_id);
+
+        if ($sender->balance() < $total) {
+            return redirect()->back()->with('alert', 'Saldo rekening pengirim tidak mencukupi.');
+        }
+
+        // code for generate invoice
+        $lastTransaction = Transaction::where('category_id', 4)
+            ->where('umkm_id', Auth::user()->umkm->id)
+            ->get()
+            ->last();
+        if (!empty($lastTransaction)) {
+            $pieces = explode(' ', $lastTransaction->invoice);
+            $lastInvoiceCode = array_pop($pieces);
+
+            $numbering = (int) str_replace('#', '', $lastInvoiceCode);
+            $newInvoice = 'Bank Transfer #' . ($numbering + 1);
+        } else {
+            $newInvoice = 'Bank Transfer #10001';
+        }
+
+        // create transaction
+        $transaction = Transaction::create([
+            'invoice' => $newInvoice,
+            'status' => 'paid',
+            'total' => $total,
+            'cut' => 0,
+            'remaining_bill' => 0,
+            'date' => Carbon::createFromFormat('d/m/Y', $request->date)->format('Y-m-d'),
+            'category_id' => 4,
+            'umkm_id' => Auth::user()->umkm->id,
+            'subtotal' => $total,
+            'taxtotal' => 0,
+            'cuttotal' => 0,
+        ]);
+
+        TransactionDetail::create([
+            'transaction_id' => $transaction->id,
+            'description' => $request->description,
+            'price' => $total,
+            'tax' => 0,
+        ]);
+
+        Coa_Transaction::create([
+            'coa_id' => $request->kas_id,
+            'transaction_id' => $transaction->id,
+            'credit' => $total
+        ]);
+
+        Coa_Transaction::create([
+            'coa_id' => $request->to_kas_id,
+            'transaction_id' => $transaction->id,
+            'debit' => $total
+        ]);
+
+        return redirect()->route('umkm.kas.index');
+        // } catch (Exception $e) {
+        //     return redirect()->route('umkm.kas.index');
+        // }
     }
 
     public function receive_money()
@@ -69,9 +144,6 @@ class KasController extends Controller
 
             // update kas
             $kas = Coa::findOrFail($request->kas_id);
-            $kas->update([
-                'balance' => $kas->balance + $total
-            ]);
 
             // code for generate invoice
             $lastTransaction = Transaction::where('category_id', 5)
@@ -95,7 +167,7 @@ class KasController extends Controller
                 'status' => 'paid',
                 'total' => $total,
                 'cut' => 0,
-                'remaining_bill' => $total,
+                'remaining_bill' => 0,
                 'date' => Carbon::createFromFormat('d/m/Y', $request->date)->format('Y-m-d'),
                 'category_id' => 5,
                 'umkm_id' => Auth::user()->umkm->id,
@@ -117,9 +189,6 @@ class KasController extends Controller
 
                 // update coa balance
                 $coa = Coa::findOrFail($request->coa_id[$x]);
-                $coa->update([
-                    'balance' => $coa->balance + $price
-                ]);
 
                 // receive
                 $coa_transaction = Coa_Transaction::where('coa_id', $request->coa_id[$x])
@@ -151,8 +220,6 @@ class KasController extends Controller
                     ->where('code', '2-20500')
                     ->get()
                     ->last();
-
-                $ppn->update(['balance' => $ppn->balance + $taxtotal]);
 
                 Coa_Transaction::create([
                     'transaction_id' => $transaction->id,
@@ -207,12 +274,9 @@ class KasController extends Controller
 
             // update kas
             $kas = Coa::findOrFail($request->kas_id);
-            if ($kas->balance < $total) {
+            if ($kas->balance() < $total) {
                 return redirect()->route('umkm.kas.send_money');
             }
-            $kas->update([
-                'balance' => $kas->balance - $total
-            ]);
 
             // code for generate invoice
             $lastTransaction = Transaction::where('category_id', 5)
@@ -236,7 +300,7 @@ class KasController extends Controller
                 'status' => 'paid',
                 'total' => $total,
                 'cut' => $request->cut ?? 0,
-                'remaining_bill' => $total,
+                'remaining_bill' => 0,
                 'date' => Carbon::createFromFormat('d/m/Y', $request->date)->format('Y-m-d'),
                 'category_id' => 6,
                 'umkm_id' => Auth::user()->umkm->id,
@@ -258,9 +322,6 @@ class KasController extends Controller
 
                 // update coa balance
                 $coa = Coa::findOrFail($request->coa_id[$x]);
-                $coa->update([
-                    'balance' => $coa->balance + $price
-                ]);
 
                 // receive
                 $coa_transaction = Coa_Transaction::where('coa_id', $request->coa_id[$x])
@@ -293,7 +354,6 @@ class KasController extends Controller
                     ->where('code', '2-20504')
                     ->get()
                     ->last();
-                $hutang_pajak->update(['balance' => $hutang_pajak->balance + $cuts]);
                 Coa_Transaction::create([
                     'transaction_id' => $transaction->id,
                     'coa_id' => $hutang_pajak->id,
@@ -306,8 +366,6 @@ class KasController extends Controller
                     ->where('code', '1-10500')
                     ->get()
                     ->last();
-
-                $ppn->update(['balance' => $ppn->balance + $taxtotal]);
 
                 Coa_Transaction::create([
                     'transaction_id' => $transaction->id,
