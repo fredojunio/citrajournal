@@ -9,34 +9,34 @@
         <div class="max-w-7xl mx-auto px-4">
             <div class="flex gap-4">
                 <!-- Pemasukan -->
-                {{-- <div class="bg-white shadow-sm sm:rounded-md p-4">
+                <div class="bg-white shadow-sm sm:rounded-md p-4">
                     <div class="flex items-center gap-2">
                         <div class="bg-citragreen-100 rounded-full w-14 h-14 flex justify-items-center items-center">
                             <i class="text-citragreen-500 bx bxs-purchase-tag text-3xl m-auto"></i>
                         </div>
                         <div>
-                            <p class="">Total penjualan bulan ini</p>
+                            <p class="">Penjualan Terbayar 30 Hari Terakhir</p>
                             <h2 class="text-2xl font-bold">
-                                Rp. xxx.xxx.xxx,-
+                                {{ AppHelper::rp($saleMonth->where('status', 'paid')->sum('total')) }}
                             </h2>
                         </div>
                     </div>
-                </div> --}}
+                </div>
 
                 <!-- Saldo -->
-                {{-- <div class="bg-white shadow-sm sm:rounded-md p-4">
+                <div class="bg-white shadow-sm sm:rounded-md p-4">
                     <div class="flex items-center gap-2">
                         <div class="bg-citrayellow-100 rounded-full w-14 h-14 flex justify-items-center items-center">
                             <i class="text-citrayellow-500 bx bxs-credit-card text-3xl m-auto"></i>
                         </div>
                         <div>
-                            <p class="">Penjualan belum dibayar</p>
+                            <p class="">Penjualan Belum Dibayar</p>
                             <h2 class="text-2xl font-bold">
-                                Rp. xxx.xxx.xxx,-
+                                {{ AppHelper::rp($sales->where('status', '!=', 'paid')->sum('total')) }}
                             </h2>
                         </div>
                     </div>
-                </div> --}}
+                </div>
             </div>
             <div class="mt-4 bg-white overflow-hidden shadow-md sm:rounded-lg">
                 <div class="px-4 pt-4 pb-24">
@@ -71,7 +71,12 @@
                         @foreach ($sales as $sale)
                             <tr class="border border-b-1 border-r-0 border-t-0 border-l-0 border-zinc-400">
                                 <td class="p-3">{{ AppHelper::date($sale->date) }}</td>
-                                <td class="p-3">{{ $sale->invoice }}</td>
+                                <td class="p-3">
+                                    <a href="{{ route('umkm.sale.show', $sale->id) }}"
+                                        class="text-citradark-500 hover:text-citragreen-500 underline">
+                                        {{ $sale->invoice }}
+                                    </a>
+                                </td>
                                 <td
                                     class="p-3 {{ $sale->status == 'paid' ? 'text-citragreen-500' : 'text-citrayellow-500' }}">
                                     {{ $sale->status == 'paid' ? 'Sudah Bayar' : 'Belum Bayar' }}</td>
@@ -100,6 +105,76 @@
                                     </x-dropdown>
                                 </td>
                             </tr>
+
+                            <!-- Pay modal -->
+                            <div id="payModal-{{ $loop->iteration }}" tabindex="-1" aria-hidden="true"
+                                class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] md:h-full">
+                                <div class="relative w-full h-full max-w-2xl md:h-auto">
+                                    <!-- Modal content -->
+                                    <div class="relative bg-white rounded-lg shadow">
+                                        <!-- Modal header -->
+                                        <div
+                                            class="flex items-start justify-between p-4 border-b rounded-t border-zinc-200">
+                                            <h3 class="text-xl font-bold">
+                                                Kirim Pembayaran - {{ $sale->invoice }}
+                                            </h3>
+                                            <button type="button"
+                                                class="text-gray-400 bg-transparent hover:bg-zinc-200 hover:text-citrablack rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
+                                                data-modal-hide="payModal-{{ $loop->iteration }}">
+                                                <svg aria-hidden="true" class="w-5 h-5" fill="currentColor"
+                                                    viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                    <path fill-rule="evenodd"
+                                                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                                        clip-rule="evenodd"></path>
+                                                </svg>
+                                                <span class="sr-only">Close modal</span>
+                                            </button>
+                                        </div>
+                                        <!-- Modal body -->
+                                        <div class="p-6 space-y-6">
+                                            <form action="{{ route('umkm.sale.partial_payment') }}"
+                                                id="partial_payment" method="post">
+                                                @csrf
+                                                <div class="flex space-x-16 items-center">
+                                                    <label for="date-{{ $loop->iteration }}"
+                                                        class="w-32">Tanggal</label>
+                                                    <div class="flex items-center gap-1">
+                                                        <x-text-input datepicker datepicker-autohide
+                                                            id="date-{{ $loop->iteration }}" class="block"
+                                                            type="text" name="date" datepicker-format="dd/mm/yyyy"
+                                                            :value="\Carbon\Carbon::now()->format('d-m-Y')" required autofocus autocomplete="date"
+                                                            placeholder="Tanggal" /> <label
+                                                            for="date-{{ $loop->iteration }}" class="cursor-pointer">
+                                                            <i class=" bx bxs-calendar text-citradark-500 text-xl"></i>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="flex space-x-16 items-center">
+                                                    <label for="total-{{ $loop->iteration }}"
+                                                        class="w-32">Nominal</label>
+                                                    <x-text-input form="editproduct-{{ $loop->iteration }}"
+                                                        id="total-{{ $loop->iteration }}" class="block w-full"
+                                                        type="text" name="total" :value="$sale->total" required
+                                                        autofocus autocomplete="total" />
+                                                </div>
+                                                <input type="hidden" name="transaction_id"
+                                                    value="{{ $sale->id }}" id="">
+                                            </form>
+                                        </div>
+                                        <div
+                                            class="flex justify-end items-center p-6 space-x-2 border-t border-zinc-200 rounded-b">
+                                            <button data-modal-hide="payModal-{{ $loop->iteration }}" type="button"
+                                                class="inline-flex items-center px-4 py-2 bg-zinc-200 border border-transparent rounded-md font-bold text-xs text-zinc-500 hover:bg-zinc-300 focus:bg-zinc-400 active:bg-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                                                Batal
+                                            </button>
+
+                                            <x-primary-button type="submit" form="partial_payment" class="ml-2">
+                                                Bayar
+                                            </x-primary-button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
                             <!-- Delete modal -->
                             <div id="deleteSaleModal-{{ $loop->iteration }}" tabindex="-1" aria-hidden="true"

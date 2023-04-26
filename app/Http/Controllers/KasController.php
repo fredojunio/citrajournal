@@ -22,7 +22,22 @@ class KasController extends Controller
         $kass = Coa::where('umkm_id', Auth::user()->umkm->id)
             ->where('category_id', 1)
             ->get();
-        return view('user.kas.kas', compact('kass'));
+
+        $incomes = Transaction::where('category_id', 1)
+            ->where('umkm_id', Auth::user()->umkm->id)
+            ->whereBetween('due_date', [Carbon::now(), Carbon::now()->addDays(30)])
+            ->get();
+
+        $outcomes = Transaction::where('category_id', 2)
+            ->where('umkm_id', Auth::user()->umkm->id)
+            ->whereBetween('due_date', [Carbon::now(), Carbon::now()->addDays(30)])
+            ->get();
+
+        return view('user.kas.kas', compact(
+            'kass',
+            'incomes',
+            'outcomes'
+        ));
     }
 
     /**

@@ -20,10 +20,18 @@ class PurchaseController extends Controller
      */
     public function index()
     {
+        $purchaseMonth = Transaction::where('category_id', 2)
+            ->where('umkm_id', Auth::user()->umkm->id)
+            ->whereBetween('date', [Carbon::now()->subDays(30), Carbon::now()])
+            ->get();
+
         $purchases = Transaction::where('category_id', 2)
             ->where('umkm_id', Auth::user()->umkm->id)
             ->paginate(15);
-        return view('user.purchase.purchase', compact('purchases'));
+        return view('user.purchase.purchase', compact(
+            'purchases',
+            'purchaseMonth'
+        ));
     }
 
     /**
@@ -243,7 +251,11 @@ class PurchaseController extends Controller
 
     public function partial_payment(Request $request)
     {
-        $this->create_purchase_payment($request->total, $request->kas_id, $request->date, $request->transaction_id);
+        $kas = Coa::where('umkm_id', Auth::user()->umkm->id)
+            ->where('category_id_', 1)
+            ->get()
+            ->first();
+        $this->create_purchase_payment($request->total, $kas->id, $request->date, $request->transaction_id);
         return redirect()->route('umkm.purchase.index');
     }
 

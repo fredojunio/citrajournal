@@ -19,16 +19,16 @@ class CostController extends Controller
      */
     public function index()
     {
-        // $costs = TransactionDetail::whereHas('transaction', function ($q) {
-        //     $q->where('umkm_id', Auth::user()->umkm->id)
-        //         ->where('category_id', 3);
-        // })->paginate(15);
+        $costMonth = Transaction::where('umkm_id', Auth::user()->umkm->id)
+            ->where('category_id', 3)
+            ->whereBetween('date', [Carbon::now()->subDays(30), Carbon::now()])
+            ->get();
 
         $costs = Transaction::where('umkm_id', Auth::user()->umkm->id)
             ->where('category_id', 3)
             ->paginate(15);
 
-        return view('user.cost.cost', compact('costs'));
+        return view('user.cost.cost', compact('costs', 'costMonth'));
     }
 
     /**
@@ -189,7 +189,9 @@ class CostController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $transaction = Transaction::findOrFail($id);
+
+        return view('user.cost.show_cost', compact('transaction'));
     }
 
     /**

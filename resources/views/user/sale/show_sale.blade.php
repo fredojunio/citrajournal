@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Detail Pembelian - ' . $transaction->invoice) }}
+            {{ __('Detail Penjualan - ' . $transaction->invoice) }}
         </h2>
     </x-slot>
 
@@ -13,8 +13,8 @@
                 <div class="w-full flex justify-between">
                     <!-- Contact -->
                     <div class="">
-                        <x-input-label for="contact" :value="__('Supplier')" />
-                        <p>{{ $transaction->contact->name ?? '-' }}</p>
+                        <x-input-label for="contact" :value="__('Pelanggan')" />
+                        <p>{{ $transaction->contact->name ?? '' }}</p>
                     </div>
                     <!-- Status -->
                     <div class="text-right">

@@ -9,19 +9,19 @@
         <div class="max-w-7xl mx-auto px-4">
             <div class="flex gap-4">
                 <!-- Pemasukan -->
-                {{-- <div class="bg-white shadow-sm sm:rounded-md p-4">
+                <div class="bg-white shadow-sm sm:rounded-md p-4">
                     <div class="flex items-center gap-2">
                         <div class="bg-citradark-100 rounded-full w-14 h-14 flex justify-items-center items-center">
                             <i class="text-citradark-500 bx bx-money text-3xl m-auto"></i>
                         </div>
                         <div>
-                            <p class="">Total biaya bulan ini</p>
+                            <p class="">Total Biaya 30 Hari Terakhir</p>
                             <h2 class="text-2xl font-bold">
-                                Rp. xxx.xxx.xxx,-
+                                {{ AppHelper::rp($costMonth->sum('total')) }}
                             </h2>
                         </div>
                     </div>
-                </div> --}}
+                </div>
 
                 <!-- Saldo -->
                 {{-- <div class="bg-white shadow-sm sm:rounded-md p-4">
@@ -53,6 +53,7 @@
                         <tr
                             class="text-zinc-400 font-bold border border-b-1 border-r-0 border-t-0 border-l-0 border-zinc-400">
                             <td class="p-3">Tanggal</td>
+                            <td class="p-3">Faktur</td>
                             <td class="p-3">Penerima</td>
                             <td class="p-3">Kategori</td>
                             <td class="p-3">Biaya</td>
@@ -61,6 +62,12 @@
                         @foreach ($costs as $cost)
                             <tr class="border border-b-1 border-r-0 border-t-0 border-l-0 border-zinc-400">
                                 <td class="p-3">{{ AppHelper::date($cost->date) ?? '-' }}</td>
+                                <td class="p-3">
+                                    <a href="{{ route('umkm.cost.show', $cost->id) }}"
+                                        class="text-citradark-500 hover:text-citragreen-500 underline">
+                                        {{ $cost->invoice }}
+                                    </a>
+                                </td>
                                 <td class="p-3">{{ $cost->contact->name ?? '-' }}</td>
                                 <td class="p-3">
                                     {{ $cost->details->count() > 1 ? 'terbagi' : $cost->details[0]->coa->name }}</td>

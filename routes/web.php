@@ -67,7 +67,9 @@ Route::group([
 
     Route::resource('umkm/cost', CostController::class);
     Route::resource('umkm/purchase', PurchaseController::class);
+    Route::post('purchase/partial_payment', [PurchaseController::class, 'partial_payment'])->name('purchase.partial_payment');
     Route::resource('umkm/sale', SaleController::class);
+    Route::post('sale/partial_payment', [SaleController::class, 'partial_payment'])->name('sale.partial_payment');
 
     Route::resource('umkm/asset', AssetController::class);
     Route::resource('umkm/coa', CoaController::class);

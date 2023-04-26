@@ -102,57 +102,57 @@
                 <!-- Sale -->
                 <div class="relative px-6 mt-3 py-1 flex justify-content-start w-full">
                     <div
-                        class="{{ request()->routeIs('umkm.sale.index') || request()->routeIs('umkm.sale.create') || request()->routeIs('umkm.sale.edit') ? 'w-full -left-3 top-0 h-full bg-citragreen-500 absolute rounded-r-full' : '' }}">
+                        class="{{ request()->routeIs('umkm.sale.index') || request()->routeIs('umkm.sale.show') || request()->routeIs('umkm.sale.create') || request()->routeIs('umkm.sale.edit') ? 'w-full -left-3 top-0 h-full bg-citragreen-500 absolute rounded-r-full' : '' }}">
                     </div>
                     <a href="{{ route('umkm.sale.index') }}"
                         class="w-full flex justify-between items-center z-10 group">
                         <div class="flex gap-2 items-center">
                             <i
-                                class="bx bxs-purchase-tag {{ request()->routeIs('umkm.sale.index') || request()->routeIs('umkm.sale.create') || request()->routeIs('umkm.sale.edit') ? 'text-white' : 'text-citradark-500 group-hover:text-citragreen-500' }} text-3xl"></i>
+                                class="bx bxs-purchase-tag {{ request()->routeIs('umkm.sale.index') || request()->routeIs('umkm.sale.show') || request()->routeIs('umkm.sale.create') || request()->routeIs('umkm.sale.edit') ? 'text-white' : 'text-citradark-500 group-hover:text-citragreen-500' }} text-3xl"></i>
                             <p
-                                class="{{ request()->routeIs('umkm.sale.index') || request()->routeIs('umkm.sale.create') || request()->routeIs('umkm.sale.edit') ? 'text-white' : 'group-hover:text-citragreen-500' }}">
+                                class="{{ request()->routeIs('umkm.sale.index') || request()->routeIs('umkm.sale.show') || request()->routeIs('umkm.sale.create') || request()->routeIs('umkm.sale.edit') ? 'text-white' : 'group-hover:text-citragreen-500' }}">
                                 Penjualan</p>
                         </div>
                         <i
-                            class="bx bx-chevron-right text-2xl {{ request()->routeIs('umkm.sale.index') || request()->routeIs('umkm.sale.create') || request()->routeIs('umkm.sale.edit') ? 'text-white' : 'group-hover:text-citragreen-500' }}"></i>
+                            class="bx bx-chevron-right text-2xl {{ request()->routeIs('umkm.sale.index') || request()->routeIs('umkm.sale.show') || request()->routeIs('umkm.sale.create') || request()->routeIs('umkm.sale.edit') ? 'text-white' : 'group-hover:text-citragreen-500' }}"></i>
                     </a>
                 </div>
 
                 <!-- Purchase -->
                 <div class="relative px-6 mt-3 py-1 flex justify-content-start w-full">
                     <div
-                        class="{{ request()->routeIs('umkm.purchase.index') || request()->routeIs('umkm.purchase.create') || request()->routeIs('umkm.purchase.edit') ? 'w-full -left-3 top-0 h-full bg-citragreen-500 absolute rounded-r-full' : '' }}">
+                        class="{{ request()->routeIs('umkm.purchase.index') || request()->routeIs('umkm.purchase.show') || request()->routeIs('umkm.purchase.create') || request()->routeIs('umkm.purchase.edit') ? 'w-full -left-3 top-0 h-full bg-citragreen-500 absolute rounded-r-full' : '' }}">
                     </div>
                     <a href="{{ route('umkm.purchase.index') }}"
                         class="w-full flex justify-between items-center z-10 group">
                         <div class="flex gap-2 items-center">
                             <i
-                                class="bx bxs-cart {{ request()->routeIs('umkm.purchase.index') || request()->routeIs('umkm.purchase.create') || request()->routeIs('umkm.purchase.edit') ? 'text-white' : 'text-citradark-500 group-hover:text-citragreen-500' }} text-3xl"></i>
+                                class="bx bxs-cart {{ request()->routeIs('umkm.purchase.index') || request()->routeIs('umkm.purchase.show') || request()->routeIs('umkm.purchase.create') || request()->routeIs('umkm.purchase.edit') ? 'text-white' : 'text-citradark-500 group-hover:text-citragreen-500' }} text-3xl"></i>
                             <p
-                                class="{{ request()->routeIs('umkm.purchase.index') || request()->routeIs('umkm.purchase.create') || request()->routeIs('umkm.purchase.edit') ? 'text-white' : 'group-hover:text-citragreen-500' }}">
+                                class="{{ request()->routeIs('umkm.purchase.index') || request()->routeIs('umkm.purchase.show') || request()->routeIs('umkm.purchase.create') || request()->routeIs('umkm.purchase.edit') ? 'text-white' : 'group-hover:text-citragreen-500' }}">
                                 Pembelian</p>
                         </div>
                         <i
-                            class="bx bx-chevron-right text-2xl {{ request()->routeIs('umkm.purchase.index') || request()->routeIs('umkm.purchase.create') || request()->routeIs('umkm.purchase.edit') ? 'text-white' : 'group-hover:text-citragreen-500' }}"></i>
+                            class="bx bx-chevron-right text-2xl {{ request()->routeIs('umkm.purchase.index') || request()->routeIs('umkm.purchase.show') || request()->routeIs('umkm.purchase.create') || request()->routeIs('umkm.purchase.edit') ? 'text-white' : 'group-hover:text-citragreen-500' }}"></i>
                     </a>
                 </div>
 
                 <!-- Cost -->
                 <div class="relative px-6 mt-3 py-1 flex justify-content-start w-full">
                     <div
-                        class="{{ request()->routeIs('umkm.cost.index') || request()->routeIs('umkm.cost.create') || request()->routeIs('umkm.cost.edit') ? 'w-full -left-3 top-0 h-full bg-citragreen-500 absolute rounded-r-full' : '' }}">
+                        class="{{ request()->routeIs('umkm.cost.index') || request()->routeIs('umkm.cost.show') || request()->routeIs('umkm.cost.create') || request()->routeIs('umkm.cost.edit') ? 'w-full -left-3 top-0 h-full bg-citragreen-500 absolute rounded-r-full' : '' }}">
                     </div>
                     <a href="{{ route('umkm.cost.index') }}"
                         class="w-full flex justify-between items-center z-10 group">
                         <div class="flex gap-2 items-center">
                             <i
-                                class="bx bxs-credit-card-front {{ request()->routeIs('umkm.cost.index') || request()->routeIs('umkm.cost.create') || request()->routeIs('umkm.cost.edit') ? 'text-white' : 'text-citradark-500 group-hover:text-citragreen-500' }} text-3xl"></i>
+                                class="bx bxs-credit-card-front {{ request()->routeIs('umkm.cost.index') || request()->routeIs('umkm.cost.show') || request()->routeIs('umkm.cost.create') || request()->routeIs('umkm.cost.edit') ? 'text-white' : 'text-citradark-500 group-hover:text-citragreen-500' }} text-3xl"></i>
                             <p
-                                class="{{ request()->routeIs('umkm.cost.index') || request()->routeIs('umkm.cost.create') || request()->routeIs('umkm.cost.edit') ? 'text-white' : 'group-hover:text-citragreen-500' }}">
+                                class="{{ request()->routeIs('umkm.cost.index') || request()->routeIs('umkm.cost.show') || request()->routeIs('umkm.cost.create') || request()->routeIs('umkm.cost.edit') ? 'text-white' : 'group-hover:text-citragreen-500' }}">
                                 Biaya</p>
                         </div>
                         <i
-                            class="bx bx-chevron-right text-2xl {{ request()->routeIs('umkm.cost.index') || request()->routeIs('umkm.cost.create') || request()->routeIs('umkm.cost.edit') ? 'text-white' : 'group-hover:text-citragreen-500' }}"></i>
+                            class="bx bx-chevron-right text-2xl {{ request()->routeIs('umkm.cost.index') || request()->routeIs('umkm.cost.show') || request()->routeIs('umkm.cost.create') || request()->routeIs('umkm.cost.edit') ? 'text-white' : 'group-hover:text-citragreen-500' }}"></i>
                     </a>
                 </div>
 

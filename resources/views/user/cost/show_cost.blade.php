@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Detail Pembelian - ' . $transaction->invoice) }}
+            {{ __('Detail Biaya - ' . $transaction->invoice) }}
         </h2>
     </x-slot>
 
@@ -13,7 +13,7 @@
                 <div class="w-full flex justify-between">
                     <!-- Contact -->
                     <div class="">
-                        <x-input-label for="contact" :value="__('Supplier')" />
+                        <x-input-label for="contact" :value="__('Penerima')" />
                         <p>{{ $transaction->contact->name ?? '-' }}</p>
                     </div>
                     <!-- Status -->
@@ -27,15 +27,9 @@
 
                 <div class="mt-4">
                     <!-- Date -->
-                    <div class="w-full flex gap-10">
-                        <div>
-                            <x-input-label for="date" :value="__('Tanggal')" />
-                            <p>{{ $transaction->date }}</p>
-                        </div>
-                        <div>
-                            <x-input-label for="due_date" :value="__('Tanggal Jatuh Tempo')" />
-                            <p>{{ $transaction->due_date }}</p>
-                        </div>
+                    <div>
+                        <x-input-label for="date" :value="__('Tanggal')" />
+                        <p>{{ $transaction->date }}</p>
                     </div>
                 </div>
 
@@ -48,9 +42,8 @@
                 <table class="w-full append">
                     <thead>
                         <tr class="font-bold text-left">
-                            <th class="p-2">Produk</th>
+                            <th class="p-2">Kode Akun</th>
                             <th class="p-2">Deskripsi</th>
-                            <th class="p-2">Jumlah</th>
                             <th class="p-2">Pajak</th>
                             <th class="p-2">Harga</th>
                             <th class="p-2">Subtotal</th>
@@ -61,13 +54,10 @@
                         @foreach ($transaction->details as $td)
                             <tr>
                                 <td class="p-2">
-                                    {{ $td->product->name }}
+                                    {{ $td->coa->name }}
                                 </td>
                                 <td class="p-2">
                                     {{ $td->description ?? '-' }}
-                                </td>
-                                <td class="p-2">
-                                    {{ $td->quantity }}
                                 </td>
                                 <td class="flex gap-1 items-center p-2">
                                     {{ $td->tax }}%
@@ -76,7 +66,7 @@
                                     {{ AppHelper::rp($td->price) }}
                                 </td>
                                 <td class="p-2">
-                                    {{ AppHelper::rp(($td->price + ($td->price * $td->tax) / 100) * $td->quantity) }}
+                                    {{ AppHelper::rp($td->price + ($td->price * $td->tax) / 100) }}
                                 </td>
                             </tr>
                         @endforeach

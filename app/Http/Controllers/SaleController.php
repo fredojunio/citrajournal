@@ -20,10 +20,18 @@ class SaleController extends Controller
      */
     public function index()
     {
+        $saleMonth = Transaction::where('category_id', 1)
+            ->where('umkm_id', Auth::user()->umkm->id)
+            ->whereBetween('date', [Carbon::now()->subDays(30), Carbon::now()])
+            ->get();
+
         $sales = Transaction::where('category_id', 1)
             ->where('umkm_id', Auth::user()->umkm->id)
             ->paginate(15);
-        return view('user.sale.sale', compact('sales'));
+        return view('user.sale.sale', compact(
+            'sales',
+            'saleMonth'
+        ));
     }
 
     /**
@@ -436,7 +444,9 @@ class SaleController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $transaction = Transaction::findOrFail($id);
+
+        return view('user.sale.show_sale', compact('transaction'));
     }
 
     /**

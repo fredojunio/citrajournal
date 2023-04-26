@@ -8,21 +8,6 @@
     <div class="py-6">
         <div class="max-w-7xl mx-auto px-4">
             <div class="flex gap-4">
-                <!-- Pemasukan -->
-                {{-- <div class="bg-white shadow-sm sm:rounded-md p-4">
-                    <div class="flex items-center gap-2">
-                        <div class="bg-citragreen-100 rounded-full w-14 h-14 flex justify-items-center items-center">
-                            <i class="text-citragreen-500 bx bxs-bar-chart-alt-2 text-3xl m-auto"></i>
-                        </div>
-                        <div>
-                            <p class="">Pemasukan kas bulan ini</p>
-                            <h2 class="text-2xl font-bold">
-                                Rp. xxx.xxx.xxx,-
-                            </h2>
-                        </div>
-                    </div>
-                </div> --}}
-
                 <!-- Saldo -->
                 <div class="bg-white shadow-sm sm:rounded-md p-4">
                     <div class="flex items-center gap-2">
@@ -30,9 +15,39 @@
                             <i class="text-citradark-500 bx bxs-credit-card text-3xl m-auto"></i>
                         </div>
                         <div>
-                            <p class="">Saldo kas</p>
+                            <p class="">Saldo Kas</p>
                             <h2 class="text-2xl font-bold">
                                 {{ AppHelper::rp($kass->map->balance()->sum()) }}
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pemasukan -->
+                <div class="bg-white shadow-sm sm:rounded-md p-4">
+                    <div class="flex items-center gap-2">
+                        <div class="bg-citragreen-100 rounded-full w-14 h-14 flex justify-items-center items-center">
+                            <i class="text-citragreen-500 bx bxs-bar-chart-alt-2 text-3xl m-auto"></i>
+                        </div>
+                        <div>
+                            <p class="">Pemasukan 30 Hari Mendatang</p>
+                            <h2 class="text-2xl font-bold">
+                                {{ AppHelper::rp($incomes->sum('total')) }}
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pemasukan -->
+                <div class="bg-white shadow-sm sm:rounded-md p-4">
+                    <div class="flex items-center gap-2">
+                        <div class="bg-citrared-100 rounded-full w-14 h-14 flex justify-items-center items-center">
+                            <i class="text-citrared-500 bx bxs-bar-chart-alt-2 text-3xl m-auto"></i>
+                        </div>
+                        <div>
+                            <p class="">Pengeluaran 30 Hari Mendatang</p>
+                            <h2 class="text-2xl font-bold">
+                                {{ AppHelper::rp($outcomes->sum('total')) }}
                             </h2>
                         </div>
                     </div>
