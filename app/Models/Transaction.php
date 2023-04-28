@@ -44,12 +44,9 @@ class Transaction extends Model
         return $this->hasMany(TransactionDetail::class, 'transaction_id', 'id');
     }
 
-    public function coa()
+    public function coas()
     {
-        $coa_transaction = $this->hasMany(Coa_Transaction::class, 'transaction_id', 'id')
-            ->orderByDesc('id')
-            ->first();
-        return $coa_transaction->coa();
+        return $this->belongsToMany(Coa::class, 'coa_transaction', 'transaction_id', 'coa_id');
     }
 
     public function paid()

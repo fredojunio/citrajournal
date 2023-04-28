@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Coa;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,6 +21,9 @@ class ReportController extends Controller
         if (!empty($date)) {
             $pendapatan = Coa::where('category_id', 12)
                 ->where('umkm_id', Auth::user()->umkm->id)
+                ->whereHas('transactions', function ($q) use ($date, $due_date) {
+                    $q->whereBetween('date', [Carbon::createFromFormat('d/m/Y', $date)->format('Y-m-d'), Carbon::createFromFormat('d/m/Y', $due_date)->format('Y-m-d')]);
+                })
                 ->get()
                 ->filter(function ($q) {
                     return $q->balance() != 0;
@@ -27,6 +31,9 @@ class ReportController extends Controller
 
             $beban_pendapatan = Coa::where('category_id', 13)
                 ->where('umkm_id', Auth::user()->umkm->id)
+                ->whereHas('transactions', function ($q) use ($date, $due_date) {
+                    $q->whereBetween('date', [Carbon::createFromFormat('d/m/Y', $date)->format('Y-m-d'), Carbon::createFromFormat('d/m/Y', $due_date)->format('Y-m-d')]);
+                })
                 ->get()
                 ->filter(function ($q) {
                     return $q->balance() != 0;
@@ -37,6 +44,9 @@ class ReportController extends Controller
                     $q->where('category_id', 14)
                         ->orWhere('category_id', 16);
                 })
+                ->whereHas('transactions', function ($q) use ($date, $due_date) {
+                    $q->whereBetween('date', [Carbon::createFromFormat('d/m/Y', $date)->format('Y-m-d'), Carbon::createFromFormat('d/m/Y', $due_date)->format('Y-m-d')]);
+                })
                 ->get()
                 ->filter(function ($q) {
                     return $q->balance() != 0;
@@ -44,12 +54,18 @@ class ReportController extends Controller
 
             $pendapatan_lain = Coa::where('umkm_id', Auth::user()->umkm->id)
                 ->where('category_id', 15)
+                ->whereHas('transactions', function ($q) use ($date, $due_date) {
+                    $q->whereBetween('date', [Carbon::createFromFormat('d/m/Y', $date)->format('Y-m-d'), Carbon::createFromFormat('d/m/Y', $due_date)->format('Y-m-d')]);
+                })
                 ->get()
                 ->filter(function ($q) {
                     return $q->balance() != 0;
                 });
             $beban_lain = Coa::where('umkm_id', Auth::user()->umkm->id)
                 ->where('category_id', 16)
+                ->whereHas('transactions', function ($q) use ($date, $due_date) {
+                    $q->whereBetween('date', [Carbon::createFromFormat('d/m/Y', $date)->format('Y-m-d'), Carbon::createFromFormat('d/m/Y', $due_date)->format('Y-m-d')]);
+                })
                 ->get()
                 ->filter(function ($q) {
                     return $q->balance() != 0;
@@ -169,6 +185,9 @@ class ReportController extends Controller
             // aset lancar
             $aset_lancar = Coa::where('category_id', '<=', 4)
                 ->where('umkm_id', Auth::user()->umkm->id)
+                ->whereHas('transactions', function ($q) use ($date, $due_date) {
+                    $q->whereBetween('date', [Carbon::createFromFormat('d/m/Y', $date)->format('Y-m-d'), Carbon::createFromFormat('d/m/Y', $due_date)->format('Y-m-d')]);
+                })
                 ->get()
                 ->filter(function ($q) {
                     return $q->balance() != 0;
@@ -177,6 +196,9 @@ class ReportController extends Controller
             $liabilitas_pendek = Coa::where('category_id', '>=', 8)
                 ->where('category_id', '<=', 9)
                 ->where('umkm_id', Auth::user()->umkm->id)
+                ->whereHas('transactions', function ($q) use ($date, $due_date) {
+                    $q->whereBetween('date', [Carbon::createFromFormat('d/m/Y', $date)->format('Y-m-d'), Carbon::createFromFormat('d/m/Y', $due_date)->format('Y-m-d')]);
+                })
                 ->get()
                 ->filter(function ($q) {
                     return $q->balance() != 0;
@@ -184,6 +206,9 @@ class ReportController extends Controller
 
             $total_aset = $aset_tetap = Coa::where('category_id', 5)
                 ->where('umkm_id', Auth::user()->umkm->id)
+                ->whereHas('transactions', function ($q) use ($date, $due_date) {
+                    $q->whereBetween('date', [Carbon::createFromFormat('d/m/Y', $date)->format('Y-m-d'), Carbon::createFromFormat('d/m/Y', $due_date)->format('Y-m-d')]);
+                })
                 ->get()
                 ->filter(function ($q) {
                     return $q->balance() != 0;
@@ -191,12 +216,18 @@ class ReportController extends Controller
 
             $laba_operasional = Coa::where('category_id', 12)
                 ->where('umkm_id', Auth::user()->umkm->id)
+                ->whereHas('transactions', function ($q) use ($date, $due_date) {
+                    $q->whereBetween('date', [Carbon::createFromFormat('d/m/Y', $date)->format('Y-m-d'), Carbon::createFromFormat('d/m/Y', $due_date)->format('Y-m-d')]);
+                })
                 ->get()
                 ->filter(function ($q) {
                     return $q->balance() != 0;
                 })->map->balance()->sum() -
                 Coa::where('category_id', 13)
                 ->where('umkm_id', Auth::user()->umkm->id)
+                ->whereHas('transactions', function ($q) use ($date, $due_date) {
+                    $q->whereBetween('date', [Carbon::createFromFormat('d/m/Y', $date)->format('Y-m-d'), Carbon::createFromFormat('d/m/Y', $due_date)->format('Y-m-d')]);
+                })
                 ->get()
                 ->filter(function ($q) {
                     return $q->balance() != 0;
@@ -206,6 +237,9 @@ class ReportController extends Controller
                     $q->where('category_id', 14)
                         ->orWhere('category_id', 16);
                 })
+                ->whereHas('transactions', function ($q) use ($date, $due_date) {
+                    $q->whereBetween('date', [Carbon::createFromFormat('d/m/Y', $date)->format('Y-m-d'), Carbon::createFromFormat('d/m/Y', $due_date)->format('Y-m-d')]);
+                })
                 ->get()
                 ->filter(function ($q) {
                     return $q->balance() != 0;
@@ -214,12 +248,18 @@ class ReportController extends Controller
 
             $pendapatan_lain = Coa::where('umkm_id', Auth::user()->umkm->id)
                 ->where('category_id', 15)
+                ->whereHas('transactions', function ($q) use ($date, $due_date) {
+                    $q->whereBetween('date', [Carbon::createFromFormat('d/m/Y', $date)->format('Y-m-d'), Carbon::createFromFormat('d/m/Y', $due_date)->format('Y-m-d')]);
+                })
                 ->get()
                 ->filter(function ($q) {
                     return $q->balance() != 0;
                 });
             $beban_lain = Coa::where('umkm_id', Auth::user()->umkm->id)
                 ->where('category_id', 16)
+                ->whereHas('transactions', function ($q) use ($date, $due_date) {
+                    $q->whereBetween('date', [Carbon::createFromFormat('d/m/Y', $date)->format('Y-m-d'), Carbon::createFromFormat('d/m/Y', $due_date)->format('Y-m-d')]);
+                })
                 ->get()
                 ->filter(function ($q) {
                     return $q->balance() != 0;
@@ -227,17 +267,26 @@ class ReportController extends Controller
             $laba_bersih = $laba_operasional + $pendapatan_lain->map->balance()->sum() - $beban_lain->map->balance()->sum();
             $laba_ditahan = $laba_bersih - $beban_lain = Coa::where('umkm_id', Auth::user()->umkm->id)
                 ->where('code', '3-30200')
+                ->whereHas('transactions', function ($q) use ($date, $due_date) {
+                    $q->whereBetween('date', [Carbon::createFromFormat('d/m/Y', $date)->format('Y-m-d'), Carbon::createFromFormat('d/m/Y', $due_date)->format('Y-m-d')]);
+                })
                 ->get()->map->balance()->sum();
 
             $liabilitas = Coa::where('category_id', '>=', 8)
                 ->where('category_id', '<=', 9)
                 ->where('umkm_id', Auth::user()->umkm->id)
+                ->whereHas('transactions', function ($q) use ($date, $due_date) {
+                    $q->whereBetween('date', [Carbon::createFromFormat('d/m/Y', $date)->format('Y-m-d'), Carbon::createFromFormat('d/m/Y', $due_date)->format('Y-m-d')]);
+                })
                 ->get()
                 ->filter(function ($q) {
                     return $q->balance() != 0;
                 })->map->balance()->sum() +
                 Coa::where('category_id', 10)
                 ->where('umkm_id', Auth::user()->umkm->id)
+                ->whereHas('transactions', function ($q) use ($date, $due_date) {
+                    $q->whereBetween('date', [Carbon::createFromFormat('d/m/Y', $date)->format('Y-m-d'), Carbon::createFromFormat('d/m/Y', $due_date)->format('Y-m-d')]);
+                })
                 ->get()
                 ->filter(function ($q) {
                     return $q->balance() != 0;
@@ -245,6 +294,9 @@ class ReportController extends Controller
 
             $modal_disetor = Coa::where('category_id', 11)
                 ->where('code', '3-30000')
+                ->whereHas('transactions', function ($q) use ($date, $due_date) {
+                    $q->whereBetween('date', [Carbon::createFromFormat('d/m/Y', $date)->format('Y-m-d'), Carbon::createFromFormat('d/m/Y', $due_date)->format('Y-m-d')]);
+                })
                 ->get()
                 ->filter(function ($q) {
                     return $q->balance() != 0;
@@ -256,10 +308,20 @@ class ReportController extends Controller
                 })->map->balance()->sum();
 
 
-            $x1 = (($aset_lancar - $liabilitas) / $total_aset) * 6.56;
-            $x2 = 3.26 * ($laba_operasional / $total_aset);
-            $x3 = 6.72 * ($laba_operasional / $total_aset);
-            $x4 = 1.05 * ($modal_disetor / $liabilitas);
+            if ($total_aset != 0) {
+                $x1 = (($aset_lancar - $liabilitas) / $total_aset) * 6.56;
+                $x2 = 3.26 * ($laba_operasional / $total_aset);
+                $x3 = 6.72 * ($laba_operasional / $total_aset);
+            } else {
+                $x1 = 0;
+                $x2 = 0;
+                $x3 = 0;
+            }
+            if ($liabilitas != 0) {
+                $x4 = 1.05 * ($modal_disetor / $liabilitas);
+            } else {
+                $x4 = 0;
+            }
 
             $zscore = $x1 + $x2 + $x3 + $x4;
 

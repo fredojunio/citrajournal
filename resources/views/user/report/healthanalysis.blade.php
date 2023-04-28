@@ -15,7 +15,11 @@
                                 <x-input-label for="date" :value="__('Tanggal')" />
                                 <div class="flex items-center gap-1">
                                     <x-text-input datepicker datepicker-autohide id="date" class="block mt-1"
-                                        type="text" name="date" datepicker-format="dd/mm/yyyy" :value="empty($date) ? \Carbon\Carbon::now()->format('d-m-Y') : $date"
+                                        type="text" name="date" datepicker-format="dd/mm/yyyy" :value="empty($date)
+                                            ? \Carbon\Carbon::now()
+                                                ->startOfMonth()
+                                                ->format('d-m-Y')
+                                            : $date"
                                         required autofocus autocomplete="date" />
                                     <label for="date" class="cursor-pointer">
                                         <i class=" bx bxs-calendar text-citradark-500 text-xl"></i>
@@ -185,7 +189,7 @@
                                 X1 (Modal Kerja/Total Aset)
                             </p>
                             <p>
-                                {{ AppHelper::decimal(($aset_lancar - $liabilitas) / $total_aset) }}
+                                {{ AppHelper::decimal($total_aset != 0 ? ($aset_lancar - $liabilitas) / $total_aset : 0) }}
                             </p>
                         </div>
                     </div>
@@ -197,7 +201,7 @@
                             6.56 X1
                         </p>
                         <p class="font-bold">
-                            {{ AppHelper::decimal((($aset_lancar - $liabilitas) / $total_aset) * 6.56) }}
+                            {{ AppHelper::decimal($total_aset != 0 ? (($aset_lancar - $liabilitas) / $total_aset) * 6.56 : 0) }}
                         </p>
                     </div>
 
@@ -228,7 +232,7 @@
                                 X2 (Laba Operasional/Total Aset)
                             </p>
                             <p>
-                                {{ AppHelper::decimal($laba_ditahan / $total_aset ?? 0) }}
+                                {{ AppHelper::decimal($total_aset != 0 ? $laba_ditahan / $total_aset : 0) }}
                             </p>
                         </div>
                     </div>
@@ -240,7 +244,7 @@
                             3.26 X2
                         </p>
                         <p class="font-bold">
-                            {{ AppHelper::decimal(3.26 * ($laba_operasional / $total_aset) ?? 0) }}
+                            {{ AppHelper::decimal($total_aset != 0 ? 3.26 * ($laba_operasional / $total_aset) : 0) }}
                         </p>
                     </div>
 
@@ -271,7 +275,7 @@
                                 X3 (Laba Operasional/Total Aset)
                             </p>
                             <p>
-                                {{ AppHelper::decimal($laba_operasional / $total_aset ?? 0) }}
+                                {{ AppHelper::decimal($total_aset != 0 ? $laba_operasional / $total_aset : 0) }}
                             </p>
                         </div>
                     </div>
@@ -283,7 +287,7 @@
                             6.72 X3
                         </p>
                         <p class="font-bold">
-                            {{ AppHelper::decimal(6.72 * ($laba_operasional / $total_aset) ?? 0) }}
+                            {{ AppHelper::decimal($total_aset != 0 ? 6.72 * ($laba_operasional / $total_aset) : 0) }}
                         </p>
                     </div>
 
@@ -314,7 +318,7 @@
                                 X4 (Modal Disetor/Total Liabilitas)
                             </p>
                             <p>
-                                {{ AppHelper::decimal($modal_disetor / $liabilitas ?? 0) }}
+                                {{ AppHelper::decimal($liabilitas != 0 ? $modal_disetor / $liabilitas : 0) }}
                             </p>
                         </div>
                     </div>
@@ -326,7 +330,7 @@
                             1.05 X4
                         </p>
                         <p class="font-bold">
-                            {{ AppHelper::decimal(1.05 * ($modal_disetor / $liabilitas) ?? 0) }}
+                            {{ AppHelper::decimal($liabilitas != 0 ? 1.05 * ($modal_disetor / $liabilitas) : 0) }}
                         </p>
                     </div>
 

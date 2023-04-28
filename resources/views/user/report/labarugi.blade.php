@@ -15,7 +15,11 @@
                                 <x-input-label for="date" :value="__('Tanggal')" />
                                 <div class="flex items-center gap-1">
                                     <x-text-input datepicker datepicker-autohide id="date" class="block mt-1"
-                                        type="text" name="date" datepicker-format="dd/mm/yyyy" :value="empty($date) ? \Carbon\Carbon::now()->format('d-m-Y') : $date"
+                                        type="text" name="date" datepicker-format="dd/mm/yyyy" :value="empty($date)
+                                            ? \Carbon\Carbon::now()
+                                                ->startOfMonth()
+                                                ->format('d-m-Y')
+                                            : $date"
                                         required autofocus autocomplete="date" />
                                     <label for="date" class="cursor-pointer">
                                         <i class=" bx bxs-calendar text-citradark-500 text-xl"></i>
@@ -27,7 +31,9 @@
                                 <x-input-label for="due_date" :value="__('Tanggal Jatuh Tempo')" />
                                 <div class="flex items-center gap-1">
                                     <x-text-input datepicker datepicker-autohide id="due_date" class="block mt-1"
-                                        type="text" name="due_date" datepicker-format="dd/mm/yyyy" :value="empty($date) ? \Carbon\Carbon::now()->format('d-m-Y') : $date"
+                                        type="text" name="due_date" datepicker-format="dd/mm/yyyy" :value="empty($due_date)
+                                            ? \Carbon\Carbon::now()->format('d-m-Y')
+                                            : $due_date"
                                         required autofocus autocomplete="due_date" />
                                     <label for="due_date" class="cursor-pointer">
                                         <i class=" bx bxs-calendar text-citradark-500 text-xl"></i>
@@ -69,7 +75,7 @@
                                     </p>
                                 </div>
                                 <p>
-                                    {{ AppHelper::rp($p->balance() ?? 0) }}
+                                    {{ AppHelper::rp($p->balance()) }}
                                 </p>
                             </div>
                         @endforeach
