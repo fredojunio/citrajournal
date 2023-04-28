@@ -44,7 +44,7 @@
                 </div>
 
                 <!-- Dashboard -->
-                {{-- <div class="relative px-6 mt-6 py-1 flex justify-content-start w-full">
+                <div class="relative px-6 mt-6 py-1 flex justify-content-start w-full">
                     <div
                         class="{{ request()->routeIs('umkm.dashboard') ? 'w-full -left-3 top-0 h-full bg-citragreen-500 absolute rounded-r-full' : '' }}">
                     </div>
@@ -59,7 +59,7 @@
                         <i
                             class="bx bx-chevron-right text-2xl {{ request()->routeIs('umkm.dashboard') ? 'text-white' : 'group-hover:text-citragreen-500' }}"></i>
                     </a>
-                </div> --}}
+                </div>
 
                 <!-- Laporan -->
                 <div class="relative px-6 mt-3 py-1 flex justify-content-start w-full">
