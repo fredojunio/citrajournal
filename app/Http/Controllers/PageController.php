@@ -15,8 +15,13 @@ class PageController extends Controller
         if (Auth::check()) {
             return redirect()->route('umkm.index');
         } else {
-            return redirect()->route('login');
+            return redirect()->route('landing_page');
         }
+    }
+
+    public function landing_page()
+    {
+        return view('user.landing_page');
     }
 
     public function dashboard()

@@ -29,6 +29,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [PageController::class, 'index']);
+Route::get('/landing_page', [PageController::class, 'landing_page'])->name('landing_page');
 
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
@@ -58,7 +59,6 @@ Route::group([
     Route::get('report/print_neraca', [ReportController::class, 'print_neraca'])->name('report.print_neraca');
     Route::get('report/healthanalysis', [ReportController::class, 'healthanalysis'])->name('report.healthanalysis');
     Route::get('report/print_healthanalysis', [ReportController::class, 'print_healthanalysis'])->name('report.print_healthanalysis');
-
 
     Route::resource('umkm/kas', KasController::class);
     Route::get('kas/receive_money', [KasController::class, 'receive_money'])->name('kas.receive_money');
