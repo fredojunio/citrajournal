@@ -40,12 +40,17 @@
                             </x-primary-button>
                         </div>
                     </form>
-                    <x-primary-button class="ml-2">
-                        <span class="mr-2">
-                            <i class="bx bx-printer text-xl text-white"></i>
-                        </span>
-                        Cetak
-                    </x-primary-button>
+                    @isset($date)
+                        <form action="{{ route('umkm.report.print_neraca') }}" method="get">
+                            <input type="hidden" name="date" value="{{ $date }}" id="">
+                            <x-primary-button class="ml-2">
+                                <span class="mr-2">
+                                    <i class="bx bx-printer text-xl text-white"></i>
+                                </span>
+                                Cetak
+                            </x-primary-button>
+                        </form>
+                    @endisset
                 </div>
             </div>
 

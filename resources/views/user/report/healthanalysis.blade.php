@@ -12,7 +12,7 @@
                     <form action="{{ route('umkm.report.healthanalysis') }}" method="get">
                         <div class="flex gap-5 items-center">
                             <div>
-                                <x-input-label for="date" :value="__('Tanggal')" />
+                                <x-input-label for="date" :value="__('Tanggal Awal')" />
                                 <div class="flex items-center gap-1">
                                     <x-text-input datepicker datepicker-autohide id="date" class="block mt-1"
                                         type="text" name="date" datepicker-format="dd/mm/yyyy" :value="empty($date)
@@ -28,7 +28,7 @@
                                 <x-input-error :messages="$errors->get('address')" class="mt-2" />
                             </div>
                             <div>
-                                <x-input-label for="due_date" :value="__('Tanggal Jatuh Tempo')" />
+                                <x-input-label for="due_date" :value="__('Tanggal Akhir')" />
                                 <div class="flex items-center gap-1">
                                     <x-text-input datepicker datepicker-autohide id="due_date" class="block mt-1"
                                         type="text" name="due_date" datepicker-format="dd/mm/yyyy" :value="empty($due_date)
@@ -46,12 +46,18 @@
                             </x-primary-button>
                         </div>
                     </form>
-                    <x-primary-button class="ml-2">
-                        <span class="mr-2">
-                            <i class="bx bx-printer text-xl text-white"></i>
-                        </span>
-                        Cetak
-                    </x-primary-button>
+                    @isset($date)
+                        <form action="{{ route('umkm.report.print_healthanalysis') }}" method="get">
+                            <input type="hidden" name="date" value="{{ $date }}" id="">
+                            <input type="hidden" name="due_date" value="{{ $due_date }}" id="">
+                            <x-primary-button class="ml-2">
+                                <span class="mr-2">
+                                    <i class="bx bx-printer text-xl text-white"></i>
+                                </span>
+                                Cetak
+                            </x-primary-button>
+                        </form>
+                    @endisset
                 </div>
             </div>
 

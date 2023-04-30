@@ -53,8 +53,11 @@ Route::group([
 
     Route::get('umkm/report/index', [ReportController::class, 'index'])->name('report.index');
     Route::get('report/labarugi', [ReportController::class, 'labarugi'])->name('report.labarugi');
+    Route::get('report/print_labarugi', [ReportController::class, 'print_labarugi'])->name('report.print_labarugi');
     Route::get('report/neraca', [ReportController::class, 'neraca'])->name('report.neraca');
+    Route::get('report/print_neraca', [ReportController::class, 'print_neraca'])->name('report.print_neraca');
     Route::get('report/healthanalysis', [ReportController::class, 'healthanalysis'])->name('report.healthanalysis');
+    Route::get('report/print_healthanalysis', [ReportController::class, 'print_healthanalysis'])->name('report.print_healthanalysis');
 
 
     Route::resource('umkm/kas', KasController::class);
