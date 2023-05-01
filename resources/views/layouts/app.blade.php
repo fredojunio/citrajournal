@@ -24,6 +24,7 @@
 </head>
 
 <body class="font-sans antialiased">
+
     <div class="min-h-screen bg-gray-100">
         <div class="flex gap-0 relative">
             <div
@@ -216,19 +217,19 @@
                 <!-- COA -->
                 <div class="relative px-6 mt-3 py-1 flex justify-content-start w-full">
                     <div
-                        class="{{ request()->routeIs('umkm.coa.index') || request()->routeIs('umkm.coa.create') || request()->routeIs('umkm.coa.edit') ? 'w-full -left-3 top-0 h-full bg-citragreen-500 absolute rounded-r-full' : '' }}">
+                        class="{{ request()->routeIs('umkm.coa.index') || request()->routeIs('umkm.coa.show') || request()->routeIs('umkm.coa.create') || request()->routeIs('umkm.coa.edit') ? 'w-full -left-3 top-0 h-full bg-citragreen-500 absolute rounded-r-full' : '' }}">
                     </div>
                     <a href="{{ route('umkm.coa.index') }}"
                         class="w-full flex justify-between items-center z-10 group">
                         <div class="flex gap-2 items-center">
                             <i
-                                class="bx bxs-food-menu {{ request()->routeIs('umkm.coa.index') || request()->routeIs('umkm.coa.create') || request()->routeIs('umkm.coa.edit') ? 'text-white' : 'text-citradark-500 group-hover:text-citragreen-500' }} text-3xl"></i>
+                                class="bx bxs-food-menu {{ request()->routeIs('umkm.coa.index') || request()->routeIs('umkm.coa.show') || request()->routeIs('umkm.coa.create') || request()->routeIs('umkm.coa.edit') ? 'text-white' : 'text-citradark-500 group-hover:text-citragreen-500' }} text-3xl"></i>
                             <p
-                                class="{{ request()->routeIs('umkm.coa.index') || request()->routeIs('umkm.coa.create') || request()->routeIs('umkm.coa.edit') ? 'text-white' : 'group-hover:text-citragreen-500' }}">
+                                class="{{ request()->routeIs('umkm.coa.index') || request()->routeIs('umkm.coa.show') || request()->routeIs('umkm.coa.create') || request()->routeIs('umkm.coa.edit') ? 'text-white' : 'group-hover:text-citragreen-500' }}">
                                 Akun (COA)</p>
                         </div>
                         <i
-                            class="bx bx-chevron-right text-2xl {{ request()->routeIs('umkm.coa.index') || request()->routeIs('umkm.coa.create') || request()->routeIs('umkm.coa.edit') ? 'text-white' : 'group-hover:text-citragreen-500' }}"></i>
+                            class="bx bx-chevron-right text-2xl {{ request()->routeIs('umkm.coa.index') || request()->routeIs('umkm.coa.show') || request()->routeIs('umkm.coa.create') || request()->routeIs('umkm.coa.edit') ? 'text-white' : 'group-hover:text-citragreen-500' }}"></i>
                     </a>
                 </div>
 
@@ -297,6 +298,14 @@
         </div>
     </div>
 
+    <script>
+        $(function() {
+            $('#menu-toggle').click(function() {
+                $('#thisisnav').toggleClass('hidden');
+                $('div').toggleClass('w-16 sm:w-48');
+            });
+        });
+    </script>
 
 </body>
 

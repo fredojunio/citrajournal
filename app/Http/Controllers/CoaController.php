@@ -51,7 +51,7 @@ class CoaController extends Controller
      */
     public function show(Coa $coa)
     {
-        //
+        return view('user.coa.show_coa', compact('coa'));
     }
 
     /**

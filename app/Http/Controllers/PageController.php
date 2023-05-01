@@ -26,6 +26,11 @@ class PageController extends Controller
 
     public function dashboard()
     {
+        $kas = Coa::where('umkm_id', Auth::user()->umkm->id)
+            ->where('category_id', 1)
+            ->get()
+            ->first();
+
         // aset lancar
         $aset_lancar = Coa::where('category_id', '<=', 4)
             ->where('umkm_id', Auth::user()->umkm->id)
@@ -214,13 +219,75 @@ class PageController extends Controller
             ->where('umkm_id', Auth::user()->umkm->id)
             ->get();
 
+        $revenues = collect();
+        $revenuesDate = collect();
+        foreach ($pendapatan as $p) {
+            foreach ($p->coa_transactions as $t) {
+                $total = $t->debit - $t->credit;
+                if ($total < 0) {
+                    $total = -$total;
+                }
+                $revenues->push($total);
+                $revenuesDate->push($t->transaction->date);
+            }
+        }
+        foreach ($pendapatan_lain as $p) {
+            foreach ($p->coa_transactions as $t) {
+                $total = $t->debit - $t->credit;
+                if ($total < 0) {
+                    $total = -$total;
+                }
+                $revenues->push($total);
+                $revenuesDate->push($t->transaction->date);
+            }
+        }
+
+        $costs = collect();
+        $costsDate = collect();
+        foreach ($beban_pendapatan as $b) {
+            foreach ($b->coa_transactions as $t) {
+                $total = $t->debit - $t->credit;
+                if ($total < 0) {
+                    $total = -$total;
+                }
+                $costs->push($total);
+                $costsDate->push($t->transaction->date);
+            }
+        }
+        foreach ($beban_operasional as $b) {
+            foreach ($b->coa_transactions as $t) {
+                $total = $t->debit - $t->credit;
+                if ($total < 0) {
+                    $total = -$total;
+                }
+                $costs->push($total);
+                $costsDate->push($t->transaction->date);
+            }
+        }
+        foreach ($beban_lain as $b) {
+            foreach ($b->coa_transactions as $t) {
+                $total = $t->debit - $t->credit;
+                if ($total < 0) {
+                    $total = -$total;
+                }
+                $costs->push($total);
+                $costsDate->push($t->transaction->date);
+            }
+        }
+
+
         return view('user.main.dashboard', compact(
+            'kas',
             'zscore',
             'advices',
             'pendapatan',
             'labarugi',
             'transactions',
-            'sales'
+            'sales',
+            'revenues',
+            'costs',
+            'revenuesDate',
+            'costsDate',
         ));
     }
 }

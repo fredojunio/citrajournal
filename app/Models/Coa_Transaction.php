@@ -28,4 +28,25 @@ class Coa_Transaction extends Model
     {
         return $this->belongsTo(Coa::class, 'coa_id', 'id');
     }
+
+    public function currentBalance()
+    {
+        $coa_transactions = Coa_Transaction::where('coa_id', $this->coa_id)
+            ->whereHas('transaction', function ($q) {
+                $q->where('date', '<=', $this->transaction->date)
+                    ->where('created_at', '<=', $this->transaction->created_at);
+            })
+            ->get();
+
+        $balance = 0;
+        foreach ($coa_transactions as $ct) {
+            $balance += $ct->debit;
+            $balance -= $ct->credit;
+        }
+        if ($balance < 0) {
+            $balance = - ($balance);
+        }
+
+        return $balance;
+    }
 }

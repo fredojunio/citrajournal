@@ -34,6 +34,11 @@ class Coa extends Model
         return $this->belongsToMany(Transaction::class, 'coa_transaction', 'coa_id', 'transaction_id');
     }
 
+    public function coa_transactions()
+    {
+        return $this->hasMany(Coa_Transaction::class, 'coa_id', 'id');
+    }
+
     public function balance()
     {
         $coa_transactions = $this->hasMany(Coa_Transaction::class, 'coa_id', 'id');

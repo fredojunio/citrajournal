@@ -29,8 +29,18 @@
                         </thead>
                         @foreach ($coas as $coa)
                             <tr class="border border-b-1 border-r-0 border-t-0 border-l-0 border-zinc-400">
-                                <td class="p-3">{{ $coa->code }}</td>
-                                <td class="p-3">{{ $coa->name }}</td>
+                                <td class="p-3">
+                                    <a href="{{ route('umkm.coa.show', $coa) }}"
+                                        class="text-citradark-500 hover:text-citragreen-500 underline">
+                                        {{ $coa->code }}
+                                    </a>
+                                </td>
+                                <td class="p-3">
+                                    <a href="{{ route('umkm.coa.show', $coa) }}"
+                                        class="text-citradark-500 hover:text-citragreen-500 underline">
+                                        {{ $coa->name }}
+                                    </a>
+                                </td>
                                 <td class="p-3">{{ $coa->category->name }}</td>
                                 <td class="p-3">{{ AppHelper::rp($coa->balance()) }}</td>
                                 <td class="p-3 text-center">
