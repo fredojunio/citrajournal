@@ -191,7 +191,7 @@
                     <span class="ml-5">Pendapatan lain</span>
                 </td>
                 <td class="text-right">
-                    Rp. 0,-
+                    {{ AppHelper::rp($pendapatan_lain->map->balance()->sum() ?? 0) }}
                 </td>
             </tr>
             <tr>

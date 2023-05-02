@@ -239,6 +239,7 @@ class ReportController extends Controller
                 'aset_tetap',
                 'liabilitas_pendek',
                 'modal_saham',
+                'pendapatan_lain',
                 'labarugi',
                 'date'
             ));
@@ -328,6 +329,7 @@ class ReportController extends Controller
             'aset_tetap',
             'liabilitas_pendek',
             'modal_saham',
+            'pendapatan_lain',
             'labarugi',
             'date'
         ));

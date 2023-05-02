@@ -229,7 +229,7 @@
                                 </div>
                                 <div class="flex flex-col gap-2 text-right">
                                     <p>
-                                        Rp. 0,-
+                                        {{ AppHelper::rp($pendapatan_lain->map->balance()->sum() ?? 0) }}
                                     </p>
                                     <p>
                                         Rp. 0,-

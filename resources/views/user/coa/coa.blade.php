@@ -43,27 +43,29 @@
                                 </td>
                                 <td class="p-3">{{ $coa->category->name }}</td>
                                 <td class="p-3">{{ AppHelper::rp($coa->balance()) }}</td>
-                                <td class="p-3 text-center">
-                                    <x-dropdown align="left" width="48">
-                                        <x-slot name="trigger">
-                                            <button>
-                                                <i class="bx bx-dots-horizontal-rounded text-xl"></i>
-                                            </button>
-                                        </x-slot>
+                                @if ($coa->lock != true && $coa->balance != 0)
+                                    <td class="p-3 text-center">
+                                        <x-dropdown align="left" width="48">
+                                            <x-slot name="trigger">
+                                                <button>
+                                                    <i class="bx bx-dots-horizontal-rounded text-xl"></i>
+                                                </button>
+                                            </x-slot>
 
-                                        <x-slot name="content">
-                                            <x-dropdown-link data-modal="editCoaModal-{{ $loop->iteration }}"
-                                                data-modal-toggle="editCoaModal-{{ $loop->iteration }}">
-                                                {{ __('Edit') }}
-                                            </x-dropdown-link>
-                                            <x-dropdown-link data-modal="deleteCoaModal-{{ $loop->iteration }}"
-                                                data-modal-toggle="deleteCoaModal-{{ $loop->iteration }}"
-                                                class="text-red-500">
-                                                {{ __('Hapus') }}
-                                            </x-dropdown-link>
-                                        </x-slot>
-                                    </x-dropdown>
-                                </td>
+                                            <x-slot name="content">
+                                                <x-dropdown-link data-modal="editCoaModal-{{ $loop->iteration }}"
+                                                    data-modal-toggle="editCoaModal-{{ $loop->iteration }}">
+                                                    {{ __('Edit') }}
+                                                </x-dropdown-link>
+                                                <x-dropdown-link data-modal="deleteCoaModal-{{ $loop->iteration }}"
+                                                    data-modal-toggle="deleteCoaModal-{{ $loop->iteration }}"
+                                                    class="text-red-500">
+                                                    {{ __('Hapus') }}
+                                                </x-dropdown-link>
+                                            </x-slot>
+                                        </x-dropdown>
+                                    </td>
+                                @endif
                             </tr>
 
                             <!-- Edit modal -->
