@@ -36,9 +36,4 @@ class TransactionDetail extends Model
     {
         return $this->belongsTo(Coa::class, 'coa_id', 'id');
     }
-
-    public function paid()
-    {
-        return $this->belongsTo(Transaction::class, 'paid_id', 'id');
-    }
 }

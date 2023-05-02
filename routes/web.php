@@ -51,6 +51,8 @@ Route::group([
     'as' => 'umkm.'
 ], function () {
     Route::get('/umkm/dashboard', [PageController::class, 'dashboard'])->name('dashboard');
+    Route::get('/umkm/alltransactions', [PageController::class, 'alltransactions'])->name('alltransactions');
+    Route::get('/umkm/showtransaction/{id}', [PageController::class, 'showTransaction'])->name('showtransaction');
 
     Route::get('umkm/report/index', [ReportController::class, 'index'])->name('report.index');
     Route::get('report/labarugi', [ReportController::class, 'labarugi'])->name('report.labarugi');

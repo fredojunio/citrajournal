@@ -38,8 +38,10 @@
 
                 <!-- User -->
                 <div class="px-6 mt-6 flex justify-content-start w-full">
-                    <a href="{{ route('umkm.show', Auth::user()->umkm) }}" class="w-full flex gap-2 items-center">
-                        <i class="bx bxs-home-smile text-citradark-500 text-4xl"></i>
+                    <a href="{{ route('umkm.show', Auth::user()->umkm) }}"
+                        class="w-full flex gap-2 items-center {{ request()->routeIs('umkm.show') ? 'text-citragreen-500' : '' }}">
+                        <i
+                            class="bx bxs-home-smile {{ request()->routeIs('umkm.show') ? 'text-citragreen-500' : 'text-citradark-500' }} text-4xl"></i>
                         <p class="font-bold">{{ Auth::user()->umkm->name }}</p>
                     </a>
                 </div>
@@ -49,7 +51,8 @@
                     <div
                         class="{{ request()->routeIs('umkm.dashboard') ? 'w-full -left-3 top-0 h-full bg-citragreen-500 absolute rounded-r-full' : '' }}">
                     </div>
-                    <a href="{{ route('umkm.dashboard') }}" class="w-full flex justify-between items-center z-10 group">
+                    <a href="{{ route('umkm.dashboard') }}"
+                        class="w-full flex justify-between items-center z-10 group">
                         <div class="flex gap-2 items-center">
                             <i
                                 class="bx bxs-dashboard {{ request()->routeIs('umkm.dashboard') ? 'text-white' : 'text-citradark-500 group-hover:text-citragreen-500' }} text-3xl"></i>
@@ -230,6 +233,25 @@
                         </div>
                         <i
                             class="bx bx-chevron-right text-2xl {{ request()->routeIs('umkm.coa.index') || request()->routeIs('umkm.coa.show') || request()->routeIs('umkm.coa.create') || request()->routeIs('umkm.coa.edit') ? 'text-white' : 'group-hover:text-citragreen-500' }}"></i>
+                    </a>
+                </div>
+
+                <!-- Daftar Transaksi -->
+                <div class="relative px-6 mt-6 py-1 flex justify-content-start w-full">
+                    <div
+                        class="{{ request()->routeIs('umkm.alltransactions') || request()->routeIs('umkm.showtransaction') ? 'w-full -left-3 top-0 h-full bg-citragreen-500 absolute rounded-r-full' : '' }}">
+                    </div>
+                    <a href="{{ route('umkm.alltransactions') }}"
+                        class="w-full flex justify-between items-center z-10 group">
+                        <div class="flex gap-2 items-center">
+                            <i
+                                class="bx bxs-book-content {{ request()->routeIs('umkm.alltransactions') || request()->routeIs('umkm.showtransaction') ? 'text-white' : 'text-citradark-500 group-hover:text-citragreen-500' }} text-3xl"></i>
+                            <p
+                                class="{{ request()->routeIs('umkm.alltransactions') || request()->routeIs('umkm.showtransaction') ? 'text-white' : 'group-hover:text-citragreen-500' }}">
+                                Daftar Transaksi</p>
+                        </div>
+                        <i
+                            class="bx bx-chevron-right text-2xl {{ request()->routeIs('umkm.alltransactions') || request()->routeIs('umkm.showtransaction') ? 'text-white' : 'group-hover:text-citragreen-500' }}"></i>
                     </a>
                 </div>
 

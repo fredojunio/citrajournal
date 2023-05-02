@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Detail Biaya - ' . $transaction->invoice) }}
+            {{ __('Detail Transaksi - ' . $transaction->invoice) }}
         </h2>
     </x-slot>
 
@@ -46,29 +46,23 @@
                             <th class="p-2">Deskripsi</th>
                             <th class="p-2">Pajak</th>
                             <th class="p-2">Harga</th>
-                            <th class="p-2">Subtotal</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($transaction->details as $td)
-                            <tr>
-                                <td class="p-2">
-                                    {{ $td->coa->name }}
-                                </td>
-                                <td class="p-2">
-                                    {{ $td->description ?? '-' }}
-                                </td>
-                                <td class="flex gap-1 items-center p-2">
-                                    {{ $td->tax }}%
-                                </td>
-                                <td class="p-2">
-                                    {{ AppHelper::rp($td->price) }}
-                                </td>
-                                <td class="p-2">
-                                    {{ AppHelper::rp($td->price + ($td->price * $td->tax) / 100) }}
-                                </td>
-                            </tr>
-                        @endforeach
+                        <tr>
+                            <td class="p-2">
+                                {{ $transaction->paid->invoice ?? '' }}
+                            </td>
+                            <td class="p-2">
+                                {{ $transaction->details[0]->description ?? '-' }}
+                            </td>
+                            <td class="flex gap-1 items-center p-2">
+                                {{ $transaction->details[0]->tax }}%
+                            </td>
+                            <td class="p-2">
+                                {{ AppHelper::rp($transaction->details[0]->price) }}
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
 
@@ -104,12 +98,12 @@
                             class="inline-flex items-center px-4 py-2 bg-zinc-200 border border-transparent rounded-md font-bold text-xs text-zinc-500 hover:bg-zinc-300 focus:bg-zinc-400 active:bg-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-500 focus:ring-offset-2 transition ease-in-out duration-150">
                             Kembali
                         </a>
-                        <form class="inline-flex ml-2" action="{{ route('umkm.purchase.edit', $transaction->id) }}"
+                        {{-- <form class="inline-flex ml-2" action="{{ route('umkm.purchase.edit', $transaction->id) }}"
                             method="get">
                             <x-primary-button type="submit">
                                 Ubah
                             </x-primary-button>
-                        </form>
+                        </form> --}}
                     </div>
                 </div>
             </div>

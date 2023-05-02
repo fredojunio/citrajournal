@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Coa;
 use App\Models\Transaction;
 use App\Models\Umkm;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -289,5 +290,54 @@ class PageController extends Controller
             'revenuesDate',
             'costsDate',
         ));
+    }
+
+    public function alltransactions(Request $request)
+    {
+        $date = $request->date;
+        $due_date = $request->due_date;
+        if (!empty($date)) {
+            $transactions = Transaction::where('umkm_id', Auth::user()->umkm->id)
+                ->whereBetween('date', [Carbon::createFromFormat('d/m/Y', $date)->format('Y-m-d'), Carbon::createFromFormat('d/m/Y', $due_date)->format('Y-m-d')])
+                ->orderBy('date')
+                ->get();
+
+            return view('user.main.alltransactions', compact(
+                'transactions',
+                'date',
+                'due_date'
+            ));
+        }
+        return view('user.main.alltransactions');
+    }
+
+    public function showTransaction($id)
+    {
+        $transaction = Transaction::findOrFail($id);
+
+        switch ($transaction->category_id) {
+            case 1:
+                return redirect()->route('umkm.sale.show', $id);
+                break;
+            case 2:
+                return redirect()->route('umkm.purchase.show', $id);
+                break;
+            case 3:
+                return redirect()->route('umkm.cost.show', $id);
+                break;
+            case 4:
+            case 5:
+            case 6:
+                return view('user.main.show_transaction_bank', compact('transaction'));
+                break;
+            case 7:
+            case 8:
+                return view('user.main.show_transaction_payment', compact('transaction'));
+                break;
+            default:
+                return redirect()->back();
+        }
+        if ($transaction->category_id == 1 && $transaction->category_id == 1) {
+        }
     }
 }

@@ -305,12 +305,12 @@ class SaleController extends Controller
             'umkm_id' => Auth::user()->umkm->id,
             'taxtotal' => 0,
             'subtotal' => $total,
-            'cuttotal' => 0
+            'cuttotal' => 0,
+            'paid_id' => $transaction_id,
         ]);
 
         TransactionDetail::create([
             'transaction_id' => $transaction->id,
-            'paid_id' => $transaction_id,
             'price' => $total,
             'tax' => 0,
         ]);
@@ -390,12 +390,12 @@ class SaleController extends Controller
                 'umkm_id' => Auth::user()->umkm->id,
                 'taxtotal' => 0,
                 'subtotal' => $total,
-                'cuttotal' => 0
+                'cuttotal' => 0,
+                'paid_id' => $transaction_id,
             ]);
 
             TransactionDetail::create([
                 'transaction_id' => $transaction->id,
-                'paid_id' => $transaction_id,
                 'price' => $total,
                 'tax' => 0,
             ]);
