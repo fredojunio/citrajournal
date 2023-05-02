@@ -17,6 +17,7 @@ class Coa extends Model
         'name',
         'category_id',
         'umkm_id',
+        'lock',
     ];
 
     public function umkm()

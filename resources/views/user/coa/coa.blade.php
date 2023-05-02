@@ -43,7 +43,7 @@
                                 </td>
                                 <td class="p-3">{{ $coa->category->name }}</td>
                                 <td class="p-3">{{ AppHelper::rp($coa->balance()) }}</td>
-                                @if ($coa->lock != true && $coa->balance != 0)
+                                @if ($coa->lock != true && $coa->balance() == 0)
                                     <td class="p-3 text-center">
                                         <x-dropdown align="left" width="48">
                                             <x-slot name="trigger">
@@ -64,6 +64,10 @@
                                                 </x-dropdown-link>
                                             </x-slot>
                                         </x-dropdown>
+                                    </td>
+                                @else
+                                    <td class="p-3 text-center">
+                                        <i class="bx bx-lock text-lg"></i>
                                     </td>
                                 @endif
                             </tr>

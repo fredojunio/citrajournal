@@ -108,7 +108,7 @@ class UmkmController extends Controller
             'name' => 'Kas',
             'category_id' => 1,
             'umkm_id' => $umkm_id,
-            'lock' => true,
+            'lock' => 1,
         ]);
 
         Coa::create([
@@ -123,7 +123,7 @@ class UmkmController extends Controller
             'name' => 'Piutang Usaha',
             'category_id' => 2,
             'umkm_id' => $umkm_id,
-            'lock' => true,
+            'lock' => 1,
         ]);
 
         Coa::create([
@@ -131,7 +131,7 @@ class UmkmController extends Controller
             'name' => 'Piutang Belum Ditagih',
             'category_id' => 2,
             'umkm_id' => $umkm_id,
-            'lock' => true,
+            'lock' => 1,
         ]);
 
         Coa::create([
@@ -139,7 +139,7 @@ class UmkmController extends Controller
             'name' => 'Persediaan Barang',
             'category_id' => 3,
             'umkm_id' => $umkm_id,
-            'lock' => true,
+            'lock' => 1,
         ]);
 
         Coa::create([
@@ -175,7 +175,7 @@ class UmkmController extends Controller
             'name' => 'Biaya Dibayar Di Muka',
             'category_id' => 4,
             'umkm_id' => $umkm_id,
-            'lock' => true,
+            'lock' => 1,
         ]);
 
         Coa::create([
@@ -190,7 +190,7 @@ class UmkmController extends Controller
             'name' => 'PPN Masukan',
             'category_id' => 4,
             'umkm_id' => $umkm_id,
-            'lock' => true,
+            'lock' => 1,
         ]);
 
         Coa::create([
@@ -254,7 +254,7 @@ class UmkmController extends Controller
             'name' => 'Aset Tetap - Perlengkapan Kantor',
             'category_id' => 5,
             'umkm_id' => $umkm_id,
-            'lock' => true,
+            'lock' => 1,
         ]);
 
         Coa::create([
@@ -332,7 +332,7 @@ class UmkmController extends Controller
             'name' => 'Hutang Usaha',
             'category_id' => 8,
             'umkm_id' => $umkm_id,
-            'lock' => true,
+            'lock' => 1,
         ]);
 
         Coa::create([
@@ -340,7 +340,7 @@ class UmkmController extends Controller
             'name' => 'Hutang Belum Ditagih',
             'category_id' => 8,
             'umkm_id' => $umkm_id,
-            'lock' => true,
+            'lock' => 1,
         ]);
 
         Coa::create([
@@ -369,7 +369,7 @@ class UmkmController extends Controller
             'name' => 'Pendapatan Diterima Di Muka',
             'category_id' => 9,
             'umkm_id' => $umkm_id,
-            'lock' => true,
+            'lock' => 1,
         ]);
 
         Coa::create([
@@ -405,7 +405,7 @@ class UmkmController extends Controller
             'name' => 'PPN Keluaran',
             'category_id' => 9,
             'umkm_id' => $umkm_id,
-            'lock' => true,
+            'lock' => 1,
         ]);
 
         Coa::create([
@@ -434,7 +434,7 @@ class UmkmController extends Controller
             'name' => 'Hutang Pajak - PPh 29',
             'category_id' => 9,
             'umkm_id' => $umkm_id,
-            'lock' => true,
+            'lock' => 1,
         ]);
 
         Coa::create([
@@ -505,7 +505,7 @@ class UmkmController extends Controller
             'name' => 'Ekuitas Saldo Awal',
             'category_id' => 11,
             'umkm_id' => $umkm_id,
-            'lock' => true,
+            'lock' => 1,
         ]);
 
         Coa::create([
@@ -513,7 +513,7 @@ class UmkmController extends Controller
             'name' => 'Pendapatan',
             'category_id' => 12,
             'umkm_id' => $umkm_id,
-            'lock' => true,
+            'lock' => 1,
         ]);
 
         Coa::create([
@@ -521,7 +521,7 @@ class UmkmController extends Controller
             'name' => 'Diskon Penjualan',
             'category_id' => 12,
             'umkm_id' => $umkm_id,
-            'lock' => true,
+            'lock' => 1,
         ]);
 
         Coa::create([
@@ -529,7 +529,7 @@ class UmkmController extends Controller
             'name' => 'Retur Penjualan',
             'category_id' => 12,
             'umkm_id' => $umkm_id,
-            'lock' => true,
+            'lock' => 1,
         ]);
 
         Coa::create([
@@ -537,7 +537,7 @@ class UmkmController extends Controller
             'name' => 'Pendapatan Belum Ditagih',
             'category_id' => 12,
             'umkm_id' => $umkm_id,
-            'lock' => true,
+            'lock' => 1,
         ]);
 
         Coa::create([
@@ -545,7 +545,7 @@ class UmkmController extends Controller
             'name' => 'Beban Pokok Pendapatan',
             'category_id' => 13,
             'umkm_id' => $umkm_id,
-            'lock' => true,
+            'lock' => 1,
         ]);
 
         Coa::create([
@@ -553,7 +553,7 @@ class UmkmController extends Controller
             'name' => 'Diskon Pembelian',
             'category_id' => 13,
             'umkm_id' => $umkm_id,
-            'lock' => true,
+            'lock' => 1,
         ]);
 
         Coa::create([
@@ -568,7 +568,7 @@ class UmkmController extends Controller
             'name' => 'Pengiriman & Pengangkutan',
             'category_id' => 13,
             'umkm_id' => $umkm_id,
-            'lock' => true,
+            'lock' => 1,
         ]);
 
         Coa::create([
@@ -583,7 +583,7 @@ class UmkmController extends Controller
             'name' => 'Biaya Produksi',
             'category_id' => 13,
             'umkm_id' => $umkm_id,
-            'lock' => true,
+            'lock' => 1,
         ]);
 
         Coa::create([
@@ -934,7 +934,7 @@ class UmkmController extends Controller
             'name' => 'Pengeluaran Barang Rusak',
             'category_id' => 14,
             'umkm_id' => $umkm_id,
-            'lock' => true,
+            'lock' => 1,
         ]);
 
         Coa::create([
@@ -963,7 +963,7 @@ class UmkmController extends Controller
             'name' => 'Pendapatan Lain - lain',
             'category_id' => 15,
             'umkm_id' => $umkm_id,
-            'lock' => true,
+            'lock' => 1,
         ]);
 
         Coa::create([
@@ -992,7 +992,7 @@ class UmkmController extends Controller
             'name' => 'Penyesuaian Persediaan',
             'category_id' => 16,
             'umkm_id' => $umkm_id,
-            'lock' => true,
+            'lock' => 1,
         ]);
 
         Coa::create([
