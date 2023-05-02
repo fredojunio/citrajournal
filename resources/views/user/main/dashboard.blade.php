@@ -6,7 +6,7 @@
     </x-slot>
 
     <div class="py-6">
-        <div class="max-w-7xl mx-auto px-4">
+        <div class="max-w-7xl transition-all duration-200 mx-auto px-4">
             @if ($zscore == 0)
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-10">
