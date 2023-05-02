@@ -56,9 +56,8 @@
                                 <div class="flex items-center gap-1">
                                     <x-text-input form="addcost" datepicker datepicker-autohide id="date"
                                         class="block mt-1" type="text" name="date" datepicker-format="dd/mm/yyyy"
-                                        :value="\Carbon\Carbon::now()->format('d-m-Y')" required autofocus autocomplete="date"
-                                        placeholder="Tanggal" /> <label for="date" class="cursor-pointer"
-                                        form="addcost">
+                                        :value="\Carbon\Carbon::now()->format('d-m-Y')" required autocomplete="date" placeholder="Tanggal" /> <label
+                                        for="date" class="cursor-pointer" form="addcost">
                                         <i class=" bx bxs-calendar text-citradark-500 text-xl"></i>
                                     </label>
                                 </div>
@@ -96,20 +95,20 @@
                             </td>
                             <td class="p-2">
                                 <x-text-input form="addcost" class="block mt-1 w-full" type="text"
-                                    name="description[]" :value="old('description')" autofocus autocomplete="description"
+                                    name="description[]" :value="old('description')" autocomplete="description"
                                     placeholder="Deskripsi" />
                             </td>
                             <td class="flex gap-1 items-center p-2">
                                 <x-text-input form="addcost" class="taxtotal block mt-1 w-20" type="text"
-                                    onchange="calculateTotal()" name="tax[]" :value="old('tax')" autofocus
-                                    autocomplete="tax" placeholder="" />
+                                    onchange="calculateTotal()" name="tax[]" :value="old('tax')" autocomplete="tax"
+                                    placeholder="" />
                                 %
                             </td>
                             <td class="p-2">
                                 <x-text-input type="text" form="addcost"
                                     class="sumtotal rupiahInput block mt-1 w-full" name="price[]"
-                                    onchange="calculateTotal()" :value="old('price')" required autofocus
-                                    autocomplete="price" placeholder="Harga" />
+                                    onchange="calculateTotal()" :value="old('price')" required autocomplete="price"
+                                    placeholder="Harga" />
                             </td>
                             {{-- <td class="p-2">
                                 <button class="">
@@ -134,19 +133,19 @@
                                 </td>
                                 <td class="p-2">
                                     <x-text-input form="addcost" class="block mt-1 w-full" type="text"
-                                        name="description[]" :value="old('description')" autofocus autocomplete="description"
+                                        name="description[]" :value="old('description')" autocomplete="description"
                                         placeholder="Deskripsi" />
                                 </td>
                                 <td class="flex gap-1 items-center p-2">
                                     <x-text-input form="addcost" class="taxtotal block mt-1 w-20" type="text"
-                                        onchange="calculateTotal()" name="tax[]" :value="old('tax')" autofocus
+                                        onchange="calculateTotal()" name="tax[]" :value="old('tax')"
                                         autocomplete="tax" placeholder="" />
                                     %
                                 </td>
                                 <td class="p-2">
                                     <x-text-input type="text" form="addcost"
                                         class="sumtotal rupiahInput block mt-1 w-full" onchange="calculateTotal()"
-                                        name="price[]" :value="old('price')" required autofocus autocomplete="price"
+                                        name="price[]" :value="old('price')" required autocomplete="price"
                                         placeholder="Harga" />
                                 </td>
                                 <td class="p-2">
@@ -180,8 +179,8 @@
                         <div class="flex gap-1 items-center">
                             <p class="text-left">Potongan</p>
                             <x-text-input id="cut" class="block mt-1 w-12" type="text"
-                                onchange="calculateTotal()" name="cut" :value="old('cut')" autofocus
-                                autocomplete="tax" placeholder="" />
+                                onchange="calculateTotal()" name="cut" :value="old('cut')" autocomplete="tax"
+                                placeholder="" />
                             %
                         </div>
                         <p class="text-right" id="cuttotal">Rp. 0,-</p>
@@ -236,7 +235,7 @@
                     <div class="flex space-x-16 items-center">
                         <label for="name" class="w-32">Nama</label>
                         <x-text-input form="addcontact" id="name" class="block w-full" type="text"
-                            name="name" :value="old('name')" required autofocus autocomplete="name" />
+                            name="name" :value="old('name')" required autocomplete="name" />
                     </div>
 
                     <div class="flex space-x-16 items-center">
@@ -268,19 +267,19 @@
                     <div class="flex space-x-16 items-center">
                         <label for="phone" class="w-32">Handphone</label>
                         <x-text-input form="addcontact" id="phone" class="block w-full" type="text"
-                            name="phone" :value="old('phone')" autofocus autocomplete="phone" />
+                            name="phone" :value="old('phone')" autocomplete="phone" />
                     </div>
 
                     <div class="flex space-x-16 items-center">
                         <label for="email" class="w-32">Email</label>
                         <x-text-input form="addcontact" id="email" class="block w-full" type="text"
-                            name="email" :value="old('email')" autofocus autocomplete="email" />
+                            name="email" :value="old('email')" autocomplete="email" />
                     </div>
 
                     <div class="flex space-x-16 items-center">
                         <label for="address" class="w-32">Alamat</label>
                         <x-text-input form="addcontact" id="address" class="block w-full" type="text"
-                            name="address" :value="old('address')" autofocus autocomplete="address" />
+                            name="address" :value="old('address')" autocomplete="address" />
                     </div>
 
                 </div>

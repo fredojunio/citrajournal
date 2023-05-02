@@ -38,7 +38,7 @@
 
                 <!-- User -->
                 <div class="px-6 mt-6 flex justify-content-start w-full">
-                    <a href="" class="w-full flex gap-2 items-center">
+                    <a href="{{ route('umkm.show', Auth::user()->umkm) }}" class="w-full flex gap-2 items-center">
                         <i class="bx bxs-home-smile text-citradark-500 text-4xl"></i>
                         <p class="font-bold">{{ Auth::user()->umkm->name }}</p>
                     </a>

@@ -20,7 +20,7 @@
                                                 ->startOfMonth()
                                                 ->format('d-m-Y')
                                             : $date"
-                                        required autofocus autocomplete="date" />
+                                        required autocomplete="date" />
                                     <label for="date" class="cursor-pointer">
                                         <i class=" bx bxs-calendar text-citradark-500 text-xl"></i>
                                     </label>

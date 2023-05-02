@@ -10,7 +10,7 @@
                 <div>
                     <x-input-label for="name" :value="__('Nama Perusahaan')" />
                     <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')"
-                        required autofocus autocomplete="name" placeholder="Masukkan nama perusahaan" />
+                        required autocomplete="name" placeholder="Masukkan nama perusahaan" />
                     <x-input-error :messages="$errors->get('name')" class="mt-2" />
                 </div>
 
@@ -26,7 +26,7 @@
                 <div class="mt-4">
                     <x-input-label for="phone" :value="__('Nomor Telepon')" />
                     <x-text-input id="phone" class="block mt-1 w-full" type="tel" name="phone"
-                        :value="old('phone')" autofocus autocomplete="phone" placeholder="Masukkan nomor telepon" />
+                        :value="old('phone')" autocomplete="phone" placeholder="Masukkan nomor telepon" />
                     <x-input-error :messages="$errors->get('phone')" class="mt-2" />
                 </div>
 
@@ -34,7 +34,7 @@
                 <div class="mt-4">
                     <x-input-label for="address" :value="__('Alamat')" />
                     <x-text-input id="address" class="block mt-1 w-full" type="text" name="address"
-                        :value="old('address')" autofocus autocomplete="address" placeholder="Masukkan alamat" />
+                        :value="old('address')" autocomplete="address" placeholder="Masukkan alamat" />
                     <x-input-error :messages="$errors->get('address')" class="mt-2" />
                 </div>
 
@@ -63,7 +63,7 @@
                 <div class="mt-4">
                     <x-input-label for="employees" :value="__('Jumlah Karyawan')" />
                     <x-text-input id="employees" class="block mt-1 w-full" type="number" name="employees"
-                        :value="old('employees')" autofocus autocomplete="employees" placeholder="Masukkan jumlah karyawan" />
+                        :value="old('employees')" autocomplete="employees" placeholder="Masukkan jumlah karyawan" />
                     <x-input-error :messages="$errors->get('address')" class="mt-2" />
                 </div>
 

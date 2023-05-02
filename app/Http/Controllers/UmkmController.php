@@ -52,7 +52,7 @@ class UmkmController extends Controller
      */
     public function show(Umkm $umkm)
     {
-        //
+        return view('user.umkm.show_umkm', compact('umkm'));
     }
 
     /**
@@ -68,7 +68,12 @@ class UmkmController extends Controller
      */
     public function update(Request $request, Umkm $umkm)
     {
-        //
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+        ]);
+
+        $umkm->update($request->all());
+        return redirect()->route('umkm.show', $umkm);
     }
 
     /**
