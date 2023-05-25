@@ -93,6 +93,13 @@
                                         </x-slot>
 
                                         <x-slot name="content">
+                                            @if ($sale->status != 'paid')
+                                                <x-dropdown-link data-modal="payModal-{{ $loop->iteration }}"
+                                                    data-modal-toggle="payModal-{{ $loop->iteration }}"
+                                                    class="cursor-pointer">
+                                                    {{ __('Lunasi') }}
+                                                </x-dropdown-link>
+                                            @endif
                                             <x-dropdown-link :href="route('umkm.sale.edit', $sale->id)">
                                                 {{ __('Edit') }}
                                             </x-dropdown-link>

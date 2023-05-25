@@ -252,7 +252,7 @@ class PurchaseController extends Controller
     public function partial_payment(Request $request)
     {
         $kas = Coa::where('umkm_id', Auth::user()->umkm->id)
-            ->where('category_id_', 1)
+            ->where('category_id_', 2)
             ->get()
             ->first();
         $this->create_purchase_payment($request->total, $kas->id, $request->date, $request->transaction_id);

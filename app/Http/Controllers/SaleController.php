@@ -269,6 +269,16 @@ class SaleController extends Controller
         }
     }
 
+    public function partial_payment(Request $request)
+    {
+        $kas = Coa::where('umkm_id', Auth::user()->umkm->id)
+            ->where('category_id_', 1)
+            ->get()
+            ->first();
+        $this->create_sale_payment($request->total, $kas->id, $request->date, $request->transaction_id);
+        return redirect()->route('umkm.sale.index');
+    }
+
     public function create_sale_payment($total, $kas_id, $date, $transaction_id): void
     {
         // update last transaction remaining bill
