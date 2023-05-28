@@ -40,8 +40,10 @@ class PurchaseController extends Controller
     public function create()
     {
         $contacts = Contact::where('umkm_id', Auth::user()->umkm->id)
-            ->where('type', 'Supplier')
-            ->orWhere('type', 'Lainnya')
+            ->where(function ($q) {
+                $q->where('type', 'Supplier')
+                    ->orWhere('type', 'Lainnya');
+            })
             ->get();
 
         $products = Product::where('umkm_id', Auth::user()->umkm->id)
