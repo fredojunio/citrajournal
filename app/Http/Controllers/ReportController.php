@@ -72,6 +72,63 @@ class ReportController extends Controller
                     return $q->balance() != 0;
                 });
 
+
+            $revenues = collect();
+            $revenuesDate = collect();
+            foreach ($pendapatan as $p) {
+                foreach ($p->coa_transactions as $t) {
+                    $total = $t->debit - $t->credit;
+                    if ($total < 0) {
+                        $total = -$total;
+                    }
+                    $revenues->push($total);
+                    $revenuesDate->push($t->transaction->date);
+                }
+            }
+            foreach ($pendapatan_lain as $p) {
+                foreach ($p->coa_transactions as $t) {
+                    $total = $t->debit - $t->credit;
+                    if ($total < 0) {
+                        $total = -$total;
+                    }
+                    $revenues->push($total);
+                    $revenuesDate->push($t->transaction->date);
+                }
+            }
+
+            $costs = collect();
+            $costsDate = collect();
+            foreach ($beban_pendapatan as $b) {
+                foreach ($b->coa_transactions as $t) {
+                    $total = $t->debit - $t->credit;
+                    if ($total < 0) {
+                        $total = -$total;
+                    }
+                    $costs->push($total);
+                    $costsDate->push($t->transaction->date);
+                }
+            }
+            foreach ($beban_operasional as $b) {
+                foreach ($b->coa_transactions as $t) {
+                    $total = $t->debit - $t->credit;
+                    if ($total < 0) {
+                        $total = -$total;
+                    }
+                    $costs->push($total);
+                    $costsDate->push($t->transaction->date);
+                }
+            }
+            foreach ($beban_lain as $b) {
+                foreach ($b->coa_transactions as $t) {
+                    $total = $t->debit - $t->credit;
+                    if ($total < 0) {
+                        $total = -$total;
+                    }
+                    $costs->push($total);
+                    $costsDate->push($t->transaction->date);
+                }
+            }
+
             return view('user.report.labarugi', compact(
                 'pendapatan',
                 'beban_pendapatan',
@@ -79,7 +136,11 @@ class ReportController extends Controller
                 'pendapatan_lain',
                 'beban_lain',
                 'date',
-                'due_date'
+                'due_date',
+                'revenues',
+                'costs',
+                'revenuesDate',
+                'costsDate',
             ));
         }
 

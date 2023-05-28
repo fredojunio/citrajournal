@@ -217,8 +217,103 @@
                         </p>
                     </div>
                 </div>
+                <div class="mt-5 bg-white shadow-md sm:rounded-lg p-4" id="labarugi">
+
+                </div>
             @endisset
         </div>
     </div>
 
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script>
+        var revenueData = <?php echo json_encode($revenuesDate ?? ''); ?>;
+        var costData = <?php echo json_encode($costsDate ?? ''); ?>;
+        var revenueValue = <?php echo json_encode($revenues ?? ''); ?>;
+        var costValue = <?php echo json_encode($costs ?? ''); ?>;
+
+        var printedRevenueData = revenueData.map(function(rev, index) {
+            return [Date.parse(rev), revenueValue[index]];
+        }).slice(-30);
+
+        var printedCostData = costData.map(function(cost, index) {
+            return [Date.parse(cost), costValue[index]];
+        }).slice(-30);
+
+        Highcharts.chart('labarugi', {
+            chart: {
+                type: 'column' // set the chart type to "bar"
+            },
+            title: {
+                text: 'Grafik Laporan Laba Rugi'
+            },
+            subtitle: {
+                text: 'Source: citrajournal'
+            },
+            xAxis: {
+                type: 'datetime',
+                dateTimeLabelFormats: {
+                    day: '%e %b'
+                },
+                tickInterval: 7 * 24 * 60 * 60 * 1000, // interval 7 hari
+                labels: {
+                    formatter: function() {
+                        var start = Highcharts.dateFormat('%e %b', this.value);
+                        var end = Highcharts.dateFormat('%e %b', this.value + (6 * 24 * 60 * 60 *
+                            1000)); // 6 hari berikutnya
+                        return start + ' - ' + end;
+                    }
+                }
+            },
+            yAxis: {
+                title: {
+                    text: 'Total'
+                },
+                labels: {
+                    formatter: function() {
+                        return this.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    }
+                }
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'middle'
+            },
+            plotOptions: {
+                series: {
+                    allowPointSelect: true
+                }
+            },
+            colors: ['#2A69FC', '#E02A52'],
+            series: [{
+                name: 'Pemasukan',
+                data: printedRevenueData,
+                dataLabels: {
+                    enabled: true,
+                }
+            }, {
+                name: 'Biaya',
+                data: printedCostData,
+                center: ['85%', '25%'],
+                size: 80,
+                dataLabels: {
+                    enabled: true,
+                }
+            }],
+            responsive: {
+                rules: [{
+                    condition: {
+                        maxWidth: 500
+                    },
+                    chartOptions: {
+                        legend: {
+                            layout: 'horizontal',
+                            align: 'center',
+                            verticalAlign: 'bottom'
+                        }
+                    }
+                }]
+            }
+        });
+    </script>
 </x-app-layout>
