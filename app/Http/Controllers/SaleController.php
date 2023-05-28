@@ -272,7 +272,7 @@ class SaleController extends Controller
     public function partial_payment(Request $request)
     {
         $kas = Coa::where('umkm_id', Auth::user()->umkm->id)
-            ->where('category_id_', 1)
+            ->where('category_id', 1)
             ->get()
             ->first();
         $this->create_sale_payment($request->total, $kas->id, $request->date, $request->transaction_id);
@@ -311,7 +311,7 @@ class SaleController extends Controller
             'total' => $total,
             'cut' => 0,
             'date' => Carbon::createFromFormat('d/m/Y', $date)->format('Y-m-d'),
-            'category_id' => 8,
+            'category_id' => 7,
             'umkm_id' => Auth::user()->umkm->id,
             'taxtotal' => 0,
             'subtotal' => $total,
@@ -396,7 +396,7 @@ class SaleController extends Controller
                 'total' => $total,
                 'cut' => 0,
                 'date' => Carbon::createFromFormat('d/m/Y', $date)->format('Y-m-d'),
-                'category_id' => 8,
+                'category_id' => 7,
                 'umkm_id' => Auth::user()->umkm->id,
                 'taxtotal' => 0,
                 'subtotal' => $total,

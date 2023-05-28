@@ -141,7 +141,7 @@
                                         <!-- Modal body -->
                                         <div class="p-6 space-y-6">
                                             <form action="{{ route('umkm.purchase.partial_payment') }}"
-                                                id="partial_payment" method="post">
+                                                id="partial_payment-{{ $loop->iteration }}" method="post">
                                                 @csrf
                                                 <div class="flex space-x-16 items-center">
                                                     <label for="date-{{ $loop->iteration }}"
@@ -160,7 +160,7 @@
                                                 <div class="flex space-x-16 items-center">
                                                     <label for="total-{{ $loop->iteration }}"
                                                         class="w-32">Nominal</label>
-                                                    <x-text-input form="editproduct-{{ $loop->iteration }}"
+                                                    <x-text-input 
                                                         id="total-{{ $loop->iteration }}" class="block w-full"
                                                         type="text" name="total" :value="$purchase->total" required
                                                         autofocus autocomplete="total" />
@@ -176,7 +176,7 @@
                                                 Batal
                                             </button>
 
-                                            <x-primary-button type="submit" form="partial_payment" class="ml-2">
+                                            <x-primary-button type="submit" form="partial_payment-{{ $loop->iteration }}" class="ml-2">
                                                 Bayar
                                             </x-primary-button>
                                         </div>
