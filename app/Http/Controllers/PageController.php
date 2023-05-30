@@ -245,6 +245,8 @@ class PageController extends Controller
 
         $costs = collect();
         $costsDate = collect();
+        $expenses = collect();
+        $expensesName = collect();
         foreach ($beban_pendapatan as $b) {
             foreach ($b->coa_transactions as $t) {
                 $total = $t->debit - $t->credit;
@@ -253,6 +255,8 @@ class PageController extends Controller
                 }
                 $costs->push($total);
                 $costsDate->push($t->transaction->date);
+
+                $expenses->push(['name' => $t->coa->name, 'y' => $total]);
             }
         }
         foreach ($beban_operasional as $b) {
@@ -263,6 +267,8 @@ class PageController extends Controller
                 }
                 $costs->push($total);
                 $costsDate->push($t->transaction->date);
+
+                $expenses->push(['name' => $t->coa->name, 'y' => $total]);
             }
         }
         foreach ($beban_lain as $b) {
@@ -273,9 +279,10 @@ class PageController extends Controller
                 }
                 $costs->push($total);
                 $costsDate->push($t->transaction->date);
+
+                $expenses->push(['name' => $t->coa->name, 'y' => $total]);
             }
         }
-
 
         return view('user.main.dashboard', compact(
             'kas',
@@ -289,6 +296,7 @@ class PageController extends Controller
             'costs',
             'revenuesDate',
             'costsDate',
+            'expenses'
         ));
     }
 

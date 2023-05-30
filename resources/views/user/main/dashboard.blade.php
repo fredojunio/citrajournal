@@ -59,71 +59,76 @@
                 </div>
 
                 <div class="mt-5 grid grid-cols-2 gap-4">
-                    <div class="flex gap-4">
-                        <div class="flex grow flex-col gap-4">
-                            <div class="w-full bg-white shadow-sm sm:rounded-md p-4">
-                                <div class="flex items-center gap-2">
-                                    <div
-                                        class="bg-citradark-100 rounded-full w-14 h-14 flex justify-items-center items-center">
-                                        <i class="text-citradark-500 bx bxs-purchase-tag text-3xl m-auto"></i>
+                    <div>
+                        <div class="flex gap-4">
+                            <div class="flex grow flex-col gap-4">
+                                <div class="w-full bg-white shadow-sm sm:rounded-md p-4">
+                                    <div class="flex items-center gap-2">
+                                        <div
+                                            class="bg-citradark-100 rounded-full w-14 h-14 flex justify-items-center items-center">
+                                            <i class="text-citradark-500 bx bxs-purchase-tag text-3xl m-auto"></i>
+                                        </div>
+                                        <div>
+                                            <p class="">Total Penjualan</p>
+                                            <h2 class="text-2xl font-bold">
+                                                {{ AppHelper::rp($pendapatan->map->balance()->sum() ?? 0) }}
+                                            </h2>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <p class="">Total Penjualan</p>
-                                        <h2 class="text-2xl font-bold">
-                                            {{ AppHelper::rp($pendapatan->map->balance()->sum() ?? 0) }}
-                                        </h2>
+                                </div>
+                                <div class="w-full bg-white shadow-sm sm:rounded-md p-4">
+                                    <div class="flex items-center gap-2">
+                                        <div
+                                            class="bg-{{ $labarugi >= 0 ? 'citragreen' : 'citrared' }}-100 rounded-full w-14 h-14 flex justify-items-center items-center">
+                                            <i
+                                                class="text-{{ $labarugi >= 0 ? 'citragreen' : 'citrared' }}-500 bx bxs-bar-chart-alt-2 text-3xl m-auto"></i>
+                                        </div>
+                                        <div>
+                                            <p class="">Total {{ $labarugi >= 0 ? 'Keuntungan' : 'Kerugian' }}</p>
+                                            <h2 class="text-2xl font-bold">
+                                                {{ AppHelper::rp($labarugi ?? 0) }}
+                                            </h2>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="w-full bg-white shadow-sm sm:rounded-md p-4">
-                                <div class="flex items-center gap-2">
-                                    <div
-                                        class="bg-{{ $labarugi >= 0 ? 'citragreen' : 'citrared' }}-100 rounded-full w-14 h-14 flex justify-items-center items-center">
-                                        <i
-                                            class="text-{{ $labarugi >= 0 ? 'citragreen' : 'citrared' }}-500 bx bxs-bar-chart-alt-2 text-3xl m-auto"></i>
+                            <div class="flex flex-col gap-4">
+                                <div class="bg-white shadow-sm sm:rounded-md p-4">
+                                    <div class="flex items-center gap-2">
+                                        <div
+                                            class="bg-citrablue-100 rounded-full w-14 h-14 flex justify-items-center items-center">
+                                            <i class="text-citrablue-500 bx bxs-wallet text-3xl m-auto"></i>
+                                        </div>
+                                        <div>
+                                            <p class="">Total Transaksi</p>
+                                            <h2 class="text-2xl font-bold">
+                                                {{ $transactions }}
+                                            </h2>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <p class="">Total {{ $labarugi >= 0 ? 'Keuntungan' : 'Kerugian' }}</p>
-                                        <h2 class="text-2xl font-bold">
-                                            {{ AppHelper::rp($labarugi ?? 0) }}
-                                        </h2>
+                                </div>
+                                <div class="bg-white shadow-sm sm:rounded-md p-4">
+                                    <div class="flex items-center gap-2">
+                                        <div
+                                            class="bg-citrayellow-100 rounded-full w-14 h-14 flex justify-items-center items-center">
+                                            <i class="text-citrayellow-500 bx bxs-box text-3xl m-auto"></i>
+                                        </div>
+                                        <div>
+                                            <p class="">Produk Terjual</p>
+                                            <h2 class="text-2xl font-bold">
+                                                {{ $sales->map->details->flatten()->sum('quantity') }}
+                                            </h2>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="flex flex-col gap-4">
-                            <div class="bg-white shadow-sm sm:rounded-md p-4">
-                                <div class="flex items-center gap-2">
-                                    <div
-                                        class="bg-citrablue-100 rounded-full w-14 h-14 flex justify-items-center items-center">
-                                        <i class="text-citrablue-500 bx bxs-wallet text-3xl m-auto"></i>
-                                    </div>
-                                    <div>
-                                        <p class="">Total Transaksi</p>
-                                        <h2 class="text-2xl font-bold">
-                                            {{ $transactions }}
-                                        </h2>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="bg-white shadow-sm sm:rounded-md p-4">
-                                <div class="flex items-center gap-2">
-                                    <div
-                                        class="bg-citrayellow-100 rounded-full w-14 h-14 flex justify-items-center items-center">
-                                        <i class="text-citrayellow-500 bx bxs-box text-3xl m-auto"></i>
-                                    </div>
-                                    <div>
-                                        <p class="">Produk Terjual</p>
-                                        <h2 class="text-2xl font-bold">
-                                            {{ $sales->map->details->flatten()->sum('quantity') }}
-                                        </h2>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="mt-5 bg-white shadow-md sm:rounded-lg p-4" id="expenses">
+
                         </div>
                     </div>
 
-                    <div class="bg-white shadow-md sm:rounded-lg p-4">
+                    <div class="bg-white h-fit shadow-md sm:rounded-lg p-4">
                         <div class="mt-2">
                             <h2 class="text-lg font-bold">
                                 Rekomendasi
@@ -291,6 +296,28 @@
                     }
                 }]
             }
+        });
+
+        var expensesData = {!! json_encode($expenses) !!};
+
+        Highcharts.chart('expenses', {
+            chart: {
+                type: 'pie'
+            },
+            title: {
+                text: 'Data Pengeluaran Kas'
+            },
+            series: [{
+                name: 'Kategori',
+                data: expensesData,
+                dataLabels: {
+                    enabled: true,
+                    formatter: function() {
+                        return this.point.name + ' Rp. ' + this.y.toString().replace(
+                            /\B(?=(\d{3})+(?!\d))/g, ".");
+                    }
+                }
+            }]
         });
     </script>
 
