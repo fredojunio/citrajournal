@@ -516,6 +516,7 @@ class ReportController extends Controller
                 })->map->balance()->sum();
 
             $modal_disetor = Coa::where('category_id', 11)
+                ->where('umkm_id', Auth::user()->umkm->id)
                 ->where('code', '3-30000')
                 ->whereHas('transactions', function ($q) use ($date, $due_date) {
                     $q->whereBetween('date', [Carbon::createFromFormat('d/m/Y', $date)->format('Y-m-d'), Carbon::createFromFormat('d/m/Y', $due_date)->format('Y-m-d')]);
